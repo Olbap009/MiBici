@@ -65,7 +65,7 @@ create_environment:
 ## Make dataset
 .PHONY: data
 data: requirements
-	$(PYTHON_INTERPRETER) mibici/dataset.py
+	uv run dvc repro --force dataset
 
 
 #################################################################################

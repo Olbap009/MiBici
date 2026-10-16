@@ -1,0 +1,77 @@
+version: '3'
+
+vars:
+  PROJECT_NAME: mibici
+  PYTHON_VERSION: '3.13'
+  BUCKET_NAME: gs://mibici-mlops-project
+
+tasks:
+  default:
+    desc: List all available tasks
+    silent: true
+    cmds:
+      - task --list
+
+  requirements:
+    desc: Install Python dependencies with uv
+    cmds:
+      - uv sync
+
+  create-env:
+    desc: Set up Python virtual environment
+    aliases: [create_environment]
+    cmds:
+      - uv venv --python {{.PYTHON_VERSION}}
+      - echo ">>> New uv virtual environment created. Activate with:"
+      - echo ">>> Windows:\ .venv\Scripts\activate"
+      - echo ">>> Unix/macOS:\ source ./.venv/bin/activate"
+
+  clean:
+    desc: Delete all compiled Python files and cache
+    cmds:
+      - find . -type f -name "*.py[co]" -delete
+      - find . -type d -name "__pycache__" -delete
+
+  lint:
+    desc: Lint code using ruff
+    cmds:
+      - uv run ruff format --check
+      - uv run ruff check
+
+  format:
+    desc: Format source code with ruff
+    cmds:
+      - uv run ruff check --fix
+      - uv run ruff format
+
+  test:
+    desc: Run test suite using pytest
+    cmds:
+      - uv run pytest tests
+
+  data:
+    desc: Make dataset using DVC pipeline
+    deps: [requirements]
+    cmds:
+      - uv run dvc repro --force dataset
+
+  dvc:push:
+    desc: Push DVC tracked data to GCS remote storage
+    cmds:
+      - uv run dvc push
+
+  dvc:pull:
+    desc: Pull DVC tracked data from GCS remote storage
+    cmds:
+      - uv run dvc pull
+
+  grant-access:
+    desc: 'Grant GCS bucket access to a colleague (Usage: task grant-access EMAIL=colleague@gmail.com [ROLE=roles/storage.objectUser])'
+    vars:
+      EMAIL: '{{.EMAIL | default .CLI_ARGS}}'
+      ROLE: '{{.ROLE | default "roles/storage.objectUser"}}'
+    preconditions:
+      - sh: 'test -n "{{.EMAIL}}"'
+        msg: 'Please provide a colleague email. Example: task grant-access EMAIL=colleague@gmail.com or task grant-access -- colleague@gmail.com'
+    cmds:
+      - gcloud storage buckets add-iam-policy-binding {{.BUCKET_NAME}} --member="user:{{.EMAIL}}" --role="{{.ROLE}}"
