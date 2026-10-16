@@ -9,17 +9,17 @@ stages:
       size: 13289
     - path: pyproject.toml
       hash: md5
-      md5: 52b7d8bf72cc48c00330b86e4806a930
-      size: 1207
+      md5: 42581fa4ad82e13cd730c24c44371b85
+      size: 1228
     - path: uv.lock
       hash: md5
-      md5: c8bbc9fc65f5d4d002e52460ea7d7796
-      size: 311211
+      md5: 7ca03762fed1ebbc874e6702639313c6
+      size: 328229
     outs:
     - path: data/processed/trips.parquet
       hash: md5
-      md5: 583e1166a1d136ca6fa5a413bdc8ce0f
-      size: 391002519
+      md5: dd86e4895041d5fe65277a9d7cfb1904
+      size: 391035467
     - path: data/raw/stations_nomenclature.csv
       hash: md5
       md5: 59ea07ca92d2b44d2c343e85af726dc7
