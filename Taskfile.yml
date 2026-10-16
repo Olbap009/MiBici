@@ -75,3 +75,13 @@ tasks:
         msg: 'Please provide a colleague email. Example: task grant-access EMAIL=colleague@gmail.com or task grant-access -- colleague@gmail.com'
     cmds:
       - gcloud storage buckets add-iam-policy-binding {{.BUCKET_NAME}} --member="user:{{.EMAIL}}" --role="{{.ROLE}}"
+
+  hooks:install:
+    desc: Install git pre-commit hooks
+    cmds:
+      - uv run pre-commit install
+
+  hooks:run:
+    desc: Run pre-commit hooks manually on all files
+    cmds:
+      - uv run pre-commit run --all-files
