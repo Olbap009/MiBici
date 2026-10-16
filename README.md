@@ -56,11 +56,36 @@ Proyecto de MLOps con datos del sistema de bicicleta pública del Área Metropol
     └── plots.py                <- Código para generar visualizaciones
 ```
 
-## Descargar y versionar el conjunto de datos
+## Gestión y descarga del conjunto de datos
 
-El módulo del dataset consulta los enlaces a los archivos CSV mensuales y la nomenclatura de estaciones más reciente desde la [página de datos abiertos de MiBici](https://mibici.net/es/datos-abiertos/). Por defecto, incluye los viajes de los últimos tres años hasta la fecha actual, normaliza los nombres de columnas originales en español a `snake_case` en inglés, preserva los nombres de estaciones en codificación UTF-8, procesa las marcas de tiempo de los viajes y añade los nombres y coordenadas de las estaciones asociadas.
+Existen dos maneras de obtener los datos para trabajar en el proyecto: **descargar los datos versionados existentes desde el almacenamiento remoto** (enfoque recomendado para colaborar) o **reconstruir y procesar el dataset desde la fuente externa**.
 
-Para instalar las dependencias y ejecutar la etapa de DVC que construye y rastrea los artefactos:
+### 1. Descargar el dataset existente desde el almacenamiento remoto (Recomendado)
+
+Para comenzar a trabajar de inmediato con la versión oficial de los datos sin procesar gigabytes de archivos crudos ni depender de la web de MiBici, descarga los artefactos rastreados en DVC desde el bucket de Google Cloud Storage (`gs://mibici-mlops-project`):
+
+```bash
+# 1. Autentícate con tus credenciales de Google Cloud
+gcloud auth application-default login
+
+# 2. Descarga los datos versionados exactos
+uv run dvc pull
+# o alternativamente con Task:
+task dvc:pull
+```
+
+> **Permisos de acceso:** Tu cuenta de Google requiere permisos de lectura en el bucket (`roles/storage.objectViewer` o `roles/storage.objectUser`). El propietario del proyecto puede otorgarte acceso ejecutando:
+> ```bash
+> task grant-access EMAIL=tu_correo@gmail.com ROLE=roles/storage.objectViewer
+> ```
+
+---
+
+### 2. Reconstruir o actualizar el dataset desde la fuente externa
+
+Si necesitas reconstruir el dataset desde cero o actualizarlo con datos recién publicados en la [página de datos abiertos de MiBici](https://mibici.net/es/datos-abiertos/), puedes usar DVC o ejecutar el script directamente.
+
+#### A. Ejecución de la etapa de DVC (`dvc repro`)
 
 ```bash
 uv sync
@@ -69,13 +94,42 @@ uv run dvc repro --force dataset
 task data
 ```
 
-Los viajes limpios se generan en `data/processed/trips.parquet` y la nomenclatura descargada se guarda en `data/raw/stations_nomenclature.csv`. DVC rastrea ambas salidas; el indicador `--force` actualiza los datos externos de MiBici y la ventana móvil de fechas.
+**¿Qué hace exactamente este comando?**
+* **No descarga** los datos desde Google Cloud Storage; ejecuta el comando `uv run python -m mibici.dataset` configurado en [dvc.yaml](dvc.yaml).
+* Consulta el sitio web de MiBici, descarga los archivos CSV mensuales correspondientes a la **ventana por defecto (los últimos 3 años hasta la fecha actual)**, procesa y normaliza los viajes, une la nomenclatura de estaciones y genera:
+  * `data/processed/trips.parquet` (~390 MB)
+  * `data/raw/stations_nomenclature.csv` (~40 KB)
+* La bandera `--force` fuerza a DVC a reejecutar la etapa ignorando el caché previo.
+* **Consideraciones importantes:**
+  * **Ventana móvil:** Dado que el rango por defecto se calcula a partir de `date.today()`, ejecutarlo en distintas fechas descargará nuevos datos y alterará los hashes en [dvc.lock](dvc.lock).
+  * **Tiempo y recursos:** Procesar 3 años de viajes implica descargar y transformar millones de registros, lo que puede tardar varios minutos dependiendo de la conexión y CPU.
 
-Se pueden especificar las opciones `--start-date AAAA-MM-DD` y `--end-date AAAA-MM-DD` en la línea de comandos ejecutando `uv run python -m mibici.dataset` para delimitar un rango de fechas personalizado.
+#### B. Delimitar un rango de fechas personalizado
 
-## Almacenamiento remoto en DVC
+Puedes personalizar el período de descarga utilizando las opciones `--start-date` y `--end-date` (en formato `AAAA-MM-DD`). Esto es muy útil para pruebas rápidas, análisis acotados o para evitar procesar 3 años completos:
 
-El repositorio utiliza un bucket de Google Cloud Storage como almacenamiento remoto: `gs://mibici-mlops-project`. Para sincronizar los datos, primero autentícate localmente mediante las Credenciales Predeterminadas de la Aplicación (ADC) de Google Cloud y posteriormente sube los archivos versionados:
+```bash
+# Ejemplo: Descargar únicamente los viajes del año 2023
+uv run python -m mibici.dataset --start-date 2023-01-01 --end-date 2023-12-31
+
+# Ejemplo: Descargar desde el 1 de enero de 2024 hasta la fecha actual
+uv run python -m mibici.dataset --start-date 2024-01-01
+
+# Ejemplo: Descargar un período corto para desarrollo y pruebas rápidas
+uv run python -m mibici.dataset --start-date 2024-05-01 --end-date 2024-05-31
+```
+
+**Parámetros disponibles:**
+* `--start-date`: Primer día del rango (`AAAA-MM-DD`). Por defecto: hace 3 años.
+* `--end-date`: Último día del rango (`AAAA-MM-DD`). Por defecto: fecha actual.
+* `--output-path`: Ruta de salida para el archivo parquet limpio (por defecto: `data/processed/trips.parquet`).
+* `--nomenclature-output-path`: Ruta de salida para la nomenclatura (por defecto: `data/raw/stations_nomenclature.csv`).
+
+---
+
+### 3. Subir nuevos datos versionados al almacenamiento remoto (Mantenedores)
+
+Si eres el encargado de actualizar el dataset oficial y deseas compartir la nueva versión con el equipo en Google Cloud Storage:
 
 ```bash
 gcloud auth application-default login
@@ -84,7 +138,7 @@ uv run dvc push
 task dvc:push
 ```
 
-Tu cuenta de Google requiere permisos para escribir objetos en el bucket. Solicita al propietario del proyecto que te otorgue el rol `roles/storage.objectUser` (puedes consultar el comando en el archivo [Taskfile.yml](file:///home/bryan/learning/mibici/Taskfile.yml) mediante `task grant-access`).
+Posteriormente, haz commit y push del archivo `dvc.lock` actualizado a Git para que tus compañeros puedan sincronizar los nuevos datos con `uv run dvc pull`.
 
 ---
 
