@@ -1,0 +1,26 @@
+schema: '2.0'
+stages:
+  dataset:
+    cmd: uv run python -m mibici.dataset
+    deps:
+    - path: mibici/dataset.py
+      hash: md5
+      md5: 3bee6fc974292a57a75f21d2dd1f9df2
+      size: 13289
+    - path: pyproject.toml
+      hash: md5
+      md5: 52b7d8bf72cc48c00330b86e4806a930
+      size: 1207
+    - path: uv.lock
+      hash: md5
+      md5: c8bbc9fc65f5d4d002e52460ea7d7796
+      size: 311211
+    outs:
+    - path: data/processed/trips.parquet
+      hash: md5
+      md5: 583e1166a1d136ca6fa5a413bdc8ce0f
+      size: 391002519
+    - path: data/raw/stations_nomenclature.csv
+      hash: md5
+      md5: 59ea07ca92d2b44d2c343e85af726dc7
+      size: 40841

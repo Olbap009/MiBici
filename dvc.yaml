@@ -1,0 +1,10 @@
+stages:
+  dataset:
+    cmd: uv run python -m mibici.dataset
+    deps:
+      - mibici/dataset.py
+      - pyproject.toml
+      - uv.lock
+    outs:
+      - data/processed/trips.parquet
+      - data/raw/stations_nomenclature.csv
