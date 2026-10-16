@@ -88,6 +88,50 @@ Tu cuenta de Google requiere permisos para escribir objetos en el bucket. Solici
 
 ---
 
+## Calidad de código y estilo (Ruff y Pre-commit Hooks)
+
+El proyecto utiliza [Ruff](https://docs.astral.sh/ruff/) como linter y formateador de código extremadamente rápido, configurado en el archivo [pyproject.toml](file:///home/bryan/learning/mibici/pyproject.toml) (longitud máxima de línea de 99 caracteres y ordenamiento automático de imports con `isort`).
+
+### Uso de Ruff
+
+Puedes verificar o aplicar formato manualmente utilizando `task` o directamente `uv`:
+
+- **Verificar formato y linteo (sin modificar archivos):**
+  ```bash
+  task lint
+  # Equivalente a:
+  # uv run ruff format --check
+  # uv run ruff check
+  ```
+
+- **Aplicar formateo y autocorrección de errores:**
+  ```bash
+  task format
+  # Equivalente a:
+  # uv run ruff check --fix
+  # uv run ruff format
+  ```
+
+### Git Pre-commit Hook
+
+Para evitar subir código con errores de estilo o sintaxis, se incluye la configuración de [pre-commit](https://pre-commit.com/) en [.pre-commit-config.yaml](file:///home/bryan/learning/mibici/.pre-commit-config.yaml), la cual ejecuta automáticamente `ruff-check --fix` y `ruff-format` antes de cada `git commit`.
+
+1. **Instalar el hook en tu entorno Git local:**
+   ```bash
+   task hooks:install
+   # o: uv run pre-commit install
+   ```
+
+2. **Ejecutar el hook manualmente sobre todos los archivos:**
+   ```bash
+   task hooks:run
+   # o: uv run pre-commit run --all-files
+   ```
+
+Una vez instalado, cada vez que ejecutes `git commit`, Ruff revisará y formateará los archivos modificados de manera transparente.
+
+---
+
 ## Flujo de trabajo y contribución (GitHub Flow)
 
 Para colaborar en este proyecto se sigue la metodología [GitHub Flow](https://docs.github.com/en/get-started/using-github/github-flow), diseñada para mantener un ciclo de entrega continuo, simple y ordenado:
