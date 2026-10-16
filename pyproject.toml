@@ -16,14 +16,12 @@ classifiers = [
     "License :: OSI Approved :: MIT License"
 ]
 dependencies = [
-    "loguru",
-    "mkdocs",
-    "pip",
-    "pytest",
-    "python-dotenv",
-    "ruff",
-    "tqdm",
-    "typer",
+    "loguru>=0.7.3", # Loggings
+    "pandas>=3.0.6", # Data Processing
+    "python-dotenv>=1.2.4", # Env variables
+    "scikit-learn>=1.9.1", # ML models
+    "tqdm>=4.70.1", # Progress Bars
+    "typer>=0.27.3", # CLI's
 ]
 requires-python = "~=3.13.0"
 
@@ -39,4 +37,13 @@ extend-select = ["I"]  # Add import sorting
 [tool.ruff.lint.isort]
 known-first-party = ["mibici"]
 force-sort-within-sections = true
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1.1",
+    "matplotlib>=3.11.2",
+    "mkdocs>=1.6.1",
+    "pytest>=9.1.1",
+    "ruff>=0.17.1",
+]
 
