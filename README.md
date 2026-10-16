@@ -1,96 +1,90 @@
 # mibici
 
 <a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
-    <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
+    <img src="https://img.shields.io/badge/CCDS-Plantilla%20de%20proyecto-328F97?logo=cookiecutter" />
 </a>
 
-Proyecto de MLOps con datos del sistema de bicicleta pública del Área Metropolitana de Guadalajara. MiBici
+Proyecto de MLOps con datos del sistema de bicicleta pública del Área Metropolitana de Guadalajara, MiBici.
 
-## Project Organization
+## Estructura del proyecto
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Taskfile.yml       <- Taskfile with convenience commands like `task data` or `task test`
-├── README.md          <- The top-level README for developers using this project.
+├── LICENSE            <- Licencia de código abierto (si se define una)
+├── Taskfile.yml       <- Archivo de tareas con comandos convenientes como `task data` o `task test`
+├── README.md          <- Documento principal para desarrolladores del proyecto.
 ├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
+│   ├── external       <- Datos provenientes de fuentes de terceros.
+│   ├── interim        <- Datos intermedios que han sido transformados.
+│   ├── processed      <- Conjuntos de datos finales y canónicos para modelado.
+│   └── raw            <- Datos originales e inmutables descargados.
 │
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── docs               <- Proyecto predeterminado de mkdocs; consulta www.mkdocs.org para detalles.
 │
-├── models             <- Trained and serialized models, model predictions, or model summaries
+├── models             <- Modelos entrenados y serializados, predicciones o resúmenes de modelos.
 │
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
+├── notebooks          <- Jupyter notebooks. La convención de nombres es un número (para ordenamiento),
+│                         las iniciales del autor y una descripción breve separada por `-`, ej.
+│                         `1.0-jqp-exploracion-inicial-datos`.
 │
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         mibici and configuration for tools like black
+├── pyproject.toml     <- Archivo de configuración del proyecto con metadatos del paquete
+│                         mibici y configuración de herramientas como ruff.
 │
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+├── references         <- Diccionarios de datos, manuales y materiales explicativos.
 │
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+├── reports            <- Análisis generados en HTML, PDF, LaTeX, etc.
+│   └── figures        <- Gráficos y figuras generadas para su uso en reportes.
 │
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
+├── requirements.txt   <- Archivo de requerimientos para reproducir el entorno (si aplica).
 │
-├── setup.cfg          <- Configuration file for flake8
+├── setup.cfg          <- Archivo de configuración para linters.
 │
-└── mibici   <- Source code for use in this project.
+└── mibici             <- Código fuente del proyecto.
     │
-    ├── __init__.py             <- Makes mibici a Python module
+    ├── __init__.py             <- Convierte a mibici en un módulo de Python
     │
-    ├── config.py               <- Store useful variables and configuration
+    ├── config.py               <- Variables útiles y configuraciones del proyecto
     │
-    ├── dataset.py              <- Scripts to download or generate data
+    ├── dataset.py              <- Scripts para descargar o procesar datos
     │
-    ├── features.py             <- Code to create features for modeling
+    ├── features.py             <- Código para generar variables (features) para modelado
     │
     ├── modeling                
     │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
+    │   ├── predict.py          <- Código para inferencia con modelos entrenados          
+    │   └── train.py            <- Código para entrenar modelos
     │
-    └── plots.py                <- Code to create visualizations
+    └── plots.py                <- Código para generar visualizaciones
 ```
 
-## Download and version the dataset
+## Descargar y versionar el conjunto de datos
 
-The dataset command reads the monthly CSV links and the latest station
-nomenclature CSV from [MiBici's open-data page](https://mibici.net/es/datos-abiertos/).
-By default, it includes trips from the last three years through the current time,
-normalizes the Spanish source columns to English snake case, preserves UTF-8 station
-names, parses trip timestamps, and adds station names and coordinates.
+El módulo del dataset consulta los enlaces a los archivos CSV mensuales y la nomenclatura de estaciones más reciente desde la [página de datos abiertos de MiBici](https://mibici.net/es/datos-abiertos/). Por defecto, incluye los viajes de los últimos tres años hasta la fecha actual, normaliza los nombres de columnas originales en español a `snake_case` en inglés, preserva los nombres de estaciones en codificación UTF-8, procesa las marcas de tiempo de los viajes y añade los nombres y coordenadas de las estaciones asociadas.
 
-Install the project and run the DVC stage to build and track the outputs:
+Para instalar las dependencias y ejecutar la etapa de DVC que construye y rastrea los artefactos:
 
 ```bash
 uv sync
 uv run dvc repro --force dataset
+# o alternativamente con Task:
+task data
 ```
 
-The cleaned trips are written to `data/processed/trips.parquet`, and the downloaded
-station nomenclature is saved to `data/raw/stations_nomenclature.csv`. DVC tracks
-both outputs; `--force` refreshes the external MiBici data and the rolling date
-window.
-Optional `--start-date YYYY-MM-DD` and `--end-date YYYY-MM-DD` CLI options can be
-passed to `uv run python -m mibici.dataset` to set a custom inclusive date range.
+Los viajes limpios se generan en `data/processed/trips.parquet` y la nomenclatura descargada se guarda en `data/raw/stations_nomenclature.csv`. DVC rastrea ambas salidas; el indicador `--force` actualiza los datos externos de MiBici y la ventana móvil de fechas.
 
-## DVC remote storage
+Se pueden especificar las opciones `--start-date AAAA-MM-DD` y `--end-date AAAA-MM-DD` en la línea de comandos ejecutando `uv run python -m mibici.dataset` para delimitar un rango de fechas personalizado.
 
-The configured remote uses the Google Cloud Storage bucket
-`gs://mibici-mlops-project`. Authenticate locally with Google Application Default
-Credentials, then upload the DVC-tracked data:
+## Almacenamiento remoto en DVC
+
+El repositorio utiliza un bucket de Google Cloud Storage como almacenamiento remoto: `gs://mibici-mlops-project`. Para sincronizar los datos, primero autentícate localmente mediante las Credenciales Predeterminadas de la Aplicación (ADC) de Google Cloud y posteriormente sube los archivos versionados:
 
 ```bash
 gcloud auth application-default login
 uv run dvc push
+# o alternativamente con Task:
+task dvc:push
 ```
 
-Your Google account needs permission to write objects to the bucket. Ask the project owner to grant you the `roles/storage.objectUser` role.
+Tu cuenta de Google requiere permisos para escribir objetos en el bucket. Solicita al propietario del proyecto que te otorgue el rol `roles/storage.objectUser` (puedes consultar el comando en el archivo [Taskfile.yml](file:///home/bryan/learning/mibici/Taskfile.yml) mediante `task grant-access`).
 
 ---
 
