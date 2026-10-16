@@ -16,8 +16,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License"
 ]
 dependencies = [
+    "dvc-gs>=3.0.1",
     "loguru>=0.7.3", # Loggings
     "pandas>=3.0.6", # Data Processing
+    "pyarrow>=18.0", # Parquet output
     "python-dotenv>=1.2.4", # Env variables
     "scikit-learn>=1.9.1", # ML models
     "tqdm>=4.70.1", # Progress Bars
@@ -43,7 +45,7 @@ dev = [
     "jupyter>=1.1.1",
     "matplotlib>=3.11.2",
     "mkdocs>=1.6.1",
+    "dvc>=3.60", # Data versioning
     "pytest>=9.1.1",
     "ruff>=0.17.1",
 ]
-
