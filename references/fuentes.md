@@ -1,5 +1,7 @@
 # Fuentes de datos y uso
 
+**Equipo:** 23
+
 - MiBici, **Datos abiertos**: https://www.mibici.net/en/open-data/
 - Catálogo de estaciones (ejemplo mensual): https://www.mibici.net/site/assets/files/1118/nomenclatura_2026_08.csv
 

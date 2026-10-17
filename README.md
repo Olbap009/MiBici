@@ -1,6 +1,6 @@
 # Proyecto MiBici
 
-Propuesta reproducible de Machine Learning para las tres preguntas del proyecto
+**Equipo 23.** Propuesta reproducible de Machine Learning para las tres preguntas del proyecto
 integrador: pronóstico de viajes (P1), riesgo operacional aproximado (P2) y
 agrupación de estaciones (P3).
 
@@ -67,4 +67,3 @@ suben directamente al repositorio.
 - El catálogo usado debe corresponder al periodo documentado.
 - Antes de la entrega hay que agregar las URL exactas de las fuentes, el rango
   real, conteos finales y capturas de MLflow.
-

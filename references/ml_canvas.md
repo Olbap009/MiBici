@@ -1,4 +1,4 @@
-# ML Canvas — MiBici
+# ML Canvas — MiBici (Equipo 23)
 
 ## Problema
 
@@ -32,4 +32,3 @@ P2 no observa inventario real de bicicletas. El umbral de capacidad es un
 supuesto operacional y no una etiqueta observada. Se evita fuga temporal con
 lags y particiones cronológicas. Los identificadores de usuario se excluyen de
 las features y no se publican.
-

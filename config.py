@@ -9,7 +9,7 @@ FIGURES_DIR = ROOT / "reports" / "figures"
 MODELS_DIR = ROOT / "models"
 
 SEED = 42
-TEAM_ID = "equipoXX"
+TEAM_ID = "equipo23"
 START_DATE = "2025-01-01"
 END_DATE = "2026-09-30"
 RISK_CAPACITY_RATIO = 0.80
