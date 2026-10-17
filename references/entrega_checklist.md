@@ -16,6 +16,9 @@
 - [x] Git inicializado y commits locales.
 - [x] CSV excluidos del repositorio.
 - [x] Versionado de datos mediante `references/data_manifest.csv` con SHA-256.
+- [x] Módulo de ingesta disponible como `src/mibici/dataset.py`.
+- [x] PDF de propuesta generado como `TC5061_Propuesta_Proyecto_Equipo23.pdf`.
+- [x] Evidencia de estructura del repositorio guardada en `reports/evidence/`.
 
 ## Pendiente del equipo
 

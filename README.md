@@ -49,13 +49,13 @@ los mismos CSV sin subir los datos grandes al repositorio.
 Consolidar los datos:
 
 ```bash
-PYTHONPATH=src python -m mibici.ingestion
+PYTHONPATH=.:src python -m mibici.dataset
 ```
 
 ## Entrenamiento y MLflow
 
 ```bash
-PYTHONPATH=src python -m mibici.training
+PYTHONPATH=.:src python -m mibici.training
 mlflow ui
 ```
 
