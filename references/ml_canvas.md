@@ -22,8 +22,8 @@ hora/día y capacidad/coordenadas del catálogo.
 ## Objetivos y métricas
 
 - P1: viajes iniciados el siguiente día; baseline de media histórica; MAE y RMSE.
-- P2: proxy binario de riesgo por demanda/capacidad; baseline de clase
-  mayoritaria; precision, recall y F1, priorizando recall.
+- P2: proxy binario de riesgo del siguiente día por demanda/capacidad; baseline
+  de clase mayoritaria; precision, recall y F1, priorizando recall.
 - P3: grupos de estaciones; K-Means; silhouette score y revisión geográfica.
 
 ## Riesgos y supuestos

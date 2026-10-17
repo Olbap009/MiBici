@@ -75,17 +75,35 @@ def daily_station_features(
         None,
     )
     if capacity_col and station_id_col:
-        capacity = stations[[station_id_col, capacity_col]].rename(
-            columns={station_id_col: "estacion_id", capacity_col: "capacidad"}
+        station_columns = [station_id_col, capacity_col]
+        for coordinate in ("latitude", "longitude", "latitud", "longitud"):
+            if coordinate in stations and coordinate not in station_columns:
+                station_columns.append(coordinate)
+        capacity = stations[station_columns].rename(
+            columns={
+                station_id_col: "estacion_id",
+                capacity_col: "capacidad",
+                "latitud": "latitude",
+                "longitud": "longitude",
+            }
         )
         capacity["estacion_id"] = capacity["estacion_id"].astype("string")
         daily = daily.merge(capacity, on="estacion_id", how="left")
+        for coordinate in ("latitude", "longitude"):
+            if coordinate not in daily:
+                daily[coordinate] = pd.NA
         daily["riesgo_alto"] = (
             daily["viajes_lag_1"] / daily["capacidad"] >= risk_ratio
         ).astype("Int64")
+        daily["riesgo_alto_siguiente"] = (
+            daily["objetivo_viajes_siguiente"] / daily["capacidad"] >= risk_ratio
+        ).astype("Int64")
     else:
         daily["capacidad"] = pd.NA
+        daily["latitude"] = pd.NA
+        daily["longitude"] = pd.NA
         daily["riesgo_alto"] = pd.NA
+        daily["riesgo_alto_siguiente"] = pd.NA
     return daily
 
 
@@ -95,4 +113,6 @@ def station_features(daily: pd.DataFrame) -> pd.DataFrame:
         viajes_desviacion=("viajes_iniciados", "std"),
         dias_observados=("fecha", "nunique"),
         capacidad=("capacidad", "first"),
+        latitude=("latitude", "first"),
+        longitude=("longitude", "first"),
     ).fillna(0)

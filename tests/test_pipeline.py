@@ -27,7 +27,12 @@ def test_normalize_column() -> None:
 def test_features_and_baselines() -> None:
     trips, stations = make_data()
     daily = daily_station_features(trips, stations)
-    assert {"viajes_lag_1", "objetivo_viajes_siguiente", "riesgo_alto"} <= set(daily)
+    assert {
+        "viajes_lag_1",
+        "objetivo_viajes_siguiente",
+        "riesgo_alto",
+        "riesgo_alto_siguiente",
+    } <= set(daily)
     assert train_p1(daily)["n_test"] > 0
     assert train_p2(daily)["n_test"] > 0
     assert train_p3(daily)["n_stations"] == 3

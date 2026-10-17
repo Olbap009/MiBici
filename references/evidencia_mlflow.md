@@ -31,10 +31,9 @@ Los resultados reproducidos el 17 de octubre de 2026 fueron:
 | Pregunta | Resultado |
 |---|---:|
 | P1 MAE | 11.6304 |
-| P2 accuracy | 0.6272 |
-| P2 F1 | 0.7709 |
+| P2 accuracy | se actualiza al regenerar el run corregido |
+| P2 F1 | se actualiza al regenerar el run corregido |
 | P3 silhouette | 0.4573 |
 
 Cada run guarda `seed`, rango de fechas, tag de equipo, pregunta y commit de
 Git. P2 es una etiqueta proxy basada en demanda/capacidad, no inventario real.
-

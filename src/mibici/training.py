@@ -41,16 +41,16 @@ def train_p1(daily: pd.DataFrame) -> dict[str, float]:
 
 
 def train_p2(daily: pd.DataFrame) -> dict[str, float]:
-    data = daily.dropna(subset=["riesgo_alto"]).copy()
+    data = daily.dropna(subset=["riesgo_alto_siguiente"]).copy()
     if data.empty:
         return {"accuracy": float("nan"), "f1": float("nan"), "n_test": 0.0}
     cutoff = data["fecha"].quantile(0.8)
     train, test = data[data["fecha"] < cutoff], data[data["fecha"] >= cutoff]
-    majority = int(train["riesgo_alto"].mode().iloc[0])
+    majority = int(train["riesgo_alto_siguiente"].mode().iloc[0])
     prediction = np.full(len(test), majority)
     return {
-        "accuracy": float(accuracy_score(test["riesgo_alto"], prediction)),
-        "f1": float(f1_score(test["riesgo_alto"], prediction, zero_division=0)),
+        "accuracy": float(accuracy_score(test["riesgo_alto_siguiente"], prediction)),
+        "f1": float(f1_score(test["riesgo_alto_siguiente"], prediction, zero_division=0)),
         "n_test": float(len(test)),
     }
 
@@ -70,6 +70,13 @@ def train_p3(daily: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> dict[str, 
     plt.savefig(figures_dir / "p3_perfiles_clusters.png", dpi=150)
     plt.close()
     return {"silhouette": float(score), "n_stations": float(len(features)), "n_clusters": float(k)}
+
+
+def write_metrics_artifact(question: str, metrics: dict[str, float]) -> Path:
+    FIGURES_DIR.mkdir(parents=True, exist_ok=True)
+    path = FIGURES_DIR / f"{question.lower()}_baseline_metrics.csv"
+    pd.DataFrame([metrics]).to_csv(path, index=False)
+    return path
 
 
 def log_run(question: str, metrics: dict[str, float], artifact: Path | None = None) -> None:
@@ -92,7 +99,9 @@ def run_pipeline(raw_dir: Path) -> None:
     daily = daily_station_features(trips, stations)
     results = {"P1": train_p1(daily), "P2": train_p2(daily), "P3": train_p3(daily)}
     for question, metrics in results.items():
-        artifact = FIGURES_DIR / "p3_perfiles_clusters.png" if question == "P3" else None
+        artifact = write_metrics_artifact(question, metrics)
+        if question == "P3":
+            artifact = FIGURES_DIR / "p3_perfiles_clusters.png"
         log_run(question, metrics, artifact)
         print(question, metrics)
 
