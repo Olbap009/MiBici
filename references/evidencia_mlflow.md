@@ -31,8 +31,12 @@ Los resultados reproducidos el 17 de octubre de 2026 fueron:
 | Pregunta | Resultado |
 |---|---:|
 | P1 MAE | 11.6304 |
+| P1 candidato MAE | 6.5447 |
+| P1 candidato RMSE | 12.4127 |
 | P2 accuracy | 0.6244 |
 | P2 F1 | 0.7688 |
+| P2 candidato accuracy | 0.8282 |
+| P2 candidato F1 | 0.8499 |
 | P3 silhouette | 0.4982 |
 
 Cada run guarda `seed`, rango de fechas, tag de equipo, pregunta y commit de

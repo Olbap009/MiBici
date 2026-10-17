@@ -108,11 +108,14 @@ def daily_station_features(
 
 
 def station_features(daily: pd.DataFrame) -> pd.DataFrame:
-    return daily.groupby("estacion_id").agg(
+    result = daily.groupby("estacion_id").agg(
         viajes_promedio=("viajes_iniciados", "mean"),
         viajes_desviacion=("viajes_iniciados", "std"),
         dias_observados=("fecha", "nunique"),
         capacidad=("capacidad", "first"),
         latitude=("latitude", "first"),
         longitude=("longitude", "first"),
-    ).infer_objects(copy=False).fillna(0)
+    )
+    for column in result.columns:
+        result[column] = pd.to_numeric(result[column], errors="coerce")
+    return result.fillna(0)
