@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.DS_Store
+.ipynb_checkpoints/
+
+# Datos y salidas grandes
+data/raw/*.csv
+data/processed/*.csv
+models/*.joblib
+models/*.pkl
+
+# MLflow local
+mlruns/
+mlartifacts/
+mlflow.db
