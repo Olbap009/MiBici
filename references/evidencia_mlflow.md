@@ -10,10 +10,10 @@ Abrir la interfaz con:
 
 ```bash
 cd /Users/mac/Desktop/MiBici_Proyecto
-mlflow ui --backend-store-uri ./mlruns
+mlflow ui --backend-store-uri ./mlruns --port 5001
 ```
 
-Luego visitar http://127.0.0.1:5000.
+Luego visitar http://127.0.0.1:5001.
 
 ## Evidencia requerida
 
@@ -25,6 +25,14 @@ Tomar y guardar en `reports/evidence/` las siguientes capturas:
 3. Detalle del run P2 con sus métricas de clasificación.
 4. Detalle del run P3 mostrando el artefacto `p3_perfiles_clusters.png`.
 5. Vista de comparación entre dos o más runs.
+
+Capturas guardadas:
+
+- `reports/evidence/mlflow_lista_runs.png`
+- `reports/evidence/mlflow_detalle_p1_candidato.png`
+- `reports/evidence/mlflow_detalle_p2_candidato.png`
+- `reports/evidence/mlflow_detalle_p3_artefacto.png`
+- `reports/evidence/mlflow_comparacion_p1.png`
 
 Los resultados reproducidos el 17 de octubre de 2026 fueron:
 

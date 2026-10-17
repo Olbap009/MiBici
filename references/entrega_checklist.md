@@ -18,7 +18,7 @@
 ## Pendiente del equipo
 
 - [ ] Agregar nombres y matrículas de integrantes.
-- [ ] Guardar las capturas de evidencia de MLflow en `reports/evidence/`.
+- [x] Guardar las capturas de evidencia de MLflow en `reports/evidence/`.
 - [ ] Crear el repositorio remoto de GitHub y agregar `origin`.
 - [ ] Cambiar la rama principal a `main` si el curso lo requiere.
 - [ ] Proteger `main` en GitHub.
