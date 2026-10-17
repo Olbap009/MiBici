@@ -4,6 +4,13 @@
 integrador: pronóstico de viajes (P1), riesgo operacional aproximado (P2) y
 agrupación de estaciones (P3).
 
+## Integrantes
+
+- Miguel Ángel Durán Betancourt
+- Juan Pablo Islas Guzmán — A01797727
+- Bryan Steve Ortega Castillo
+- Kevin Rogelio Rodriguez Magaña
+
 ## Estructura
 
 ```text

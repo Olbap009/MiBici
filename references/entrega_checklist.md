@@ -2,6 +2,7 @@
 
 ## Listo
 
+- [x] Nombres de los cuatro integrantes agregados.
 - [x] Datos reales descargados desde el portal oficial.
 - [x] Ingesta robusta y consolidación reproducible.
 - [x] Feature engineering para P1, P2 y P3.
@@ -17,7 +18,7 @@
 
 ## Pendiente del equipo
 
-- [ ] Agregar nombres y matrículas de integrantes.
+- [ ] Completar las matrículas de Miguel Ángel Durán Betancourt, Bryan Steve Ortega Castillo y Kevin Rogelio Rodriguez Magaña.
 - [x] Guardar las capturas de evidencia de MLflow en `reports/evidence/`.
 - [ ] Crear el repositorio remoto de GitHub y agregar `origin`.
 - [ ] Cambiar la rama principal a `main` si el curso lo requiere.

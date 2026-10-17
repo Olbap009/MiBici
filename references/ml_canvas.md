@@ -1,5 +1,8 @@
 # ML Canvas — MiBici (Equipo 23)
 
+**Integrantes:** Miguel Ángel Durán Betancourt; Juan Pablo Islas Guzmán
+(A01797727); Bryan Steve Ortega Castillo; Kevin Rogelio Rodriguez Magaña.
+
 ## Problema
 
 El operador necesita anticipar demanda, priorizar estaciones con posible
