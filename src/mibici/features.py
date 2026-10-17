@@ -115,4 +115,4 @@ def station_features(daily: pd.DataFrame) -> pd.DataFrame:
         capacidad=("capacidad", "first"),
         latitude=("latitude", "first"),
         longitude=("longitude", "first"),
-    ).fillna(0).infer_objects(copy=False)
+    ).infer_objects(copy=False).fillna(0)

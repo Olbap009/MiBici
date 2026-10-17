@@ -10,7 +10,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
-from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error, silhouette_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import HistGradientBoostingRegressor
+from sklearn.metrics import (
+    accuracy_score,
+    f1_score,
+    mean_absolute_error,
+    mean_squared_error,
+    silhouette_score,
+)
 from sklearn.preprocessing import StandardScaler
 
 from config import END_DATE, FIGURES_DIR, MLFLOW_EXPERIMENT, ROOT, SEED, START_DATE, TEAM_ID
@@ -40,6 +48,31 @@ def train_p1(daily: pd.DataFrame) -> dict[str, float]:
     return {"mae": float(mae), "n_train": float(len(train)), "n_test": float(len(test))}
 
 
+def train_p1_candidate(daily: pd.DataFrame) -> dict[str, float]:
+    data = daily.dropna(
+        subset=[
+            "objetivo_viajes_siguiente",
+            "viajes_lag_1",
+            "viajes_lag_7",
+            "media_7_dias",
+        ]
+    )
+    cutoff = data["fecha"].quantile(0.8)
+    train, test = data[data["fecha"] < cutoff], data[data["fecha"] >= cutoff]
+    columns = ["viajes_lag_1", "viajes_lag_7", "media_7_dias", "dia_semana", "mes"]
+    model = HistGradientBoostingRegressor(random_state=SEED, max_iter=100)
+    model.fit(train[columns], train["objetivo_viajes_siguiente"])
+    prediction = model.predict(test[columns])
+    return {
+        "mae": float(mean_absolute_error(test["objetivo_viajes_siguiente"], prediction)),
+        "rmse": float(
+            mean_squared_error(test["objetivo_viajes_siguiente"], prediction) ** 0.5
+        ),
+        "n_train": float(len(train)),
+        "n_test": float(len(test)),
+    }
+
+
 def train_p2(daily: pd.DataFrame) -> dict[str, float]:
     data = daily.dropna(subset=["riesgo_alto_siguiente"]).copy()
     if data.empty:
@@ -48,6 +81,23 @@ def train_p2(daily: pd.DataFrame) -> dict[str, float]:
     train, test = data[data["fecha"] < cutoff], data[data["fecha"] >= cutoff]
     majority = int(train["riesgo_alto_siguiente"].mode().iloc[0])
     prediction = np.full(len(test), majority)
+    return {
+        "accuracy": float(accuracy_score(test["riesgo_alto_siguiente"], prediction)),
+        "f1": float(f1_score(test["riesgo_alto_siguiente"], prediction, zero_division=0)),
+        "n_test": float(len(test)),
+    }
+
+
+def train_p2_candidate(daily: pd.DataFrame) -> dict[str, float]:
+    data = daily.dropna(
+        subset=["riesgo_alto_siguiente", "viajes_lag_1", "viajes_lag_7", "media_7_dias"]
+    )
+    cutoff = data["fecha"].quantile(0.8)
+    train, test = data[data["fecha"] < cutoff], data[data["fecha"] >= cutoff]
+    columns = ["viajes_lag_1", "viajes_lag_7", "media_7_dias", "dia_semana", "mes"]
+    model = LogisticRegression(class_weight="balanced", max_iter=300, random_state=SEED)
+    model.fit(train[columns], train["riesgo_alto_siguiente"])
+    prediction = model.predict(test[columns])
     return {
         "accuracy": float(accuracy_score(test["riesgo_alto_siguiente"], prediction)),
         "f1": float(f1_score(test["riesgo_alto_siguiente"], prediction, zero_division=0)),
@@ -97,7 +147,13 @@ def log_run(question: str, metrics: dict[str, float], artifact: Path | None = No
 def run_pipeline(raw_dir: Path) -> None:
     trips, stations = load_raw(raw_dir)
     daily = daily_station_features(trips, stations)
-    results = {"P1": train_p1(daily), "P2": train_p2(daily), "P3": train_p3(daily)}
+    results = {
+        "P1": train_p1(daily),
+        "P1-candidato": train_p1_candidate(daily),
+        "P2": train_p2(daily),
+        "P2-candidato": train_p2_candidate(daily),
+        "P3": train_p3(daily),
+    }
     for question, metrics in results.items():
         artifact = write_metrics_artifact(question, metrics)
         if question == "P3":
