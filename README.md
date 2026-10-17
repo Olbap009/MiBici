@@ -40,6 +40,11 @@ Descargar los CSV mensuales publicados por MiBici y colocarlos en `data/raw/`:
 
 Los nombres exactos pueden variar históricamente. La ingesta intenta `utf-8`,
 `utf-8-sig`, `cp1252` y `latin1`, y normaliza los nombres de columnas.
+La versión del snapshot se conserva en
+[`references/data_manifest.csv`](references/data_manifest.csv), con nombre,
+filas, tamaño y SHA-256 de cada archivo. Este manifiesto es el mecanismo de
+versionado de datos: permite verificar que otra computadora usa exactamente
+los mismos CSV sin subir los datos grandes al repositorio.
 
 Consolidar los datos:
 
@@ -64,8 +69,8 @@ demanda previa dividida entre capacidad alcanza el umbral configurado en
 La rama principal debe permanecer protegida. Cada cambio se trabaja en una
 rama `feature/<tema>`, se revisa mediante Pull Request y se integra solo
 después de ejecutar el pipeline y sus validaciones. Los CSV grandes se
-controlan con DVC o se reconstruyen mediante la ingesta documentada; nunca se
-suben directamente al repositorio.
+reconstruyen mediante la ingesta documentada y se verifican contra el
+manifiesto; nunca se suben directamente al repositorio.
 
 ## Limitaciones conocidas
 

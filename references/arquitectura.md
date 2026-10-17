@@ -13,11 +13,11 @@ flowchart LR
   G --> I
   H --> I
   I --> J[reports/figures]
-  D -. DVC .-> K[Versionado de datos]
+  D -. manifiesto SHA-256 .-> K[Versionado de datos]
 ```
 
 La ejecución local usa Python, pandas y scikit-learn. MLflow conserva
 parámetros, métricas, tags y artefactos; Git conserva código y documentación;
-DVC debe conservar las versiones de los CSV sin incluirlos directamente en
-GitHub.
-
+el manifiesto `references/data_manifest.csv` conserva la versión verificable de
+los CSV mediante filas, tamaños y hashes SHA-256, sin incluirlos directamente
+en GitHub.

@@ -7,6 +7,7 @@ RAW_DIR = ROOT / "data" / "raw"
 PROCESSED_DIR = ROOT / "data" / "processed"
 FIGURES_DIR = ROOT / "reports" / "figures"
 MODELS_DIR = ROOT / "models"
+DATA_MANIFEST = ROOT / "references" / "data_manifest.csv"
 
 SEED = 42
 TEAM_ID = "equipo23"

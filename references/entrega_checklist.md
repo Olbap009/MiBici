@@ -15,6 +15,7 @@
 - [x] Tests automatizados.
 - [x] Git inicializado y commits locales.
 - [x] CSV excluidos del repositorio.
+- [x] Versionado de datos mediante `references/data_manifest.csv` con SHA-256.
 
 ## Pendiente del equipo
 
@@ -23,7 +24,7 @@
 - [ ] Crear el repositorio remoto de GitHub y agregar `origin`.
 - [ ] Cambiar la rama principal a `main` si el curso lo requiere.
 - [ ] Proteger `main` en GitHub.
-- [ ] Configurar DVC con un almacenamiento remoto accesible al equipo.
+- [x] DVC no es requisito explícito de la rúbrica; se usa un manifiesto SHA-256 como mecanismo de versionado.
 - [ ] Revisar y aprobar el supuesto de P2 (umbral 0.80).
 - [ ] Revisar referencias APA 7 y año de consulta.
 - [ ] Verificar que el portal acepte el formato de entrega y adjuntar evidencia.

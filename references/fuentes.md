@@ -8,7 +8,7 @@
 Antes de congelar la entrega se debe anotar en este archivo la URL exacta de
 cada mes descargado, la fecha de descarga y el conteo de filas obtenido. Los
 archivos originales se mantienen fuera de Git y se reconstruyen con la ingesta
-documentada o DVC.
+documentada; sus hashes están congelados en `data_manifest.csv`.
 
 ## Descarga actual
 

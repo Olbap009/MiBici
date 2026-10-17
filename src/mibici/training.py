@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import subprocess
 from pathlib import Path
 
@@ -21,7 +22,16 @@ from sklearn.metrics import (
 )
 from sklearn.preprocessing import StandardScaler
 
-from config import END_DATE, FIGURES_DIR, MLFLOW_EXPERIMENT, ROOT, SEED, START_DATE, TEAM_ID
+from config import (
+    DATA_MANIFEST,
+    END_DATE,
+    FIGURES_DIR,
+    MLFLOW_EXPERIMENT,
+    ROOT,
+    SEED,
+    START_DATE,
+    TEAM_ID,
+)
 from mibici.features import daily_station_features, station_features
 from mibici.ingestion import load_raw
 
@@ -36,6 +46,13 @@ def git_commit() -> str:
         ).strip()
     except (OSError, subprocess.CalledProcessError):
         return "sin-git"
+
+
+def data_version() -> str:
+    """Return the SHA-256 of the committed manifest for the raw data snapshot."""
+    if not DATA_MANIFEST.exists():
+        return "manifest-no-encontrado"
+    return hashlib.sha256(DATA_MANIFEST.read_bytes()).hexdigest()
 
 
 def train_p1(daily: pd.DataFrame) -> dict[str, float]:
@@ -137,7 +154,14 @@ def log_run(question: str, metrics: dict[str, float], artifact: Path | None = No
         return
     mlflow.set_experiment(MLFLOW_EXPERIMENT)
     with mlflow.start_run(run_name=f"{question}-baseline"):
-        mlflow.log_params({"seed": SEED, "start_date": START_DATE, "end_date": END_DATE})
+        mlflow.log_params(
+            {
+                "seed": SEED,
+                "start_date": START_DATE,
+                "end_date": END_DATE,
+                "data_version": data_version(),
+            }
+        )
         mlflow.log_metrics({key: value for key, value in metrics.items() if np.isfinite(value)})
         mlflow.set_tags({"team": TEAM_ID, "question": question, "git_commit": git_commit()})
         if artifact and artifact.exists():
