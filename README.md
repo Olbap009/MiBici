@@ -253,15 +253,10 @@ Adoptamos la especificación de [Conventional Commits](https://www.conventionalc
 
 Integrantes:
 
-- Miguel Ángel Durán Betancourt
+- Miguel Ángel Durán Betancourt — A01797974
 - Juan Pablo Islas Guzmán — A01797727
-- Bryan Steve Ortega Castillo
-- Kevin Rogelio Rodriguez Magaña
-
-La propuesta consolidada, con resultados y capturas de MLflow, está en
-[`TC5061_Propuesta_Proyecto_Equipo23.pdf`](TC5061_Propuesta_Proyecto_Equipo23.pdf).
-La evidencia de MLflow se encuentra en `reports/evidence/` y el manifiesto de
-datos en `references/data_manifest.csv`.
+- Bryan Steve Ortega Castillo — A01797846
+- Kevin Rogelio Rodriguez Magaña — A01840418
 
 El repositorio usa DVC para versionar los datos grandes. La reconstrucción
 desde la fuente oficial se ejecuta con:
@@ -288,7 +283,3 @@ Para ejecutar los experimentos base:
   ```bash
   uv run python -m mibici.baseline_p2
   ```
-
-El Pull Request de integración de la propuesta y evidencia se mantiene
-separado del código de ingesta, DVC y modelado de los integrantes.
-
