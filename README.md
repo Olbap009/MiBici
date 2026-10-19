@@ -248,3 +248,34 @@ Adoptamos la especificación de [Conventional Commits](https://www.conventionalc
 - **Commits atómicos:** Cada commit debe resolver una única unidad lógica de trabajo.
 
 --------
+
+## Entrega del Equipo 23
+
+Integrantes:
+
+- Miguel Ángel Durán Betancourt
+- Juan Pablo Islas Guzmán — A01797727
+- Bryan Steve Ortega Castillo
+- Kevin Rogelio Rodriguez Magaña
+
+La propuesta consolidada, con resultados y capturas de MLflow, está en
+[`TC5061_Propuesta_Proyecto_Equipo23.pdf`](TC5061_Propuesta_Proyecto_Equipo23.pdf).
+La evidencia de MLflow se encuentra en `reports/evidence/` y el manifiesto de
+datos en `references/data_manifest.csv`.
+
+El repositorio usa DVC para versionar los datos grandes. La reconstrucción
+desde la fuente oficial se ejecuta con:
+
+```bash
+uv sync
+uv run dvc repro --force dataset
+```
+
+Para el experimento base de P2:
+
+```bash
+uv run python -m mibici.train_p2
+```
+
+El Pull Request de integración de la propuesta y evidencia se mantiene
+separado del código de ingesta, DVC y modelado de los integrantes.
