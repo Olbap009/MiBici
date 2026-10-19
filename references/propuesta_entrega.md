@@ -77,6 +77,8 @@ uv run dvc repro --force dataset
 
 ---
 
+<div class="page-break"></div>
+
 # 4. Baselines, Modelos Candidatos y Métricas por Pregunta
 
 | Pregunta | Modelo Baseline | Modelo Candidato | Métricas Propuestas | Justificación de las Métricas |
@@ -86,6 +88,8 @@ uv run dvc repro --force dataset
 | **P3** | **K-Means Básico ($k=4$):** Agrupamiento basado en 5 variables simples (escala y coordenadas geográficas). | **K-Means Enriquecido ($k=4$) y Clustering Aglomerativo:** Espacio funcional 9D con dinámicas horarias y balance de flujo. | **Silhouette Score, Davies-Bouldin, Calinski-Harabasz** | El **Silhouette** mide compacidad y separación intracluster. **Davies-Bouldin** (menor es mejor) valida la separación de centroides respecto al diámetro de cluster. **Calinski-Harabasz** evalúa la dispersión entre clusters. |
 
 ---
+
+<div class="page-break"></div>
 
 # 5. Diagrama de Arquitectura del Sistema
 
@@ -103,6 +107,8 @@ La arquitectura desacopla el almacenamiento de datos, el procesamiento de transf
 
 ---
 
+<div class="page-break"></div>
+
 # 6. Resultados del Experimento Base y Modelos Candidatos
 
 Resultados obtenidos sobre los conjuntos de prueba cronológicos con datos reales de MiBici:
@@ -118,6 +124,8 @@ Resultados obtenidos sobre los conjuntos de prueba cronológicos con datos reale
 
 ---
 
+<div class="page-break"></div>
+
 # 7. Evidencia de Corridas en MLflow
 
 Se configuraron experimentos independientes por pregunta bajo el servidor local de MLflow (`sqlite:///mlruns.db` en el puerto 5001), registrando parámetros, métricas, etiquetas y artefactos:
@@ -128,11 +136,15 @@ Se configuraron experimentos independientes por pregunta bajo el servidor local 
 ### 7.2. Experimento P1 (Regresión de Demanda Diaria)
 ![Corridas de P1 en MLflow](../reports/evidence/mlflow_experimento_p1.png)
 
+<div class="page-break"></div>
+
 ### 7.3. Experimento P2 (Clasificación de Riesgo de Desbalance)
 ![Corridas de P2 en MLflow](../reports/evidence/mlflow_experimento_p2.png)
 
 ### 7.4. Experimento P3 (Clustering de Estaciones)
 ![Corridas de P3 en MLflow](../reports/evidence/mlflow_experimento_p3.png)
+
+<div class="page-break"></div>
 
 ### 7.5. Detalle de Corrida con Etiquetas, Parámetros y Métricas
 ![Detalle de corrida en MLflow](../reports/evidence/mlflow_detalle_run.png)
@@ -140,10 +152,14 @@ Se configuraron experimentos independientes por pregunta bajo el servidor local 
 ### 7.6. Artefactos Visuales Registrados en MLflow
 ![Artefactos registrados en MLflow](../reports/evidence/mlflow_artefactos.png)
 
+<div class="page-break"></div>
+
 ### 7.7. Comparación de Corridas Lado a Lado
 ![Comparación de corridas en MLflow](../reports/evidence/mlflow_comparacion_runs.png)
 
 ---
+
+<div class="page-break"></div>
 
 # 8. Estructura del Repositorio
 
@@ -223,7 +239,7 @@ TC5061-Proyecto-Equipo23/
 └── uv.lock                             <- Bloqueo estricto de 272 dependencias
 ```
 
----
+<div class="page-break"></div>
 
 # 9. Referencias (APA 7)
 

@@ -85,3 +85,10 @@ tasks:
     desc: Run pre-commit hooks manually on all files
     cmds:
       - uv run pre-commit run --all-files
+
+  pdf:
+    desc: Build formal PDF deliverable from markdown proposal
+    cmds:
+      - pandoc references/propuesta_entrega.md -s --css references/pdf_style.css --resource-path=references:. --embed-resources -o references/propuesta_entrega.html --metadata title="Propuesta de proyecto MiBici — Equipo 23"
+      - google-chrome --headless --disable-gpu --no-sandbox --no-pdf-header-footer --print-to-pdf="TC5061_Propuesta_Proyecto_Equipo23.pdf" "file://{{.USER_WORKING_DIR}}/references/propuesta_entrega.html"
+
