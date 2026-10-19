@@ -8,6 +8,7 @@ import subprocess
 import tempfile
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import mlflow
@@ -27,11 +28,15 @@ from sklearn.tree import DecisionTreeClassifier, export_text
 
 from mibici.config import P2_EXAMPLES_PATH, PROJ_ROOT
 
-
 FEATURES = [
-    "departures_prev_30m", "arrivals_prev_30m",
-    "departures_prev_2h", "arrivals_prev_2h",
-    "hour", "minute", "day_of_week", "capacity",
+    "departures_prev_30m",
+    "arrivals_prev_30m",
+    "departures_prev_2h",
+    "arrivals_prev_2h",
+    "hour",
+    "minute",
+    "day_of_week",
+    "capacity",
 ]
 LABELS = [
     "sin_presion_neta_elevada",
@@ -45,8 +50,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--max-depth", type=int, default=5)
     parser.add_argument("--min-samples-leaf", type=int, default=100)
-    parser.add_argument("--class-weight", choices=["balanced", "none"],
-                        default="balanced")
+    parser.add_argument("--class-weight", choices=["balanced", "none"], default="balanced")
     parser.add_argument("--sample-fraction", type=float, default=0.05)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--tracking-uri", default="http://127.0.0.1:5001")
@@ -107,9 +111,7 @@ def evaluate(model):
     matrix = np.zeros((3, 3), dtype=np.int64)
     for frame in read_batches("validation"):
         predictions = model.predict(frame[FEATURES])
-        matrix += confusion_matrix(
-            frame["target"], predictions, labels=LABELS
-        )
+        matrix += confusion_matrix(frame["target"], predictions, labels=LABELS)
 
     if (matrix.sum(axis=1) == 0).any():
         raise ValueError("Faltan clases en la validación.")
@@ -120,17 +122,27 @@ def evaluate(model):
     predicted = np.tile(np.arange(3), 3)
     weights = matrix.ravel()
     precision, recall, _, _ = precision_recall_fscore_support(
-        actual, predicted, labels=[0, 1, 2],
-        sample_weight=weights, zero_division=0,
+        actual,
+        predicted,
+        labels=[0, 1, 2],
+        sample_weight=weights,
+        zero_division=0,
     )
     metrics = {
-        "val_accuracy": float(accuracy_score(
-            actual, predicted, sample_weight=weights)),
-        "val_balanced_accuracy": float(balanced_accuracy_score(
-            actual, predicted, sample_weight=weights)),
-        "val_f1_macro": float(f1_score(
-            actual, predicted, labels=[0, 1, 2], average="macro",
-            sample_weight=weights, zero_division=0)),
+        "val_accuracy": float(accuracy_score(actual, predicted, sample_weight=weights)),
+        "val_balanced_accuracy": float(
+            balanced_accuracy_score(actual, predicted, sample_weight=weights)
+        ),
+        "val_f1_macro": float(
+            f1_score(
+                actual,
+                predicted,
+                labels=[0, 1, 2],
+                average="macro",
+                sample_weight=weights,
+                zero_division=0,
+            )
+        ),
     }
     for i, label in enumerate(LABELS):
         metrics[f"val_precision_{label}"] = float(precision[i])
@@ -160,33 +172,37 @@ def main():
         dirty = subprocess.check_output(
             ["git", "status", "--porcelain"], cwd=PROJ_ROOT, text=True
         ).strip()
-        mlflow.set_tags({
-            "equipo": "23", "pregunta": "P2",
-            "target_tipo": "proxy_presion_neta",
-            "git_commit": commit,
-            "working_tree_dirty": str(bool(dirty)).lower(),
-        })
+        mlflow.set_tags(
+            {
+                "equipo": "23",
+                "pregunta": "P2",
+                "target_tipo": "proxy_presion_neta",
+                "git_commit": commit,
+                "working_tree_dirty": str(bool(dirty)).lower(),
+            }
+        )
         mlflow.log_params(vars(args))
-        mlflow.log_params({
-            "modelo": "DecisionTreeClassifier",
-            "muestreo": "Bernoulli uniforme solo en train",
-            "batch_size": 100_000,
-            "test_evaluado": False,
-            "dataset_sha256": file_hash(P2_EXAMPLES_PATH),
-        })
+        mlflow.log_params(
+            {
+                "modelo": "DecisionTreeClassifier",
+                "muestreo": "Bernoulli uniforme solo en train",
+                "batch_size": 100_000,
+                "test_evaluado": False,
+                "dataset_sha256": file_hash(P2_EXAMPLES_PATH),
+            }
+        )
 
         print("Seleccionando muestra de entrenamiento...", flush=True)
         sample, total = sample_training(args.sample_fraction, args.seed)
-        counts = {
-            label: int((sample["target"] == label).sum())
-            for label in LABELS
-        }
+        counts = {label: int((sample["target"] == label).sum()) for label in LABELS}
         print("Filas seleccionadas:", len(sample), "de", total)
         print("Clases en la muestra:", counts, flush=True)
-        mlflow.log_params({
-            "train_rows_available": total,
-            "train_rows_used": len(sample),
-        })
+        mlflow.log_params(
+            {
+                "train_rows_available": total,
+                "train_rows_used": len(sample),
+            }
+        )
 
         model = DecisionTreeClassifier(
             max_depth=args.max_depth,
@@ -241,12 +257,13 @@ def main():
         )
 
         for relative in (
-            "mibici/modeling/train_p2.py", "mibici/config.py",
-            "mibici/features.py", "mibici/build_p2_examples.py", "uv.lock",
+            "mibici/modeling/train_p2.py",
+            "mibici/config.py",
+            "mibici/features.py",
+            "mibici/build_p2_examples.py",
+            "uv.lock",
         ):
-            mlflow.log_artifact(
-                str(PROJ_ROOT / relative), artifact_path="codigo"
-            )
+            mlflow.log_artifact(str(PROJ_ROOT / relative), artifact_path="codigo")
 
         print("\nRESULTADOS:")
         print(json.dumps(metrics, indent=2))

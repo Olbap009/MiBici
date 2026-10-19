@@ -1,5 +1,5 @@
-
 from pathlib import Path
+
 import joblib
 import mlflow
 import numpy as np
@@ -22,11 +22,7 @@ train = df.iloc[:limite]
 test = df.iloc[limite:]
 
 modelo = RandomForestRegressor(
-    n_estimators=500,
-    max_depth=None,
-    min_samples_leaf=5,
-    random_state=42,
-    n_jobs=-1
+    n_estimators=500, max_depth=None, min_samples_leaf=5, random_state=42, n_jobs=-1
 )
 
 modelo.fit(train[features], train["viajes"])
@@ -46,37 +42,27 @@ MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
 joblib.dump(modelo, MODEL_PATH)
 
 # Guardar predicciones para graficar
-resultados = pd.DataFrame({
-    "fecha": test["fecha"].to_numpy(),
-    "viajes_reales": test["viajes"].to_numpy(),
-    "viajes_predichos": predicciones
-})
-
-resultados.to_csv(
-    ROOT / "data" / "processed" / "p1_predicciones.csv",
-    index=False
+resultados = pd.DataFrame(
+    {
+        "fecha": test["fecha"].to_numpy(),
+        "viajes_reales": test["viajes"].to_numpy(),
+        "viajes_predichos": predicciones,
+    }
 )
+
+resultados.to_csv(ROOT / "data" / "processed" / "p1_predicciones.csv", index=False)
 
 # Registrar evaluación final en MLflow
 mlflow.set_tracking_uri(f"sqlite:///{(ROOT / 'mlflow.db').as_posix()}")
 mlflow.set_experiment("MiBici_P1_Regresion")
 
 with mlflow.start_run(run_name="random_forest_p1_optimizado"):
-    mlflow.log_params({
-        "n_estimators": 500,
-        "max_depth": "None",
-        "min_samples_leaf": 5,
-        "random_state": 42
-    })
-    mlflow.log_metrics({
-        "mae": float(mae),
-        "rmse": float(rmse),
-        "r2": float(r2)
-    })
+    mlflow.log_params(
+        {"n_estimators": 500, "max_depth": "None", "min_samples_leaf": 5, "random_state": 42}
+    )
+    mlflow.log_metrics({"mae": float(mae), "rmse": float(rmse), "r2": float(r2)})
     mlflow.sklearn.log_model(
-        modelo,
-        name="modelo_p1_optimizado",
-        skops_trusted_types=["sklearn.tree._tree.Tree"]
+        modelo, name="modelo_p1_optimizado", skops_trusted_types=["sklearn.tree._tree.Tree"]
     )
 
 print("\nModelo y predicciones guardados correctamente.")

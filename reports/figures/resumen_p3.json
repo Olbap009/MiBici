@@ -1,0 +1,27 @@
+{
+  "metricas": {
+    "silhouette_score": 0.18335401028338844,
+    "davies_bouldin_score": 1.704127455039294,
+    "calinski_harabasz_score": 87.50074840489755,
+    "n_stations": 471.0,
+    "n_clusters": 4.0,
+    "inertia": 2713.6489476017987
+  },
+  "distribucion_clusters": {
+    "Cluster_0 (Polo Laboral / Atractor Vespertino)": 146,
+    "Cluster_3 (Estaciones Periféricas / Baja Intensidad)": 114,
+    "Cluster_2 (Corredor Mixto / Ocio y Fin de Semana)": 111,
+    "Cluster_1 (Residencial Emisor / Matutino)": 100
+  },
+  "variables": [
+    "viajes_promedio_diario",
+    "pct_pico_matutino",
+    "pct_mediodia",
+    "pct_pico_vespertino",
+    "pct_fin_semana",
+    "ratio_flujo_neto",
+    "capacidad",
+    "latitude",
+    "longitude"
+  ]
+}

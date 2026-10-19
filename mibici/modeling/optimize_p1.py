@@ -1,10 +1,8 @@
-
 from pathlib import Path
 
 import mlflow
 import numpy as np
 import pandas as pd
-
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
@@ -54,12 +52,7 @@ configuraciones = [
 resultados = []
 
 for i, params in enumerate(configuraciones, start=1):
-
-    modelo = RandomForestRegressor(
-        **params,
-        random_state=42,
-        n_jobs=-1
-    )
+    modelo = RandomForestRegressor(**params, random_state=42, n_jobs=-1)
 
     modelo.fit(X_train, y_train)
     pred = modelo.predict(X_val)
@@ -76,13 +69,9 @@ for i, params in enumerate(configuraciones, start=1):
         mlflow.log_metric("val_rmse", float(rmse))
         mlflow.log_metric("val_r2", float(r2))
 
-    resultados.append({
-        "configuracion": i,
-        **params,
-        "val_mae": mae,
-        "val_rmse": rmse,
-        "val_r2": r2
-    })
+    resultados.append(
+        {"configuracion": i, **params, "val_mae": mae, "val_rmse": rmse, "val_r2": r2}
+    )
 
 resultados_df = pd.DataFrame(resultados)
 resultados_df = resultados_df.sort_values("val_mae")

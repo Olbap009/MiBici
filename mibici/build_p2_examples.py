@@ -9,16 +9,16 @@ import pyarrow.parquet as pq
 
 from mibici.config import (
     P2_ACTIVITY_DAYS,
-    P2_DATA_START,
     P2_DATA_END,
-    P2_TRAIN_END,
-    P2_VALIDATION_END,
+    P2_DATA_START,
     P2_EXAMPLES_PATH,
     P2_EXAMPLES_SUMMARY_PATH,
     P2_INTERVAL_MINUTES,
     P2_MOVEMENTS_PATH,
     P2_PRESSURE_THRESHOLD,
     P2_STATIONS_PATH,
+    P2_TRAIN_END,
+    P2_VALIDATION_END,
 )
 from mibici.features import build_p2_station_examples
 
@@ -33,14 +33,10 @@ def assign_split(examples):
     examples["split"] = ""
 
     train = examples["target_end"].le(train_end)
-    validation = (
-        examples["prediction_time"].ge(train_end)
-        & examples["target_end"].le(validation_end)
+    validation = examples["prediction_time"].ge(train_end) & examples["target_end"].le(
+        validation_end
     )
-    test = (
-        examples["prediction_time"].ge(validation_end)
-        & examples["target_end"].le(data_end)
-    )
+    test = examples["prediction_time"].ge(validation_end) & examples["target_end"].le(data_end)
 
     examples.loc[train, "split"] = "train"
     examples.loc[validation, "split"] = "validation"
@@ -57,9 +53,7 @@ def main():
     if stations["id"].isna().any() or stations["id"].duplicated().any():
         raise ValueError("El catálogo tiene identificadores inválidos.")
 
-    stations["dpcapacity"] = pd.to_numeric(
-        stations["dpcapacity"], errors="coerce"
-    )
+    stations["dpcapacity"] = pd.to_numeric(stations["dpcapacity"], errors="coerce")
     stations = stations.loc[
         stations["dpcapacity"].notna() & stations["dpcapacity"].gt(0)
     ].sort_values("id")
@@ -77,9 +71,7 @@ def main():
             movements = pd.read_parquet(
                 P2_MOVEMENTS_PATH,
                 filters=[("station_id", "==", int(station.id))],
-                columns=[
-                    "station_id", "interval_start", "departures", "arrivals"
-                ],
+                columns=["station_id", "interval_start", "departures", "arrivals"],
             )
             if movements.empty:
                 continue
@@ -106,15 +98,12 @@ def main():
 
             table = pa.Table.from_pandas(examples, preserve_index=False)
             if writer is None:
-                writer = pq.ParquetWriter(
-                    temporary, table.schema, compression="zstd"
-                )
+                writer = pq.ParquetWriter(temporary, table.schema, compression="zstd")
             writer.write_table(table)
             total += len(examples)
 
             print(
-                f"Estación {station.id}: {len(examples):,} ejemplos. "
-                f"Acumulado: {total:,}",
+                f"Estación {station.id}: {len(examples):,} ejemplos. Acumulado: {total:,}",
                 flush=True,
             )
 

@@ -8,6 +8,7 @@ import subprocess
 import tempfile
 
 import matplotlib
+
 matplotlib.use("Agg")  # Guarda gráficos sin necesitar una ventana.
 import matplotlib.pyplot as plt
 import mlflow
@@ -16,7 +17,6 @@ import pyarrow.dataset as ds
 from sklearn.metrics import ConfusionMatrixDisplay
 
 from mibici.config import P2_EXAMPLES_PATH, PROJ_ROOT
-
 
 LABELS = [
     "sin_presion_neta_elevada",
@@ -108,13 +108,15 @@ def main():
             ["git", "status", "--porcelain"], cwd=PROJ_ROOT, text=True
         ).strip()
 
-        mlflow.set_tags({
-            "equipo": "23",
-            "pregunta": "P2",
-            "target_tipo": "proxy_presion_neta",
-            "git_commit": commit,
-            "working_tree_dirty": str(bool(status)).lower(),
-        })
+        mlflow.set_tags(
+            {
+                "equipo": "23",
+                "pregunta": "P2",
+                "target_tipo": "proxy_presion_neta",
+                "git_commit": commit,
+                "working_tree_dirty": str(bool(status)).lower(),
+            }
+        )
 
         print("Contando clases de entrenamiento...", flush=True)
         train_counts = count_classes(P2_EXAMPLES_PATH, "train")
@@ -125,15 +127,17 @@ def main():
         majority, matrix, metrics = evaluate(train_counts, val_counts)
 
         print("Calculando huella del dataset...", flush=True)
-        mlflow.log_params({
-            "modelo": "regla_clase_mayoritaria",
-            "clase_predicha": majority,
-            "train_rows": int(train_counts.sum()),
-            "validation_rows": int(val_counts.sum()),
-            "dataset_sha256": sha256_file(P2_EXAMPLES_PATH),
-            "aleatoriedad": "ninguna",
-            "test_evaluado": False,
-        })
+        mlflow.log_params(
+            {
+                "modelo": "regla_clase_mayoritaria",
+                "clase_predicha": majority,
+                "train_rows": int(train_counts.sum()),
+                "validation_rows": int(val_counts.sum()),
+                "dataset_sha256": sha256_file(P2_EXAMPLES_PATH),
+                "aleatoriedad": "ninguna",
+                "test_evaluado": False,
+            }
+        )
         mlflow.log_metrics(metrics)
 
         # Guardamos la regla completa y su evaluación como evidencia.

@@ -49,3 +49,12 @@ P2_TRAIN_END = "2026-01-01"
 P2_VALIDATION_END = "2026-07-01"
 P2_EXAMPLES_PATH = PROCESSED_DATA_DIR / "p2_examples.parquet"
 P2_EXAMPLES_SUMMARY_PATH = INTERIM_DATA_DIR / "p2_examples_summary.json"
+
+# Configuración de P3 (Clustering de Estaciones)
+P3_TRIPS_PATH = PROCESSED_DATA_DIR / "trips.parquet"
+P3_STATIONS_PATH = RAW_DATA_DIR / "stations_nomenclature.csv"
+P3_FEATURES_PATH = PROCESSED_DATA_DIR / "p3_station_features.parquet"
+P3_CLUSTERS_OUTPUT_PATH = REPORTS_DIR / "figures" / "p3_estaciones_clustering.csv"
+P3_DEFAULT_K = 4
+P3_RANDOM_STATE = 42
+P3_EXPERIMENT_NAME = "mibici-equipo23"
