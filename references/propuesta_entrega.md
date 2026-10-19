@@ -1,6 +1,6 @@
 ---
 title: "Propuesta de Proyecto de Aprendizaje Automático — MiBici"
-subtitle: "TC5061 — MLOps y Despliegue de Modelos — Equipo 23"
+subtitle: "TC5061 — Operaciones de aprendizaje automático — Equipo 23"
 date: "Octubre 2026"
 geometry: margin=2cm
 ---
