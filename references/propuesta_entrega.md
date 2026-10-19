@@ -72,7 +72,7 @@ evitar fuga de información.
 |---|---|---|---|
 | P1 | Lag de demanda | RandomForestRegressor | MAE, RMSE, R² |
 | P2 | Clase mayoritaria / presión | DecisionTreeClassifier | Accuracy, precision, recall, F1 |
-| P3 | — | K-Means, k=4 | Silhouette |
+| P3 | K-Means básico (escala + coords) | K-Means enriquecido / Aglomerativo | Silhouette, Davies-Bouldin, Calinski-Harabasz |
 
 Resultados con datos reales:
 
@@ -83,7 +83,10 @@ Resultados con datos reales:
 | P1 candidato RMSE | 12.4127 |
 | P2 baseline accuracy / F1 | 0.6244 / 0.7688 |
 | P2 candidato accuracy / F1 | 0.8282 / 0.8499 |
-| P3 silhouette | 0.4982 |
+| P3 baseline Silhouette | 0.2990 |
+| P3 candidato Silhouette / DB | 0.1834 / 1.7041 |
+| P3 candidato Aglomerativo Silhouette | 0.1496 |
+
 
 # 5. Arquitectura
 

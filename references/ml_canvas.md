@@ -27,7 +27,8 @@ hora/día y capacidad/coordenadas del catálogo.
 - P1: viajes iniciados el siguiente día; baseline de media histórica; MAE y RMSE.
 - P2: proxy binario de riesgo del siguiente día por demanda/capacidad; baseline
   de clase mayoritaria; precision, recall y F1, priorizando recall.
-- P3: grupos de estaciones; K-Means; silhouette score y revisión geográfica.
+- P3: grupos de estaciones; baseline K-Means básico (escala + coordenadas) vs. candidato K-Means enriquecido (firma horaria y flujo neto) y Clustering Aglomerativo; Silhouette Score, Davies-Bouldin y Calinski-Harabasz.
+
 
 ## Riesgos y supuestos
 

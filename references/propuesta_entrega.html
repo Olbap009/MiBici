@@ -356,9 +356,9 @@ antes del horizonte para evitar fuga de información.</p>
 </tr>
 <tr>
 <td>P3</td>
-<td>—</td>
-<td>K-Means, k=4</td>
-<td>Silhouette</td>
+<td>K-Means básico (escala + coords)</td>
+<td>K-Means enriquecido / Aglomerativo</td>
+<td>Silhouette, Davies-Bouldin, Calinski-Harabasz</td>
 </tr>
 </tbody>
 </table>
@@ -392,8 +392,16 @@ antes del horizonte para evitar fuga de información.</p>
 <td style="text-align: right;">0.8282 / 0.8499</td>
 </tr>
 <tr>
-<td>P3 silhouette</td>
-<td style="text-align: right;">0.4982</td>
+<td>P3 baseline Silhouette</td>
+<td style="text-align: right;">0.2990</td>
+</tr>
+<tr>
+<td>P3 candidato Silhouette / DB</td>
+<td style="text-align: right;">0.1834 / 1.7041</td>
+</tr>
+<tr>
+<td>P3 candidato Aglomerativo Silhouette</td>
+<td style="text-align: right;">0.1496</td>
 </tr>
 </tbody>
 </table>
