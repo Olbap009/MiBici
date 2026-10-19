@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import joblib
@@ -6,7 +5,6 @@ import mlflow
 import mlflow.sklearn
 import numpy as np
 import pandas as pd
-
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import (
     mean_absolute_error,
@@ -87,20 +85,20 @@ with mlflow.start_run(run_name="random_forest_p1"):
 
     metricas = evaluar(y_test, pred_rf)
 
-    mlflow.log_params({
-        "modelo": "RandomForestRegressor",
-        "n_estimators": 200,
-        "max_depth": 8,
-        "min_samples_leaf": 3,
-        "random_state": 42,
-        "test_size": 0.2,
-    })
+    mlflow.log_params(
+        {
+            "modelo": "RandomForestRegressor",
+            "n_estimators": 200,
+            "max_depth": 8,
+            "min_samples_leaf": 3,
+            "random_state": 42,
+            "test_size": 0.2,
+        }
+    )
 
     mlflow.log_metrics(metricas)
     mlflow.sklearn.log_model(
-    modelo,
-    name="modelo_p1",
-    skops_trusted_types=["sklearn.tree._tree.Tree"]
+        modelo, name="modelo_p1", skops_trusted_types=["sklearn.tree._tree.Tree"]
     )
 
     MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
