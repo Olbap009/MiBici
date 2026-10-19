@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
+  <meta name="generator" content="pandoc 3.11" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Propuesta de proyecto MiBici — Equipo 23</title>
   <style>
@@ -41,7 +41,6 @@
       body {
         background-color: transparent;
         color: black;
-        font-size: 12pt;
       }
       p, h2, h3 {
         orphans: 3;
@@ -91,6 +90,7 @@
       color: #606060;
     }
     code {
+      white-space: pre-wrap;
       font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
       font-size: 85%;
       margin: 0;
@@ -154,10 +154,13 @@
     #TOC a:not(:hover) {
       text-decoration: none;
     }
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -168,7 +171,6 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     /* CSS for syntax highlighting */
     html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
@@ -239,22 +241,27 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Propuesta de proyecto MiBici — Equipo 23</h1>
-<p class="subtitle">TC5061</p>
-<p class="date">17 de octubre de 2026</p>
+<p class="subtitle">TC5061 — MLOps y Despliegue de Modelos — Equipo
+23</p>
+<p class="date">Octubre 2026</p>
 </header>
-<p>Repositorio del equipo: <a
-href="https://github.com/bryan-s-ortega/MiBici"
-class="uri">https://github.com/bryan-s-ortega/MiBici</a></p>
-<h1 id="integrantes">Integrantes</h1>
+<p><strong>Enlace al repositorio oficial:</strong> <a
+href="https://github.com/bryan-s-ortega/TC5061-Proyecto-Equipo23"
+class="uri">https://github.com/bryan-s-ortega/TC5061-Proyecto-Equipo23</a></p>
+<h3 id="integrantes-del-equipo-23">Integrantes del Equipo 23:</h3>
 <ul>
-<li>Miguel Ángel Durán Betancourt</li>
-<li>Juan Pablo Islas Guzmán — A01797727</li>
-<li>Bryan Steve Ortega Castillo</li>
-<li>Kevin Rogelio Rodriguez Magaña</li>
+<li><strong>Miguel Ángel Durán Betancourt</strong> — A01797974</li>
+<li><strong>Juan Pablo Islas Guzmán</strong> — A01797727</li>
+<li><strong>Bryan Steve Ortega Castillo</strong> — A01797846</li>
+<li><strong>Kevin Rogelio Rodriguez Magaña</strong> — A01840418</li>
 </ul>
-<h1 id="problema-y-propuesta">1. Problema y propuesta</h1>
-<p>El proyecto propone una solución reproducible de Machine Learning
-para las tres preguntas operativas de MiBici:</p>
+<hr />
+<h1 id="formulación-del-problema-y-ml-canvas">1. Formulación del
+Problema y ML Canvas</h1>
+<p>El sistema de bicicleta pública del Área Metropolitana de Guadalajara
+(MiBici) enfrenta tres retos operacionales críticos de asignación de
+recursos y diseño de red. A continuación se formulan los tres problemas
+siguiendo el marco del <em>Machine Learning Canvas</em>:</p>
 <table>
 <colgroup>
 <col style="width: 25%" />
@@ -264,199 +271,526 @@ para las tres preguntas operativas de MiBici:</p>
 </colgroup>
 <thead>
 <tr>
-<th>Pregunta</th>
-<th>Tarea</th>
-<th>Usuario</th>
-<th>Decisión</th>
+<th>Dimensión</th>
+<th>Pregunta 1 (P1): Demanda Diaria</th>
+<th>Pregunta 2 (P2): Riesgo de Desbalance</th>
+<th>Pregunta 3 (P3): Segmentación de Estaciones</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>P1. ¿Cuántos viajes se iniciarán?</td>
-<td>Regresión</td>
-<td>Operador</td>
-<td>Asignar flota y personal</td>
+<td><strong>Tipo de Tarea</strong></td>
+<td>Aprendizaje Supervisado (Regresión)</td>
+<td>Aprendizaje Supervisado (Clasificación Multiclase)</td>
+<td>Aprendizaje No Supervisado (Clustering)</td>
 </tr>
 <tr>
-<td>P2. ¿Habrá riesgo de saturación?</td>
-<td>Clasificación</td>
-<td>Rebalanceo</td>
-<td>Priorizar inspección o traslado</td>
+<td><strong>¿Qué se predice o agrupa?</strong></td>
+<td>Número total de viajes iniciados por día en la red de MiBici.</td>
+<td>Nivel de presión operativa de la estación en el siguiente intervalo:
+sin presión, presión sin bicicletas (vacía) o presión sin anclajes
+(llena).</td>
+<td>Tipología y perfil funcional de las estaciones físicas según sus
+patrones horarios, flujo neto y uso semanal.</td>
 </tr>
 <tr>
-<td>P3. ¿Qué estaciones comparten patrones?</td>
-<td>Clustering</td>
-<td>Planeación urbana</td>
-<td>Detectar perfiles y zonas</td>
+<td><strong>Granularidad</strong></td>
+<td>Red completa, agregación diaria
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>1</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> día</mtext></mrow></mrow><annotation encoding="application/x-tex">t = 1 \text{ día}</annotation></semantics></math>).</td>
+<td>Por estación individual, intervalos de 30 minutos
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>30</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> min</mtext></mrow></mrow><annotation encoding="application/x-tex">t = 30 \text{ min}</annotation></semantics></math>).</td>
+<td>Por estación individual, matriz agregada para las 471 estaciones
+activas.</td>
+</tr>
+<tr>
+<td><strong>Horizonte</strong></td>
+<td>Pronóstico para las siguientes 24 horas
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>=</mo><mn>1</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> día</mtext></mrow></mrow><annotation encoding="application/x-tex">H = 1 \text{ día}</annotation></semantics></math>).</td>
+<td>Pronóstico para los siguientes 30 minutos
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>=</mo><mn>30</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> min</mtext></mrow></mrow><annotation encoding="application/x-tex">H = 30 \text{ min}</annotation></semantics></math>).</td>
+<td>Agrupamiento estacional y estratégico (semestral/anual).</td>
+</tr>
+<tr>
+<td><strong>Relevancia Operativa</strong></td>
+<td>Dimensionar la capacidad operativa general, turnos de mecánicos y
+disponibilidad global de unidades.</td>
+<td>Prevenir el colapso operativo por estaciones sin bicicletas
+disponibles o sin anclajes libres para retorno.</td>
+<td>Comprender la estructura funcional urbana del AMG y la
+complementariedad entre estaciones.</td>
+</tr>
+<tr>
+<td><strong>Usuario del Resultado</strong></td>
+<td>Dirección de Operaciones y Mantenimiento de MiBici.</td>
+<td>Supervisores logísticos de balanceo dinámico y conductores de
+camionetas.</td>
+<td>Dirección General de AMIM y Dirección de Planeación Urbana y
+Transporte.</td>
+</tr>
+<tr>
+<td><strong>Decisión que se toma</strong></td>
+<td>Asignar la flota activa diaria, planear mantenimiento en taller y
+coordinar guardias de personal.</td>
+<td>Despachar camionetas de rebalanceo hacia estaciones críticas antes
+de que queden bloqueadas.</td>
+<td>Diseñar rutas fijas de rebalanceo (pares complementarios) y
+planificar expansión física de ciclovías y anclajes.</td>
 </tr>
 </tbody>
 </table>
-<p>La unidad de análisis es estación-día para P1 y P2, y
-estación-periodo para P3. P1 predice los viajes del día siguiente. P2
-construye una etiqueta proxy de riesgo futuro a partir de
-demanda/capacidad, porque los datos abiertos no contienen inventario
-histórico real. P3 agrupa estaciones por uso, capacidad y ubicación.</p>
-<h1 id="datos-uso-y-versionado">2. Datos, uso y versionado</h1>
-<p>La fuente es el portal oficial de <a
-href="https://www.mibici.net/en/open-data/">Datos abiertos de
-MiBici</a>. Se descargaron 21 archivos de viajes, de enero de 2025 a
-septiembre de 2026, y el catálogo <code>nomenclatura_2026_09.csv</code>.
-La consolidación contiene 7,894,097 viajes y 484 estaciones.</p>
-<p>El proyecto usa las variables de viaje necesarias para fechas, horas,
-origen, destino y duración, además de capacidad, latitud y longitud del
-catálogo. Los identificadores de usuario no se usan como variables ni se
-publican.</p>
-<p>Los CSV grandes no se suben a Git. El mecanismo principal de
-versionado es DVC, con <code>dvc.yaml</code>, <code>dvc.lock</code> y un
-remoto configurado en el repositorio. La ingesta también conserva un
-manifiesto complementario con archivo, filas, bytes y SHA-256. Esto
-permite reconstruir el snapshot y verificar su integridad.</p>
-<h1 id="ingesta-y-feature-engineering">3. Ingesta y feature
-engineering</h1>
-<p>La ingesta está disponible en <code>mibici/dataset.py</code>.
-Descarga los meses seleccionados y la nomenclatura desde el portal
-oficial, normaliza columnas, codificaciones y fechas, une el catálogo de
-estaciones y guarda el resultado limpio en Parquet. La etapa está
-declarada en <code>dvc.yaml</code>.</p>
+<hr />
+<h1 id="definición-de-los-datos-y-estrategia-de-partición">2. Definición
+de los Datos y Estrategia de Partición</h1>
+<h3 id="fuentes-y-rango-de-fechas">2.1. Fuentes y Rango de Fechas</h3>
+<ul>
+<li><strong>Fuente Oficial:</strong> Portal de <a
+href="https://mibici.net/es/datos-abiertos/">Datos Abiertos de
+MiBici</a>.</li>
+<li><strong>Rango Seleccionado:</strong> De <strong>noviembre de 2023 a
+septiembre de 2026</strong> (últimos 3 años operativos completos). Se
+justifica este periodo para asegurar suficiente representatividad
+pospandemia, capturar ciclos estacionales anuales y considerar la red
+madura de estaciones en el AMG.</li>
+<li><strong>Tamaño Real Obtenido:</strong>
+<ul>
+<li><strong>Viajes procesados:</strong> Más de 11.2 millones de viajes
+válidos.</li>
+<li><strong>Estaciones activas:</strong> 471 estaciones con coordenadas
+geográficas y capacidades válidas en el catálogo
+<code>stations_nomenclature.csv</code>.</li>
+<li><strong>Almacenamiento columnar limpio:</strong> 391 MB en formato
+Apache Parquet (<code>data/processed/trips.parquet</code>).</li>
+</ul></li>
+</ul>
+<h3 id="variables-originales-y-construcción-del-target">2.2. Variables
+Originales y Construcción del Target</h3>
+<ul>
+<li><strong>Variables Originales de Viaje:</strong>
+<code>trip_id</code>, <code>started_at</code>, <code>ended_at</code>,
+<code>origin_station_id</code>, <code>destination_station_id</code>,
+<code>user_id</code>, <code>gender</code>, <code>birth_year</code>.</li>
+<li><strong>Variables del Catálogo de Estaciones:</strong>
+<code>id</code>, <code>name</code>, <code>latitude</code>,
+<code>longitude</code>, <code>dpcapacity</code>.</li>
+<li><strong>Construcción de Variables Objetivo:</strong>
+<ul>
+<li><strong>Target P1:</strong> Conteo total de viajes con
+<code>started_at</code> normalizado por día calendario
+(<code>viajes</code>), rellenando fechas con calendario continuo para
+detectar días sin servicio y rezagos temporales exactos.</li>
+<li><strong>Target P2:</strong> Proxy de presión neta por estación e
+intervalo de 30 minutos: se calculan las salidas y llegadas netas en
+relación con la capacidad física (<code>dpcapacity</code>). Si el
+déficit o superávit proyectado supera el umbral del 30% de capacidad, se
+clasifica como <em>presión sin bicicletas</em> o <em>presión sin
+anclajes</em>.</li>
+<li><strong>Target P3:</strong> No supervisado. La matriz de features
+describe la firma temporal: proporciones de uso matutino (07:00–10:00),
+mediodía (12:00–16:00), vespertino (17:00–21:00), fin de semana y ratio
+de flujo neto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">llegadas</mtext><mo>−</mo><mtext mathvariant="normal">salidas</mtext><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">llegadas</mtext><mo>+</mo><mtext mathvariant="normal">salidas</mtext><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\text{llegadas} - \text{salidas}) / (\text{llegadas} + \text{salidas})</annotation></semantics></math>.</li>
+</ul></li>
+</ul>
+<h3 id="condiciones-de-uso-y-protección-de-datos-personales">2.3.
+Condiciones de Uso y Protección de Datos Personales</h3>
+<p>Los datos son publicados bajo licencia de datos abiertos para fines
+analíticos y de investigación. Se aplica estricta disociación: los
+identificadores de usuario (<code>user_id</code>), género y año de
+nacimiento se excluyen de la modelación y no se serializan ni exponen en
+ningún punto del pipeline, preservando el secreto estadístico y la
+privacidad.</p>
+<h3 id="estrategia-de-partición-sin-fuga-de-información-futura">2.4.
+Estrategia de Partición (Sin Fuga de Información Futura)</h3>
+<p>Para evitar la fuga de información temporal (<em>data leakage</em>):
+* Se prohíbe el muestreo aleatorio (<em>random split</em>). * Se aplica
+<strong>partición cronológica estricta</strong>: * <strong>P1:</strong>
+80% inicial para entrenamiento cronológico
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>818</mn></mrow><annotation encoding="application/x-tex">n = 818</annotation></semantics></math>
+días) y 20% más reciente para prueba
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>205</mn></mrow><annotation encoding="application/x-tex">n = 205</annotation></semantics></math>
+días: marzo a septiembre de 2026). * <strong>P2:</strong> Entrenamiento
+hasta enero de 2026, validación de enero a junio de 2026 y prueba
+retenida de julio a septiembre de 2026. Todas las características
+rezagadas (<code>departures_prev_30m</code>,
+<code>arrivals_prev_2h</code>) se calculan estrictamente con eventos
+anteriores al inicio de la ventana de predicción.</p>
+<hr />
+<h1 id="pipeline-de-ml-e-ingesta-reproducible">3. Pipeline de ML e
+Ingesta Reproducible</h1>
+<p>El pipeline se ejecuta de extremo a extremo sin intervención
+manual:</p>
+<ol type="1">
+<li><strong>Ingesta (<code>mibici.dataset</code>):</strong> Proceso CLI
+en Typer que descarga directamente los CSV mensuales del portal, valida
+codificaciones mixtas (<code>utf-8</code>, <code>latin-1</code>),
+normaliza encabezados, castea tipos de fecha y escribe el dataset
+consolidado en <code>data/processed/trips.parquet</code>.</li>
+<li><strong>Versionado de Datos:</strong> Se rastrea en DVC con <a
+href="../dvc.yaml"><code>dvc.yaml</code></a> y <a
+href="../dvc.lock"><code>dvc.lock</code></a> apuntando a Google Cloud
+Storage (<code>gs://mibici-mlops-project</code>). Se complementa con <a
+href="data_manifest.csv"><code>references/data_manifest.csv</code></a>
+para auditoría de integridad basada en hashes SHA-256 de cada archivo
+fuente.</li>
+<li><strong>Feature Engineering Modular
+(<code>mibici.features</code>):</strong> Funciones documentadas y
+modulares que generan las matrices temporales y espaciales reutilizables
+para P1, P2 y P3.</li>
+</ol>
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> sync</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run dvc repro <span class="at">--force</span> dataset</span></code></pre></div>
-<p><code>mibici/features.py</code> genera las variables reutilizables
-para las preguntas. Las particiones supervisadas son cronológicas y los
-features históricos se construyen únicamente con información disponible
-antes del horizonte para evitar fuga de información.</p>
-<h1 id="modelos-y-métricas">4. Modelos y métricas</h1>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ingesta reproducible automática</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> sync</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run dvc repro <span class="at">--force</span> dataset</span></code></pre></div>
+<hr />
+<h1 id="baselines-modelos-candidatos-y-métricas-por-pregunta">4.
+Baselines, Modelos Candidatos y Métricas por Pregunta</h1>
 <table>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
 </colgroup>
 <thead>
 <tr>
 <th>Pregunta</th>
-<th>Baseline</th>
-<th>Candidato</th>
-<th>Métricas</th>
+<th>Modelo Baseline</th>
+<th>Modelo Candidato</th>
+<th>Métricas Propuestas</th>
+<th>Justificación de las Métricas</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>P1</td>
-<td>Lag de demanda</td>
-<td>RandomForestRegressor</td>
-<td>MAE, RMSE, R²</td>
+<td><strong>P1</strong></td>
+<td><strong>Lag 7 (Autorregresivo Semanal):</strong> Asume que la
+demanda de hoy replica la del mismo día de la semana anterior.</td>
+<td><strong>RandomForestRegressor:</strong> Ensamble de 200 árboles
+regularizados (<code>max_depth=6</code>,
+<code>min_samples_leaf=8</code>).</td>
+<td><strong>MAE, RMSE,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math></strong></td>
+<td>El <strong>MAE</strong> refleja directamente el error promedio en
+número de viajes diarios (interpretable para el operador). El
+<strong>RMSE</strong> penaliza grandes desvíos y el
+<strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math></strong>
+mide la varianza explicada.</td>
 </tr>
 <tr>
-<td>P2</td>
-<td>Clase mayoritaria / presión</td>
-<td>DecisionTreeClassifier</td>
-<td>Accuracy, precision, recall, F1</td>
+<td><strong>P2</strong></td>
+<td><strong>Regla de Clase Mayoritaria:</strong> Predice siempre la
+clase mayoritaria (<em>sin presión</em>).</td>
+<td><strong>DecisionTreeClassifier:</strong> Árbol de profundidad 5
+balanceado (<code>class_weight='balanced'</code>).</td>
+<td><strong>Accuracy, F1 Macro, Recall</strong></td>
+<td>En un problema de desbalance, el Accuracy es engañoso. El <strong>F1
+Macro</strong> equilibra precisión y exhaustividad entre las 3 clases, y
+el <strong>Recall</strong> en las clases minoritarias de saturación es
+vital para no omitir alertas de desbalance.</td>
 </tr>
 <tr>
-<td>P3</td>
-<td>K-Means básico (escala + coords)</td>
-<td>K-Means enriquecido / Aglomerativo</td>
-<td>Silhouette, Davies-Bouldin, Calinski-Harabasz</td>
+<td><strong>P3</strong></td>
+<td><strong>K-Means Básico
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">k=4</annotation></semantics></math>):</strong>
+Agrupamiento basado en 5 variables simples (escala y coordenadas
+geográficas).</td>
+<td><strong>K-Means Enriquecido
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">k=4</annotation></semantics></math>)
+y Clustering Aglomerativo:</strong> Espacio funcional 9D con dinámicas
+horarias y balance de flujo.</td>
+<td><strong>Silhouette Score, Davies-Bouldin,
+Calinski-Harabasz</strong></td>
+<td>El <strong>Silhouette</strong> mide compacidad y separación
+intracluster. <strong>Davies-Bouldin</strong> (menor es mejor) valida la
+separación de centroides respecto al diámetro de cluster.
+<strong>Calinski-Harabasz</strong> evalúa la dispersión entre
+clusters.</td>
 </tr>
 </tbody>
 </table>
-<p>Resultados con datos reales:</p>
-<table>
+<hr />
+<h1 id="diagrama-de-arquitectura-del-sistema">5. Diagrama de
+Arquitectura del Sistema</h1>
+<p>La arquitectura desacopla el almacenamiento de datos, el
+procesamiento de transformaciones y el gobierno de experimentos:</p>
+<figure>
+<img src="diagrama_arquitectura.png"
+alt="Diagrama de Arquitectura del Sistema MLOps — Equipo 23" />
+<figcaption aria-hidden="true">Diagrama de Arquitectura del Sistema
+MLOps — Equipo 23</figcaption>
+</figure>
+<h3 id="justificación-de-las-herramientas-seleccionadas">Justificación
+de las Herramientas Seleccionadas:</h3>
+<ul>
+<li><strong>uv:</strong> Administrador de paquetes y entornos virtuales
+en Rust con resolución determinista mediante <code>uv.lock</code>.
+Reduce los tiempos de instalación de minutos a segundos y garantiza
+reproducibilidad idéntica.</li>
+<li><strong>Apache Parquet &amp; PyArrow:</strong> Formato columnar con
+compresión Snappy y tipado binario. Permite consultar millones de
+registros de viajes consumiendo solo ~390 MB y permitiendo streaming por
+lotes sin saturar la memoria RAM.</li>
+<li><strong>DVC + Google Cloud Storage:</strong> Separa el código (Git)
+de los datos pesados (Cloud Storage), permitiendo sincronizar snapshots
+reproducibles de datos grandes sin degradar el rendimiento del
+repositorio.</li>
+<li><strong>MLflow Tracking:</strong> Plataforma de gobernanza que
+audita y registra parámetros, métricas, artefactos y el commit exacto de
+Git (<code>git_commit</code>) en cada corrida.</li>
+<li><strong>Scikit-learn:</strong> Biblioteca de referencia para
+modelado, garantizando algoritmos estandarizados y evaluadores
+rigurosos.</li>
+<li><strong>Ruff &amp; Pre-commit:</strong> Linter y formateador
+ultrarrápido que impone estándares PEP 8 y orden de imports antes de
+cada commit.</li>
+</ul>
+<hr />
+<h1 id="resultados-del-experimento-base-y-modelos-candidatos">6.
+Resultados del Experimento Base y Modelos Candidatos</h1>
+<p>Resultados obtenidos sobre los conjuntos de prueba cronológicos con
+datos reales de MiBici:</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
 <thead>
 <tr>
-<th>Run</th>
-<th style="text-align: right;">Resultado</th>
+<th>Pregunta</th>
+<th>Experimento en MLflow</th>
+<th>Modelo Evaluado</th>
+<th>Métrica Principal</th>
+<th>Métrica Secundaria</th>
+<th>Conclusión Operativa</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>P1 baseline MAE</td>
-<td style="text-align: right;">11.6304</td>
+<td><strong>P1</strong></td>
+<td><code>mibici-equipo23-p1</code></td>
+<td><strong>Baseline Lag 7</strong></td>
+<td>MAE: 1,315.2 viajes</td>
+<td>RMSE: 1,979.5
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math>:
+0.569)</td>
+<td>Captura estacionalidad semanal básica.</td>
 </tr>
 <tr>
-<td>P1 candidato MAE</td>
-<td style="text-align: right;">6.5447</td>
+<td><strong>P1</strong></td>
+<td><code>mibici-equipo23-p1</code></td>
+<td><strong>RandomForest Candidato</strong></td>
+<td><strong>MAE: 1,243.1 viajes</strong></td>
+<td><strong>RMSE: 1,919.5
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math>:
+0.595)</strong></td>
+<td><strong>Supera al baseline:</strong> reduce el error medio en más de
+72 viajes diarios y mejora el
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math>.</td>
 </tr>
 <tr>
-<td>P1 candidato RMSE</td>
-<td style="text-align: right;">12.4127</td>
+<td><strong>P2</strong></td>
+<td><code>mibici-equipo23-p2</code></td>
+<td><strong>Baseline Clase Mayoritaria</strong></td>
+<td>Accuracy: 0.6244</td>
+<td>F1 Macro: 0.7688</td>
+<td>Incapaz de detectar eventos de saturación crítica.</td>
 </tr>
 <tr>
-<td>P2 baseline accuracy / F1</td>
-<td style="text-align: right;">0.6244 / 0.7688</td>
+<td><strong>P2</strong></td>
+<td><code>mibici-equipo23-p2</code></td>
+<td><strong>Árbol de Decisión Candidato</strong></td>
+<td><strong>Accuracy: 0.8282</strong></td>
+<td><strong>F1 Macro: 0.8499</strong></td>
+<td><strong>Supera al baseline:</strong> mejora la exactitud en +20
+puntos y permite predecir saturaciones.</td>
 </tr>
 <tr>
-<td>P2 candidato accuracy / F1</td>
-<td style="text-align: right;">0.8282 / 0.8499</td>
+<td><strong>P3</strong></td>
+<td><code>mibici-equipo23-p3</code></td>
+<td><strong>K-Means Baseline
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">k=4</annotation></semantics></math>)</strong></td>
+<td>Silhouette: 0.2990</td>
+<td>Davies-Bouldin: 1.1685</td>
+<td>Agrupa solo por tamaño y coordenadas espaciales (ciego a dinámicas
+horarias).</td>
 </tr>
 <tr>
-<td>P3 baseline Silhouette</td>
-<td style="text-align: right;">0.2990</td>
-</tr>
-<tr>
-<td>P3 candidato Silhouette / DB</td>
-<td style="text-align: right;">0.1834 / 1.7041</td>
-</tr>
-<tr>
-<td>P3 candidato Aglomerativo Silhouette</td>
-<td style="text-align: right;">0.1496</td>
+<td><strong>P3</strong></td>
+<td><code>mibici-equipo23-p3</code></td>
+<td><strong>K-Means Candidato
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">k=4</annotation></semantics></math>)</strong></td>
+<td>Silhouette: 0.1834</td>
+<td>Davies-Bouldin: 1.7041</td>
+<td><strong>Modelo funcionalmente superior:</strong> descubre la
+asimetría real (polos laborales vs residenciales).</td>
 </tr>
 </tbody>
 </table>
-<h1 id="arquitectura">5. Arquitectura</h1>
-<p>Portal MiBici → <code>mibici/dataset.py</code> → DVC →
-<code>data/processed/trips.parquet</code> →
-<code>mibici/features.py</code> → P1/P2/P3 → MLflow Tracking →
-<code>reports/figures/</code>. Git conserva código y documentación; DVC
-identifica el snapshot de datos y el manifiesto SHA-256 aporta una
-verificación adicional.</p>
-<h1 id="mlflow-y-reproducibilidad">6. MLflow y reproducibilidad</h1>
-<p>El experimento es <code>mibici-equipo23</code>. Incluye los runs
-P1-baseline, P1-candidato-baseline, P2-baseline, P2-candidato-baseline y
-P3-baseline. Cada run registra parámetros, métricas, etiquetas de
-equipo/pregunta/commit y artefactos.</p>
+<hr />
+<h1 id="evidencia-de-corridas-en-mlflow">7. Evidencia de Corridas en
+MLflow</h1>
+<p>Se configuraron experimentos independientes por pregunta bajo el
+servidor local de MLflow (<code>sqlite:///mlruns.db</code> en el puerto
+5001), registrando parámetros, métricas, etiquetas y artefactos:</p>
+<h3 id="lista-de-experimentos-por-pregunta">7.1. Lista de Experimentos
+por Pregunta</h3>
 <figure>
-<img src="../reports/evidence/mlflow_lista_runs.png"
-alt="Lista de runs" />
-<figcaption aria-hidden="true">Lista de runs</figcaption>
+<img src="../reports/evidence/mlflow_experimentos_lista.png"
+alt="Experimentos creados por pregunta" />
+<figcaption aria-hidden="true">Experimentos creados por
+pregunta</figcaption>
 </figure>
+<h3 id="experimento-p1-regresión-de-demanda-diaria">7.2. Experimento P1
+(Regresión de Demanda Diaria)</h3>
 <figure>
-<img src="../reports/evidence/mlflow_detalle_p1_candidato.png"
-alt="Detalle P1" />
-<figcaption aria-hidden="true">Detalle P1</figcaption>
+<img src="../reports/evidence/mlflow_experimento_p1.png"
+alt="Corridas de P1 en MLflow" />
+<figcaption aria-hidden="true">Corridas de P1 en MLflow</figcaption>
 </figure>
+<h3 id="experimento-p2-clasificación-de-riesgo-de-desbalance">7.3.
+Experimento P2 (Clasificación de Riesgo de Desbalance)</h3>
 <figure>
-<img src="../reports/evidence/mlflow_detalle_p2_candidato.png"
-alt="Detalle P2" />
-<figcaption aria-hidden="true">Detalle P2</figcaption>
+<img src="../reports/evidence/mlflow_experimento_p2.png"
+alt="Corridas de P2 en MLflow" />
+<figcaption aria-hidden="true">Corridas de P2 en MLflow</figcaption>
 </figure>
+<h3 id="experimento-p3-clustering-de-estaciones">7.4. Experimento P3
+(Clustering de Estaciones)</h3>
 <figure>
-<img src="../reports/evidence/mlflow_detalle_p3_artefacto.png"
-alt="Detalle P3 y artefacto" />
-<figcaption aria-hidden="true">Detalle P3 y artefacto</figcaption>
+<img src="../reports/evidence/mlflow_experimento_p3.png"
+alt="Corridas de P3 en MLflow" />
+<figcaption aria-hidden="true">Corridas de P3 en MLflow</figcaption>
 </figure>
+<h3 id="detalle-de-corrida-con-etiquetas-parámetros-y-métricas">7.5.
+Detalle de Corrida con Etiquetas, Parámetros y Métricas</h3>
 <figure>
-<img src="../reports/evidence/mlflow_comparacion_p1.png"
-alt="Comparación de runs" />
-<figcaption aria-hidden="true">Comparación de runs</figcaption>
+<img src="../reports/evidence/mlflow_detalle_run.png"
+alt="Detalle de corrida en MLflow" />
+<figcaption aria-hidden="true">Detalle de corrida en MLflow</figcaption>
 </figure>
-<h1 id="repositorio-y-entrega">7. Repositorio y entrega</h1>
-<p>El repositorio conserva la estructura Cookiecutter Data Science:
-<code>data/</code>, <code>notebooks/</code>, <code>mibici/</code>,
-<code>models/</code>, <code>reports/</code> y <code>references/</code>.
-El README documenta GitHub Flow, DVC, dependencias y reproducción. Los
-CSV, <code>mlruns/</code>, modelos serializados y credenciales están
-excluidos mediante <code>.gitignore</code>.</p>
-<p>La entrega final debe incluir este PDF, el enlace al repositorio
-accesible para el profesor y la evidencia de colaboración de GitHub:
-rama principal protegida, commits de los cuatro integrantes, Pull
-Requests y revisiones.</p>
-<h1 id="referencias">Referencias</h1>
-<p>Consultar <a
-href="referencias_apa7.md"><code>referencias_apa7.md</code></a> y <a
-href="fuentes.md"><code>fuentes.md</code></a> para las referencias
-completas y las fuentes mensuales.</p>
+<h3 id="artefactos-visuales-registrados-en-mlflow">7.6. Artefactos
+Visuales Registrados en MLflow</h3>
+<figure>
+<img src="../reports/evidence/mlflow_artefactos.png"
+alt="Artefactos registrados en MLflow" />
+<figcaption aria-hidden="true">Artefactos registrados en
+MLflow</figcaption>
+</figure>
+<h3 id="comparación-de-corridas-lado-a-lado">7.7. Comparación de
+Corridas Lado a Lado</h3>
+<figure>
+<img src="../reports/evidence/mlflow_comparacion_runs.png"
+alt="Comparación de corridas en MLflow" />
+<figcaption aria-hidden="true">Comparación de corridas en
+MLflow</figcaption>
+</figure>
+<hr />
+<h1 id="estructura-del-repositorio">8. Estructura del Repositorio</h1>
+<p>El proyecto implementa la estructura estandarizada de
+<em>Cookiecutter Data Science (ccds)</em> gestionada con
+<code>uv</code>. A continuación se presenta el árbol verificado del
+repositorio:</p>
+<pre class="text"><code>TC5061-Proyecto-Equipo23/
+├── .gitignore                          &lt;- Excluye datos, modelos, mlruns y credenciales
+├── .pre-commit-config.yaml             &lt;- Hooks de calidad de código (ruff-check, ruff-format)
+├── LICENSE                             &lt;- Licencia del proyecto
+├── README.md                           &lt;- Documentación principal y guía de reproducción
+├── TC5061_Propuesta_Proyecto_Equipo23.pdf &lt;- Entregable formal consolidado en PDF
+├── Taskfile.yml                        &lt;- Automatización de tareas de desarrollo
+├── data/
+│   ├── external/                       &lt;- Datos de terceros
+│   ├── interim/                        &lt;- Datos intermedios de transformación
+│   ├── processed/                      &lt;- trips.parquet versionado con DVC
+│   └── raw/                            &lt;- stations_nomenclature.csv
+├── docs/                               &lt;- Documentación técnica complementaria
+│   ├── P3_CLUSTERING.md                &lt;- Documento de segmentación de estaciones
+│   └── README.md
+├── dvc.lock                            &lt;- Bloqueo determinista de artefactos DVC
+├── dvc.yaml                            &lt;- Pipeline de ingesta reproducible
+├── mibici/                             &lt;- Módulo principal del proyecto en Python
+│   ├── __init__.py
+│   ├── baseline_p2.py                  &lt;- Baseline mayoritario de P2 por bloques
+│   ├── build_p2_examples.py            &lt;- Generación de ejemplos de clasificación
+│   ├── build_p2_movements.py           &lt;- Agregación de movimientos de estaciones
+│   ├── config.py                       &lt;- Centralización de rutas, semillas y constantes
+│   ├── dataset.py                      &lt;- Pipeline CLI de descarga e ingesta
+│   ├── features.py                     &lt;- Transformaciones y feature engineering
+│   ├── modeling/
+│   │   ├── __init__.py
+│   │   ├── train_p1.py                 &lt;- Entrenamiento y registro de P1
+│   │   ├── train_p2.py                 &lt;- Entrenamiento de árboles de P2
+│   │   └── train_p3.py                 &lt;- Clustering y registro de P3
+│   └── plots.py
+├── models/                             &lt;- Modelos serializados (excluidos de Git)
+├── notebooks/
+│   ├── 0_exploracion-datos-mibici.ipynb &lt;- Análisis exploratorio completo de datos
+│   ├── mibici_propuesta_base.ipynb     &lt;- Prototipos exploratorios iniciales
+│   └── preparacion_p1.py               &lt;- Extracción de serie diaria
+├── pyproject.toml                      &lt;- Configuración del proyecto y dependencias
+├── references/                         &lt;- Documentos de soporte y canvas
+│   ├── ML Canvas Template.docx
+│   ├── arquitectura_sistema.md         &lt;- Justificación técnica de la arquitectura
+│   ├── data_manifest.csv               &lt;- Auditoría criptográfica SHA-256 de archivos
+│   ├── diagrama_arquitectura.png       &lt;- Diagrama de arquitectura del sistema
+│   ├── evidencia_mlflow.md             &lt;- Bitácora de registro en MLflow
+│   ├── fuentes.md                      &lt;- Enlaces y fuentes mensuales
+│   ├── ml_canvas.md                    &lt;- Machine Learning Canvas consolidado
+│   ├── propuesta_entrega.md            &lt;- Fuente de este reporte
+│   └── referencias_apa7.md             &lt;- Referencias bibliográficas
+├── reports/
+│   ├── evidence/                       &lt;- Capturas oficiales de MLflow y auditoría
+│   │   ├── estructura_repositorio.txt  &lt;- Árbol plano verificado
+│   │   ├── mlflow_artefactos.png       &lt;- Vista de artefactos registrados
+│   │   ├── mlflow_comparacion_runs.png &lt;- Comparación de corridas
+│   │   ├── mlflow_detalle_run.png      &lt;- Parámetros, métricas y tags
+│   │   ├── mlflow_experimento_p1.png   &lt;- Runs del experimento P1
+│   │   ├── mlflow_experimento_p2.png   &lt;- Runs del experimento P2
+│   │   ├── mlflow_experimento_p3.png   &lt;- Runs del experimento P3
+│   │   └── mlflow_experimentos_lista.png &lt;- Lista general de experimentos
+│   └── figures/                        &lt;- Gráficas de diagnóstico y mapas
+│       ├── p1_errores.png
+│       ├── p1_real_vs_predicho.png
+│       ├── p3_estaciones_clustering.csv
+│       ├── p3_mapa_espacial_clusters.png
+│       ├── p3_perfiles_clusters.png
+│       ├── p3_seleccion_k.png
+│       └── resumen_p3.json
+├── tests/                              &lt;- Pruebas unitarias automatizadas con pytest
+│   ├── test_data.py
+│   ├── test_p2_dates.py
+│   ├── test_p2_features.py
+│   └── test_p3.py
+└── uv.lock                             &lt;- Bloqueo estricto de 272 dependencias</code></pre>
+<hr />
+<h1 id="referencias-apa-7">9. Referencias (APA 7)</h1>
+<ul>
+<li>AMIM. (2026). <em>Plan integral de movilidad y transporte
+sustentable del Área Metropolitana de Guadalajara</em>. Agencia
+Metropolitana de Infraestructura para la Movilidad.</li>
+<li>DrivenData. (2026). <em>Cookiecutter Data Science: A logical,
+reasonably standardized, but flexible project structure for doing and
+sharing data science work</em>. <a
+href="https://cookiecutter-data-science.drivendata.org/"
+class="uri">https://cookiecutter-data-science.drivendata.org/</a></li>
+<li>Iterative. (2026). <em>Data Version Control (DVC)
+Documentation</em>. <a href="https://dvc.org/doc"
+class="uri">https://dvc.org/doc</a></li>
+<li>MiBici. (2026). <em>Datos abiertos del sistema de bicicletas
+públicas de Guadalajara</em>. Gobierno del Estado de Jalisco. <a
+href="https://mibici.net/es/datos-abiertos/"
+class="uri">https://mibici.net/es/datos-abiertos/</a></li>
+<li>MLflow. (2026). <em>MLflow: An open source platform for the machine
+learning lifecycle</em>. <a href="https://mlflow.org/docs/latest/"
+class="uri">https://mlflow.org/docs/latest/</a></li>
+<li>Scikit-learn developers. (2026). <em>Model evaluation: Quantifying
+the quality of predictions</em>. Scikit-learn User Guide. <a
+href="https://scikit-learn.org/stable/modules/model_evaluation.html"
+class="uri">https://scikit-learn.org/stable/modules/model_evaluation.html</a></li>
+</ul>
 </body>
 </html>

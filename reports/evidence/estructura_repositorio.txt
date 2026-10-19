@@ -1,30 +1,106 @@
-MiBici_Proyecto/
+TC5061-Proyecto-Equipo23/
+├── .gitignore
+├── .pre-commit-config.yaml
+├── LICENSE
 ├── README.md
-├── config.py
-├── pyproject.toml
-├── requirements.txt
-├── data/
-│   ├── raw/              # CSV locales; excluidos de Git
-│   └── processed/        # salidas reproducibles; excluidas de Git
-├── notebooks/
-│   └── mibici_propuesta_base.ipynb
-├── src/mibici/
+├── TC5061_Propuesta_Proyecto_Equipo23.pdf
+├── Taskfile.yml
+├── data
+│   ├── external
+│   │   └── .gitkeep
+│   ├── interim
+│   │   └── .gitkeep
+│   ├── processed
+│   │   ├── .gitkeep
+│   │   ├── p1_demanda_diaria.csv
+│   │   └── trips.parquet
+│   └── raw
+│       ├── .gitkeep
+│       └── stations_nomenclature.csv
+├── docs
+│   ├── .gitkeep
+│   ├── P3_CLUSTERING.md
+│   ├── README.md
+│   ├── docs
+│   │   ├── getting-started.md
+│   │   └── index.md
+│   └── mkdocs.yml
+├── dvc.lock
+├── dvc.yaml
+├── mibici
+│   ├── __init__.py
+│   ├── audit_p2.py
+│   ├── baseline_p2.py
+│   ├── build_p2_examples.py
+│   ├── build_p2_movements.py
+│   ├── config.py
 │   ├── dataset.py
-│   ├── ingestion.py
 │   ├── features.py
-│   └── training.py
-├── tests/
-│   └── test_pipeline.py
-├── models/               # modelos serializados; excluidos de Git
-├── reports/
-│   ├── evidence/         # capturas de MLflow
-│   └── figures/           # métricas y gráfica P3
-└── references/
-    ├── arquitectura.md
-    ├── data_manifest.csv
-    ├── entrega_checklist.md
-    ├── evidencia_mlflow.md
-    ├── fuentes.md
-    ├── ml_canvas.md
-    ├── propuesta_entrega.md
-    └── referencias_apa7.md
+│   ├── modeling
+│   │   ├── __init__.py
+│   │   ├── evaluate_p1.py
+│   │   ├── optimize_p1.py
+│   │   ├── predict.py
+│   │   ├── train.py
+│   │   ├── train_p1.py
+│   │   ├── train_p2.py
+│   │   └── train_p3.py
+│   └── plots.py
+├── models
+│   └── .gitkeep
+├── notebooks
+│   ├── .gitkeep
+│   ├── 0_exploracion-datos-mibici.ipynb
+│   ├── mibici_propuesta_base.ipynb
+│   └── preparacion_p1.py
+├── pyproject.toml
+├── references
+│   ├── .gitkeep
+│   ├── ML Canvas Template.docx
+│   ├── arquitectura_sistema.md
+│   ├── data_manifest.csv
+│   ├── diagrama_arquitectura.png
+│   ├── evidencia_mlflow.md
+│   ├── fuentes.md
+│   ├── ml_canvas.md
+│   ├── p2_arquitectura.md
+│   ├── p2_diagnostico_y_decisiones.md
+│   ├── p2_propuesta.md
+│   ├── propuesta_entrega.html
+│   ├── propuesta_entrega.md
+│   └── referencias_apa7.md
+├── reports
+│   ├── .gitkeep
+│   ├── ML Canvas Proposal.docx
+│   ├── evidence
+│   │   ├── .gitkeep
+│   │   ├── estructura_repositorio.txt
+│   │   ├── mlflow_artefactos.png
+│   │   ├── mlflow_comparacion_runs.png
+│   │   ├── mlflow_detalle_run.png
+│   │   ├── mlflow_experimento_p1.png
+│   │   ├── mlflow_experimento_p2.png
+│   │   ├── mlflow_experimento_p3.png
+│   │   └── mlflow_experimentos_lista.png
+│   └── figures
+│       ├── .gitkeep
+│       ├── p1-candidato_baseline_metrics.csv
+│       ├── p1_baseline_metrics.csv
+│       ├── p1_errores.png
+│       ├── p1_importancia_variables.png
+│       ├── p1_real_vs_predicho.png
+│       ├── p2-candidato_baseline_metrics.csv
+│       ├── p2_baseline_metrics.csv
+│       ├── p3_baseline_metrics.csv
+│       ├── p3_estaciones_clustering.csv
+│       ├── p3_mapa_espacial_clusters.png
+│       ├── p3_perfiles_clusters.png
+│       ├── p3_seleccion_k.png
+│       └── resumen_p3.json
+├── scripts
+├── tests
+│   ├── test_data.py
+│   ├── test_p2_dates.py
+│   ├── test_p2_features.py
+│   └── test_p3.py
+└── uv.lock
