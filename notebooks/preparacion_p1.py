@@ -2,8 +2,11 @@
 from pathlib import Path
 import pandas as pd
 
-DATA_PATH = Path("data/processed/trips.parquet")
-OUTPUT_PATH = Path("data/processed/p1_demanda_diaria.csv")
+from mibici.config import P1_DATA_PATH, PROCESSED_DATA_DIR
+
+DATA_PATH = PROCESSED_DATA_DIR / "trips.parquet"
+OUTPUT_PATH = P1_DATA_PATH
+
 
 # Cargar datos
 df = pd.read_parquet(DATA_PATH, columns=["started_at"])
