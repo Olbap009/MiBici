@@ -2095,6 +2095,7 @@ version = "0.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "dvc-gs" },
+    { name = "joblib" },
     { name = "loguru" },
     { name = "mlflow" },
     { name = "pandas" },
@@ -2120,6 +2121,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "dvc-gs", specifier = ">=3.0.1" },
+    { name = "joblib", specifier = ">=1.6.0" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "mlflow", specifier = "==3.16.1" },
     { name = "pandas", specifier = ">=3.0.6" },

@@ -17,6 +17,7 @@ classifiers = [
 ]
 dependencies = [
     "dvc-gs>=3.0.1",
+    "joblib>=1.6.0",
     "loguru>=0.7.3", # Loggings
     "mlflow==3.16.1",
     "pandas>=3.0.6", # Data Processing
