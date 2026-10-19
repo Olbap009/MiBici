@@ -128,8 +128,8 @@ def main():
     with mlflow.start_run(run_name="P1_random_forest_candidato"):
         modelo = RandomForestRegressor(
             n_estimators=200,
-            max_depth=8,
-            min_samples_leaf=3,
+            max_depth=6,
+            min_samples_leaf=8,
             random_state=P1_RANDOM_STATE,
             n_jobs=-1,
         )
@@ -143,8 +143,8 @@ def main():
             {
                 "modelo": "RandomForestRegressor",
                 "n_estimators": 200,
-                "max_depth": 8,
-                "min_samples_leaf": 3,
+                "max_depth": 6,
+                "min_samples_leaf": 8,
                 "random_state": P1_RANDOM_STATE,
                 "test_size": 0.2,
                 "features_usadas": ",".join(FEATURES),
