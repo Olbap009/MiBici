@@ -271,11 +271,24 @@ uv sync
 uv run dvc repro --force dataset
 ```
 
-Para el experimento base de P2:
+Para ejecutar los experimentos base:
 
-```bash
-uv run python -m mibici.train_p2
-```
+- **P3 (Clustering de Estaciones — ejecuta directamente sobre los datos de la ingesta):**
+  ```bash
+  uv run python -m mibici.modeling.train_p3
+  ```
+
+- **P1 (Regresión de Demanda Diaria):**
+  ```bash
+  uv run python notebooks/preparacion_p1.py
+  uv run python -m mibici.modeling.train_p1
+  ```
+
+- **P2 (Clasificación de Presión Neta):**
+  ```bash
+  uv run python -m mibici.baseline_p2
+  ```
 
 El Pull Request de integración de la propuesta y evidencia se mantiene
 separado del código de ingesta, DVC y modelado de los integrantes.
+
