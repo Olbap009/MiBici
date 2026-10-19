@@ -13,12 +13,14 @@ def sample_movements():
         freq="30min",
         inclusive="left",
     )
-    return pd.DataFrame({
-        "station_id": 2,
-        "interval_start": calendar,
-        "departures": 1,
-        "arrivals": 1,
-    })
+    return pd.DataFrame(
+        {
+            "station_id": 2,
+            "interval_start": calendar,
+            "departures": 1,
+            "arrivals": 1,
+        }
+    )
 
 
 def build(data):
@@ -63,9 +65,7 @@ def test_future_changes_label_but_not_present_predictors():
 def test_missing_interval_is_not_replaced_by_older_interval():
     data = sample_movements()
     # Quitamos las 09:30: según el supuesto del baseline, cuenta como cero.
-    data = data.loc[
-        data["interval_start"].ne(pd.Timestamp("2026-01-08 09:30"))
-    ]
+    data = data.loc[data["interval_start"].ne(pd.Timestamp("2026-01-08 09:30"))]
     result = build(data)
     row = result.loc[pd.Timestamp("2026-01-08 10:00")]
 
@@ -81,9 +81,7 @@ def test_history_and_target_boundaries():
     # Exigimos siete días completos de historia.
     assert result.index.min() == pd.Timestamp("2026-01-08")
     assert result["target_end"].max() == pd.Timestamp("2026-01-09")
-    assert (
-        result["target_end"] - result.index == pd.Timedelta(minutes=30)
-    ).all()
+    assert (result["target_end"] - result.index == pd.Timedelta(minutes=30)).all()
 
 
 def test_pressure_threshold_in_both_directions():

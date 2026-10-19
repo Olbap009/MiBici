@@ -30,9 +30,7 @@ def main():
         raise ValueError("El catálogo contiene IDs faltantes o duplicados.")
 
     capacity = pd.to_numeric(stations["dpcapacity"], errors="coerce")
-    valid_ids = set(
-        stations.loc[capacity.notna() & capacity.gt(0), "id"].astype(int)
-    )
+    valid_ids = set(stations.loc[capacity.notna() & capacity.gt(0), "id"].astype(int))
 
     # Solo necesitamos recordar las versiones de los IDs repetidos.
     # Así evitamos crear un diccionario con los 13 millones de viajes.
@@ -48,8 +46,11 @@ def main():
     seen_repeated = {}
     report = Counter()
     columns = [
-        "trip_id", "started_at", "ended_at",
-        "origin_station_id", "destination_station_id",
+        "trip_id",
+        "started_at",
+        "ended_at",
+        "origin_station_id",
+        "destination_station_id",
     ]
     source = pq.ParquetFile(P2_TRIPS_PATH)
 
@@ -72,9 +73,7 @@ def main():
 
                 if trip_id in seen_repeated:
                     if signature != seen_repeated[trip_id]:
-                        raise ValueError(
-                            f"Movimiento contradictorio en trip_id={trip_id}"
-                        )
+                        raise ValueError(f"Movimiento contradictorio en trip_id={trip_id}")
                     keep[index] = False
                     report["duplicate_copies_removed"] += 1
                 else:
@@ -110,12 +109,9 @@ def main():
                 for month, part in movements.groupby(months):
                     destination = temporary / month
                     destination.mkdir(exist_ok=True)
-                    part.to_parquet(
-                        destination / f"batch_{number:04d}.parquet", index=False
-                    )
+                    part.to_parquet(destination / f"batch_{number:04d}.parquet", index=False)
 
-            print(f"Lote {number}: {report['source_rows']:,} viajes revisados",
-                  flush=True)
+            print(f"Lote {number}: {report['source_rows']:,} viajes revisados", flush=True)
 
         # Consolidación mensual: una fila por estación e intervalo.
         output = temporary / "movimientos_finales.parquet"
@@ -125,26 +121,19 @@ def main():
                 if not month_folder.is_dir():
                     continue
 
-                parts = [
-                    pd.read_parquet(path)
-                    for path in sorted(month_folder.glob("*.parquet"))
-                ]
+                parts = [pd.read_parquet(path) for path in sorted(month_folder.glob("*.parquet"))]
                 month_data = pd.concat(parts, ignore_index=True)
                 consolidated = (
-                    month_data.groupby(
-                        ["station_id", "interval_start"], as_index=False
-                    )[["departures", "arrivals"]]
+                    month_data.groupby(["station_id", "interval_start"], as_index=False)[
+                        ["departures", "arrivals"]
+                    ]
                     .sum()
                     .sort_values(["station_id", "interval_start"])
                 )
-                consolidated["station_id"] = consolidated["station_id"].astype(
-                    "int64"
-                )
+                consolidated["station_id"] = consolidated["station_id"].astype("int64")
                 table = pa.Table.from_pandas(consolidated, preserve_index=False)
                 if writer is None:
-                    writer = pq.ParquetWriter(
-                        output, table.schema, compression="zstd"
-                    )
+                    writer = pq.ParquetWriter(output, table.schema, compression="zstd")
                 writer.write_table(table)
                 report["station_intervals_with_events"] += len(consolidated)
                 print(f"Mes consolidado: {month_folder.name}", flush=True)
@@ -163,9 +152,7 @@ def main():
     summary["interval_minutes"] = P2_INTERVAL_MINUTES
     summary["repeated_trip_ids"] = len(repeated_ids)
     report_path = INTERIM_DATA_DIR / "p2_movimientos_resumen.json"
-    report_path.write_text(
-        json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8"
-    )
+    report_path.write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
     print("\nRESUMEN:")
     print(json.dumps(summary, indent=2, ensure_ascii=False))
     print(f"\nArchivo generado: {P2_MOVEMENTS_PATH}")

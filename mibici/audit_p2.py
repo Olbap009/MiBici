@@ -23,13 +23,11 @@ def audit_trip_ids():
     report = {
         "total_rows": table.num_rows,
         "missing_trip_ids": missing,
-        "unique_non_null_trip_ids": int(len(unique_ids)),
+        "unique_non_null_trip_ids": len(unique_ids),
         "repeated_trip_ids": int(repeated.sum()),
         "rows_with_repeated_ids": int(counts[repeated].sum()),
         "extra_rows_beyond_first": int((counts[repeated] - 1).sum()),
-        "repeated_id_examples": [
-            int(value) for value in unique_ids[repeated][:10]
-        ],
+        "repeated_id_examples": [int(value) for value in unique_ids[repeated][:10]],
     }
 
     # El diagnóstico se guarda junto a los datos intermedios locales.
@@ -72,9 +70,7 @@ def audit_repeated_movements():
     from mibici.config import P2_BATCH_SIZE
 
     source = pq.ParquetFile(P2_TRIPS_PATH)
-    for batch in source.iter_batches(
-        batch_size=P2_BATCH_SIZE, columns=columns
-    ):
+    for batch in source.iter_batches(batch_size=P2_BATCH_SIZE, columns=columns):
         frame = batch.to_pandas()
         selected = frame.loc[frame["trip_id"].isin(repeated_ids)]
         if not selected.empty:
@@ -91,11 +87,9 @@ def audit_repeated_movements():
         equivalent_ids = versions_per_id[versions_per_id == 1].index
 
         report = {
-            "repeated_ids_equivalent_for_p2": int(len(equivalent_ids)),
-            "repeated_ids_with_conflicting_movements": int(len(conflicting_ids)),
-            "conflicting_id_examples": [
-                int(value) for value in conflicting_ids[:10]
-            ],
+            "repeated_ids_equivalent_for_p2": len(equivalent_ids),
+            "repeated_ids_with_conflicting_movements": len(conflicting_ids),
+            "conflicting_id_examples": [int(value) for value in conflicting_ids[:10]],
         }
 
         if len(conflicting_ids):

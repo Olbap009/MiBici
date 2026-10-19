@@ -195,7 +195,6 @@ def _normalize_text(values: pd.Series) -> pd.Series:
     )
 
 
-
 def parse_trip_dates(values: pd.Series) -> pd.Series:
     """Interpreta fechas con reglas explícitas, sin inferir día y mes.
 
@@ -208,22 +207,15 @@ def parse_trip_dates(values: pd.Series) -> pd.Series:
     if text.isna().any() or text.eq("").any():
         raise ValueError("Hay fechas faltantes o vacías.")
 
-    result = pd.Series(
-        pd.NaT, index=values.index, dtype="datetime64[ns]", name=values.name
-    )
+    result = pd.Series(pd.NaT, index=values.index, dtype="datetime64[ns]", name=values.name)
     recognized = pd.Series(False, index=values.index)
 
     formats = [
-        (r"\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{2}",
-         "%d/%m/%Y %H:%M"),
-        (r"\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{2}:\d{2}",
-         "%d/%m/%Y %H:%M:%S"),
-        (r"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}",
-         "%Y-%m-%d %H:%M"),
-        (r"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}",
-         "%Y-%m-%d %H:%M:%S"),
-        (r"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}\.\d{1,9}",
-         "%Y-%m-%d %H:%M:%S.%f"),
+        (r"\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{2}", "%d/%m/%Y %H:%M"),
+        (r"\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{2}:\d{2}", "%d/%m/%Y %H:%M:%S"),
+        (r"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}", "%Y-%m-%d %H:%M"),
+        (r"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}", "%Y-%m-%d %H:%M:%S"),
+        (r"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}\.\d{1,9}", "%Y-%m-%d %H:%M:%S.%f"),
     ]
 
     for pattern, date_format in formats:

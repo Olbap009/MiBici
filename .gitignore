@@ -4,6 +4,8 @@
 # Experiments
 mlruns/
 mlartifacts/
+mlruns.db
+*.db
 
 # Models
 *.pkl
