@@ -1,38 +1,31 @@
 # Evidencia de MLflow — Equipo 23
 
-## Experimento
+## Experimentos por Pregunta
 
-```text
-mibici-equipo23
-```
+- **P1 (Regresión de Demanda Diaria):** `mibici-equipo23-p1` (Runs: `P1_baseline_lag7`, `P1_random_forest_candidato`)
+- **P2 (Clasificación de Presión Neta):** `mibici-equipo23-p2` (Runs: `P2_baseline_mayoritario`, `P2_arbol_d5_balanced`)
+- **P3 (Clustering de Estaciones):** `mibici-equipo23-p3` (Runs: `P3_kmeans_baseline_k4`, `P3_kmeans_candidato_k4`)
+- **Consolidado General:** `mibici-equipo23`
 
-Abrir la interfaz con:
+Abrir la interfaz local con:
 
 ```bash
-cd /Users/mac/Desktop/MiBici_Proyecto
-mlflow ui --backend-store-uri ./mlruns --port 5001
+uv run mlflow ui --backend-store-uri sqlite:///mlruns.db --port 5001
 ```
 
 Luego visitar http://127.0.0.1:5001.
 
-## Evidencia requerida
+## Evidencia guardada en `reports/evidence/`
 
-Tomar y guardar en `reports/evidence/` las siguientes capturas:
+1. **Lista general de experimentos:** `reports/evidence/mlflow_experimentos_lista.png`
+2. **Experimento P1:** `reports/evidence/mlflow_experimento_p1.png`
+3. **Experimento P2:** `reports/evidence/mlflow_experimento_p2.png`
+4. **Experimento P3:** `reports/evidence/mlflow_experimento_p3.png`
+5. **Lista consolidada de corridas:** `reports/evidence/mlflow_1_lista_runs.png` y `mlflow_lista_runs.png`
+6. **Detalle de corrida (tags, params, métricas):** `reports/evidence/mlflow_2_detalle_run.png`
+7. **Artefactos visuales registrados:** `reports/evidence/mlflow_3_artefactos.png` y `mlflow_detalle_p3_artefacto.png`
+8. **Comparación de corridas:** `reports/evidence/mlflow_4_comparacion_runs.png` y `mlflow_comparacion_p1.png`
 
-1. Vista de la lista del experimento `mibici-equipo23` donde se vean los runs
-   `P1-baseline`, `P2-baseline` y `P3-baseline`.
-2. Detalle del run P1 con parámetros, métricas y tags.
-3. Detalle del run P2 con sus métricas de clasificación.
-4. Detalle del run P3 mostrando el artefacto `p3_perfiles_clusters.png`.
-5. Vista de comparación entre dos o más runs.
-
-Capturas guardadas:
-
-- `reports/evidence/mlflow_lista_runs.png`
-- `reports/evidence/mlflow_detalle_p1_candidato.png`
-- `reports/evidence/mlflow_detalle_p2_candidato.png`
-- `reports/evidence/mlflow_detalle_p3_artefacto.png`
-- `reports/evidence/mlflow_comparacion_p1.png`
 
 Los resultados reproducidos el 17 de octubre de 2026 fueron:
 

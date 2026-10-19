@@ -16,7 +16,7 @@ import numpy as np
 import pyarrow.dataset as ds
 from sklearn.metrics import ConfusionMatrixDisplay
 
-from mibici.config import P2_EXAMPLES_PATH, PROJ_ROOT
+from mibici.config import P2_EXAMPLES_PATH, P2_EXPERIMENT_NAME, PROJ_ROOT
 
 LABELS = [
     "sin_presion_neta_elevada",
@@ -98,7 +98,7 @@ def sha256_file(path: Path) -> str:
 
 def main():
     mlflow.set_tracking_uri("http://127.0.0.1:5001")
-    mlflow.set_experiment("mibici-equipo23")
+    mlflow.set_experiment(P2_EXPERIMENT_NAME)
 
     with mlflow.start_run(run_name="P2_baseline_mayoritario") as run:
         commit = subprocess.check_output(

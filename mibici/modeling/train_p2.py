@@ -26,7 +26,7 @@ from sklearn.metrics import (
 )
 from sklearn.tree import DecisionTreeClassifier, export_text
 
-from mibici.config import P2_EXAMPLES_PATH, PROJ_ROOT
+from mibici.config import P2_EXAMPLES_PATH, P2_EXPERIMENT_NAME, PROJ_ROOT
 
 FEATURES = [
     "departures_prev_30m",
@@ -54,8 +54,9 @@ def parse_args():
     parser.add_argument("--sample-fraction", type=float, default=0.05)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--tracking-uri", default="http://127.0.0.1:5001")
-    parser.add_argument("--experiment", default="mibici-equipo23")
+    parser.add_argument("--experiment", default=P2_EXPERIMENT_NAME)
     args = parser.parse_args()
+
     if not 0 < args.sample_fraction <= 1:
         parser.error("--sample-fraction debe estar entre 0 y 1.")
     if args.max_depth < 1 or args.min_samples_leaf < 1:

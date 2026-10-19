@@ -50,11 +50,13 @@ P2_VALIDATION_END = "2026-07-01"
 P2_EXAMPLES_PATH = PROCESSED_DATA_DIR / "p2_examples.parquet"
 P2_EXAMPLES_SUMMARY_PATH = INTERIM_DATA_DIR / "p2_examples_summary.json"
 
+P2_EXPERIMENT_NAME = "mibici-equipo23-p2"
+
 # Configuración de P1 (Regresión de Demanda Diaria)
 P1_DATA_PATH = PROCESSED_DATA_DIR / "p1_demanda_diaria.csv"
 P1_MODEL_PATH = MODELS_DIR / "p1_random_forest.pkl"
 P1_RANDOM_STATE = 42
-P1_EXPERIMENT_NAME = "mibici-equipo23"
+P1_EXPERIMENT_NAME = "mibici-equipo23-p1"
 
 # Configuración de P3 (Clustering de Estaciones)
 P3_TRIPS_PATH = PROCESSED_DATA_DIR / "trips.parquet"
@@ -63,4 +65,4 @@ P3_FEATURES_PATH = PROCESSED_DATA_DIR / "p3_station_features.parquet"
 P3_CLUSTERS_OUTPUT_PATH = REPORTS_DIR / "figures" / "p3_estaciones_clustering.csv"
 P3_DEFAULT_K = 4
 P3_RANDOM_STATE = 42
-P3_EXPERIMENT_NAME = "mibici-equipo23"
+P3_EXPERIMENT_NAME = "mibici-equipo23-p3"
