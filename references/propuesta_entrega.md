@@ -43,34 +43,35 @@ El proyecto usa las variables de viaje necesarias para fechas, horas, origen,
 destino y duración, además de capacidad, latitud y longitud del catálogo. Los
 identificadores de usuario no se usan como variables ni se publican.
 
-Los CSV grandes no se suben a Git. El mecanismo de versionado es
-[`references/data_manifest.csv`](data_manifest.csv), que registra archivo,
-filas, bytes y SHA-256. La ingesta reconstruye `data/processed/` desde
-`data/raw/` y los nuevos runs de MLflow registran el hash del manifiesto como
-`data_version`. DVC no es requisito explícito de la rúbrica.
+Los CSV grandes no se suben a Git. El mecanismo principal de versionado es
+DVC, con `dvc.yaml`, `dvc.lock` y un remoto configurado en el repositorio. La
+ingesta también conserva un manifiesto complementario con archivo, filas,
+bytes y SHA-256. Esto permite reconstruir el snapshot y verificar su
+integridad.
 
 # 3. Ingesta y feature engineering
 
-La ingesta está disponible en `src/mibici/dataset.py` y
-`src/mibici/ingestion.py`. Normaliza columnas, prueba codificaciones
-`utf-8`, `utf-8-sig`, `cp1252` y `latin1`, concatena los viajes y conserva el
-catálogo más reciente.
+La ingesta está disponible en `mibici/dataset.py`. Descarga los meses
+seleccionados y la nomenclatura desde el portal oficial, normaliza columnas,
+codificaciones y fechas, une el catálogo de estaciones y guarda el resultado
+limpio en Parquet. La etapa está declarada en `dvc.yaml`.
 
 ```bash
-PYTHONPATH=.:src python -m mibici.dataset
-PYTHONPATH=.:src python -m mibici.training
+uv sync
+uv run dvc repro --force dataset
 ```
 
-`features.py` genera agregaciones estación-día, lags de 1 y 7 días, media
-móvil de 7 días, variables calendario, capacidad y coordenadas. Las
-particiones de P1 y P2 son cronológicas 80/20 para evitar fuga de información.
+`mibici/features.py` genera las variables reutilizables para las preguntas.
+Las particiones supervisadas son cronológicas y los features históricos se
+construyen únicamente con información disponible antes del horizonte para
+evitar fuga de información.
 
 # 4. Modelos y métricas
 
 | Pregunta | Baseline | Candidato | Métricas |
 |---|---|---|---|
-| P1 | Media histórica por estación | HistGradientBoostingRegressor | MAE, RMSE |
-| P2 | Clase mayoritaria | LogisticRegression balanceada | Accuracy, F1 |
+| P1 | Lag de demanda | RandomForestRegressor | MAE, RMSE, R² |
+| P2 | Clase mayoritaria / presión | DecisionTreeClassifier | Accuracy, precision, recall, F1 |
 | P3 | — | K-Means, k=4 | Silhouette |
 
 Resultados con datos reales:
@@ -86,10 +87,10 @@ Resultados con datos reales:
 
 # 5. Arquitectura
 
-Portal MiBici → `data/raw/` → `dataset.py`/`ingestion.py` →
-`data/processed/` → `features.py` → P1/P2/P3 → MLflow Tracking →
-`reports/figures/`. Git conserva código y documentación; el manifiesto
-SHA-256 identifica el snapshot de datos.
+Portal MiBici → `mibici/dataset.py` → DVC → `data/processed/trips.parquet` →
+`mibici/features.py` → P1/P2/P3 → MLflow Tracking → `reports/figures/`.
+Git conserva código y documentación; DVC identifica el snapshot de datos y el
+manifiesto SHA-256 aporta una verificación adicional.
 
 # 6. MLflow y reproducibilidad
 
@@ -110,10 +111,11 @@ artefactos.
 
 # 7. Repositorio y entrega
 
-El repositorio separa `data/`, `notebooks/`, `src/mibici/`, `models/`,
-`reports/` y `references/`. El README documenta GitHub Flow, dependencias y
-reproducción. Los CSV, `mlruns/`, modelos serializados y credenciales están
-excluidos mediante `.gitignore`.
+El repositorio conserva la estructura Cookiecutter Data Science:
+`data/`, `notebooks/`, `mibici/`, `models/`, `reports/` y `references/`.
+El README documenta GitHub Flow, DVC, dependencias y reproducción. Los CSV,
+`mlruns/`, modelos serializados y credenciales están excluidos mediante
+`.gitignore`.
 
 La entrega final debe incluir este PDF, el enlace al repositorio accesible para
 el profesor y la evidencia de colaboración de GitHub: rama principal
