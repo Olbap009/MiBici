@@ -120,6 +120,42 @@ def search_p1(seed: int):
         test_metrics = evaluate(test["viajes"], model.predict(test[FEATURES]), "test")
         for key, value in test_metrics.items():
             client.log_metric(winner, key, value)
+
         client.set_tag(winner, "stage_of_work", "selected_and_tested")
-        print(json.dumps({"winner_run_id": winner, "test": test_metrics}, indent=2))
+
+        # Registrar exactamente el modelo ganador de la búsqueda.
+        model_name = "mibici-equipo23-p1-demanda"
+        model_uri = f"runs:/{winner}/modelo"
+
+        registered_model = mlflow.register_model(
+            model_uri=model_uri,
+            name=model_name,
+            await_registration_for=60,
+        )
+
+        # Asignar alias champion a la versión registrada.
+        client.set_registered_model_alias(
+            name=model_name,
+            alias="champion",
+            version=registered_model.version,
+        )
+
+        # Verificar que el modelo registrado puede cargarse.
+        champion_uri = f"models:/{model_name}@champion"
+        champion_model = mlflow.sklearn.load_model(champion_uri)
+
+        # Comprobar que genera las mismas predicciones que el ganador.
+        np.testing.assert_allclose(
+            champion_model.predict(test[FEATURES]),
+            model.predict(test[FEATURES]),
+        )
+
+        print(json.dumps({
+            "winner_run_id": winner,
+            "registered_model": model_name,
+            "model_version": registered_model.version,
+            "alias": "champion",
+            "test": test_metrics,
+        }, indent=2))
+
         return winner
