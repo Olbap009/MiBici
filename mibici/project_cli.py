@@ -11,8 +11,6 @@ from mibici.config import (
     MLFLOW_PROJECT_EXPERIMENT,
     P1_DATA_PATH,
     P2_EXAMPLES_PATH,
-    P2_STATIONS_PATH,
-    P2_TRIPS_PATH,
     P3_STATIONS_PATH,
     P3_TRIPS_PATH,
 )

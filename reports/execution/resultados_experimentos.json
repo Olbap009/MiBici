@@ -1,0 +1,91 @@
+{
+  "experimento": "mibici-equipo23",
+  "tracking_uri": "http://127.0.0.1:5002",
+  "datos": {
+    "inicio": "2023-10-15",
+    "fin": "2026-09-30",
+    "fuentes": 37,
+    "trips_sha256": "f5fcc8f7f66b237d5093d159d8c5b635afe4f1990beb0a11cc025d740d8e316e"
+  },
+  "modelos": {
+    "P1": {
+      "question": "P1",
+      "name": "MiBici_Equipo23_P1_Demanda",
+      "version": "1",
+      "alias": "champion",
+      "source_run": "ca0f4557b2664c6b9a89aa54808739ec",
+      "load_uri": "models:/MiBici_Equipo23_P1_Demanda@champion",
+      "smoke_prediction": "8563.698094806148",
+      "academic_review_required": true,
+      "metrics": {
+        "val_mae": 801.8816878043069,
+        "val_rmse": 1430.1629566937947,
+        "val_r2": 0.7438021025010813,
+        "test_mae": 1299.9695070149621,
+        "test_rmse": 2008.6074673497224,
+        "test_r2": 0.5479552344384981
+      },
+      "selection_reason": "Menor MAE de validación entre las tres variantes RF, con prueba consultada después de elegir. Comparación final con lag_7."
+    },
+    "P2": {
+      "question": "P2",
+      "name": "MiBici_Equipo23_P2_Presion_Proxy_Academica",
+      "version": "1",
+      "alias": "champion",
+      "source_run": "4202303e725f4152ac6632c9901516f7",
+      "load_uri": "models:/MiBici_Equipo23_P2_Presion_Proxy_Academica@champion",
+      "smoke_prediction": "sin_presion_neta_elevada",
+      "academic_review_required": true,
+      "metrics": {
+        "val_accuracy": 0.7690637744884686,
+        "val_balanced_accuracy": 0.6451166877255199,
+        "val_f1_macro": 0.3078114857817173,
+        "val_precision_sin_presion_neta_elevada": 0.9990800107567973,
+        "val_recall_sin_presion_neta_elevada": 0.7700838726810956,
+        "val_precision_presion_sin_bicicletas": 0.014539037148253983,
+        "val_recall_presion_sin_bicicletas": 0.5686715605020128,
+        "val_precision_presion_sin_anclajes": 0.012934308572943016,
+        "val_recall_presion_sin_anclajes": 0.5965946299934513,
+        "test_accuracy": 0.7816435253907561,
+        "test_balanced_accuracy": 0.6458659216084722,
+        "test_f1_macro": 0.30893656537616104,
+        "test_precision_sin_presion_neta_elevada": 0.999314155636269,
+        "test_recall_sin_presion_neta_elevada": 0.78261156317858,
+        "test_precision_presion_sin_bicicletas": 0.01386783128851816,
+        "test_recall_presion_sin_bicicletas": 0.5802121671357436,
+        "test_precision_presion_sin_anclajes": 0.011181042578273293,
+        "test_recall_presion_sin_anclajes": 0.5747740345110929
+      },
+      "selection_reason": "Mayor balanced accuracy de validación, sujeto a recall >=0.10 en ambas clases de presión. La precisión de alertas sigue siendo baja."
+    },
+    "P3": {
+      "question": "P3",
+      "name": "MiBici_Equipo23_P3_Estaciones",
+      "version": "1",
+      "alias": "champion",
+      "source_run": "6c1c512b733346f1aa9195c7e2b09236",
+      "load_uri": "models:/MiBici_Equipo23_P3_Estaciones@champion",
+      "smoke_prediction": "1",
+      "academic_review_required": true,
+      "metrics": {
+        "silhouette_score": 0.300877116060401,
+        "davies_bouldin_score": 1.1503582541178483,
+        "calinski_harabasz_score": 169.5381871818889,
+        "n_stations": 471.0,
+        "n_clusters": 4.0,
+        "inertia": 1127.274072516518
+      },
+      "selection_reason": "Selección conservadora del baseline k=4: las variantes con más variables no aportan evidencia de mejora. La silueta se calcula en espacios de variables diferentes y no demuestra superioridad predictiva ni utilidad urbana por sí sola."
+    }
+  },
+  "corridas_modelo": 12,
+  "pruebas": "24 passed",
+  "limites": [
+    "No se obtuvo acceso al bucket DVC. Los ejemplos finales y movimientos de P2 reconstruidos coinciden con los MD5 versionados; el parquet de viajes tiene distinta disposición física.",
+    "La ingesta actual interpreta fechas explícitamente. Los baselines se recalcularon con los mismos insumos que los candidatos.",
+    "El P1 actual predice demanda diaria agregada del sistema, como el código del PR. No comparar su MAE con el antiguo baseline local por estación-día.",
+    "P3 usa métricas internas sobre espacios de variables diferentes y requiere interpretación de los grupos.",
+    "Los aliases champion son versiones académicas; no hay un servicio de inferencia desplegado.",
+    "Cambios y resultados locales; no se publicaron en GitHub ni se cargaron al bucket."
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "model_type": "baseline",
+  "algorithm": "kmeans",
+  "k": 4,
+  "seed": 42,
+  "features": [
+    "viajes_promedio_diario",
+    "viajes_desviacion_diaria",
+    "capacidad",
+    "latitude",
+    "longitude"
+  ]
+}

@@ -74,3 +74,6 @@ __pypackages__/
 /mlflow_mibici.db-*
 /mlruns/
 /mlartifacts/
+
+# Logs locales de ejecucion (las metricas y evidencias se versionan por separado)
+/reports/execution/*.log

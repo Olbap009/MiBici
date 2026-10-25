@@ -1,0 +1,6 @@
+{
+  "trips_sha256": "f5fcc8f7f66b237d5093d159d8c5b635afe4f1990beb0a11cc025d740d8e316e",
+  "stations_sha256": "206e45fe633922b634d858142fa21e6fd9f4c421b6435c02980ef290cc2df90d",
+  "stations_count": 471,
+  "note": "Clustering descriptivo; no existe train/validation/test supervisado"
+}
