@@ -66,3 +66,8 @@ P3_CLUSTERS_OUTPUT_PATH = REPORTS_DIR / "figures" / "p3_estaciones_clustering.cs
 P3_DEFAULT_K = 4
 P3_RANDOM_STATE = 42
 P3_EXPERIMENT_NAME = "mibici-equipo23-p3"
+
+# Ejecución reproducible de la segunda entrega.
+MLFLOW_PROJECT_EXPERIMENT = "mibici-equipo23"
+PROJECT_DATA_START = "2023-10-15"
+PROJECT_DATA_END = "2026-09-30"

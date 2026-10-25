@@ -58,6 +58,8 @@ def run_p1(*, model, seed, n_estimators, max_depth, min_samples_leaf):
                          "commit": subprocess.check_output(
                              ["git", "rev-parse", "HEAD"], cwd=PROJ_ROOT, text=True).strip()})
         mlflow.log_params(params)
+        from mibici.run_support import log_provenance
+        log_provenance()
         mlflow.log_input(mlflow.data.from_pandas(
             train[FEATURES + ["viajes"]], source=str(P1_DATA_PATH),
             targets="viajes", name="p1_demanda_diaria"), context="training")
@@ -85,6 +87,7 @@ def run_p1(*, model, seed, n_estimators, max_depth, min_samples_leaf):
             fig.tight_layout()
             fig.savefig(folder / "real_vs_predicho.png")
             plt.close(fig)
+            (folder / "configuracion.json").write_text(json.dumps(params, indent=2), encoding="utf-8")
             mlflow.log_artifacts(str(folder), artifact_path="evidencia")
         if estimator is not None:
             mlflow.sklearn.log_model(

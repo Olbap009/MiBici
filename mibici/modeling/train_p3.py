@@ -356,6 +356,8 @@ def train_p3(
         )
 
         mlflow.log_metrics(metrics)
+        from mibici.run_support import log_provenance
+        log_provenance()
         mlflow.log_input(
             mlflow.data.from_pandas(
                 X.assign(station_key=features_df.index.astype(str)),

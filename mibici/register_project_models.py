@@ -37,6 +37,16 @@ def register(question: str, run_id: str, model_uri: str | None = None):
     client.set_model_version_tag(name, version.version, "academic_review", "required")
     if question == "P2":
         client.set_model_version_tag(name, version.version, "target", "presion_proxy_no_inventario")
+    client.update_registered_model(name, description=(
+        f"Equipo 23, {question}. Selección académica reproducible; "
+        "consultar métricas, datos y limitaciones en la corrida fuente."))
+    client.update_model_version(name, version.version, description=(
+        f"Corrida {run_id}; commit {run.data.tags.get('commit', 'no declarado')}. "
+        "Versión de datos y configuración disponibles en los artefactos data/ y config/."))
+    for key in ("dataset_sha256", "data_sha256", "nomenclature_sha256"):
+        if key in run.data.params:
+            client.set_model_version_tag(name, version.version, key, run.data.params[key])
+    client.set_model_version_tag(name, version.version, "commit", run.data.tags.get("commit", "no declarado"))
     client.set_registered_model_alias(name, "champion", version.version)
     alias_uri = f"models:/{name}@champion"
     model = mlflow.sklearn.load_model(alias_uri)

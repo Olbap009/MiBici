@@ -139,6 +139,8 @@ def fit_log_run(sample, train_rows: int, digest: str, *, model: str, seed: int,
         matrix, pos, neg = evaluate_stream(estimator, "validation")
         metrics = metrics_from_matrix(matrix, "val")
         mlflow.log_metrics(metrics)
+        from mibici.run_support import log_provenance
+        log_provenance()
         with tempfile.TemporaryDirectory() as temp:
             folder = Path(temp)
             (folder / "configuracion.json").write_text(

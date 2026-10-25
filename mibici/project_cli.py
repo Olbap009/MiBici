@@ -8,6 +8,7 @@ from pathlib import Path
 import mlflow
 
 from mibici.config import (
+    MLFLOW_PROJECT_EXPERIMENT,
     P1_DATA_PATH,
     P2_EXAMPLES_PATH,
     P2_STATIONS_PATH,
@@ -16,7 +17,7 @@ from mibici.config import (
     P3_TRIPS_PATH,
 )
 
-EXPERIMENT = "mibici-equipo23-mlprojects"
+EXPERIMENT = MLFLOW_PROJECT_EXPERIMENT
 INPUTS = {
     "P1": (P1_DATA_PATH,),
     "P2": (P2_EXAMPLES_PATH,),
@@ -39,16 +40,8 @@ def ingest(question: str, build: str) -> None:
     if build not in {"true", "false"}:
         raise ValueError("--build debe ser true o false")
     if build == "true":
-        if question != "P2":
-            raise ValueError("Construcción integrada solo disponible para P2")
-        for path in (P2_TRIPS_PATH, P2_STATIONS_PATH):
-            if not path.is_file():
-                raise FileNotFoundError(f"Falta el insumo corregido de P2: {path}")
-        from mibici.build_p2_examples import main as build_examples
-        from mibici.build_p2_movements import main as build_movements
-
-        build_movements()
-        build_examples()
+        from mibici.prepare_project_data import prepare
+        prepare(question)
     check_inputs(question)
     for path in INPUTS[question]:
         print(f"{question} OK: {path} ({Path(path).stat().st_size:,} bytes)")
@@ -85,13 +78,13 @@ def train(args: argparse.Namespace) -> None:
             min_samples_leaf=args.min_samples_leaf,
         )
     else:
-        if args.model not in {"kmeans", "agglomerative"}:
-            raise ValueError("P3 admite kmeans o agglomerative")
+        if args.model not in {"kmeans", "agglomerative", "baseline"}:
+            raise ValueError("P3 admite kmeans, agglomerative o baseline")
         from mibici.modeling.train_p3 import train_p3
 
         train_p3(
-            model_type="candidato",
-            algorithm=args.model,
+            model_type="baseline" if args.model == "baseline" else "candidato",
+            algorithm="kmeans" if args.model == "baseline" else args.model,
             k=args.k,
             seed=args.seed,
             tracking_uri=mlflow.get_tracking_uri(),

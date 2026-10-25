@@ -354,3 +354,42 @@ adjuntar capturas de sus modelos y corridas al documento del equipo.
 Las búsquedas P1/P3 ejecutan tres candidatos anidados; P1 evalúa test solo
 para el elegido por MAE de validación. P3 elige por silhouette sobre el mismo
 conjunto de estaciones y no pretende que esa métrica sea desempeño futuro.
+
+
+## Ejecución local del 25 de octubre de 2026
+
+La ejecución actual usa el experimento común `mibici-equipo23` y un servidor
+SQLite en `http://127.0.0.1:5002`; el servidor antiguo de 5001 se conserva.
+El código antiguo duplicado de `src/` se guardó en una carpeta de respaldo
+junto al proyecto para permitir instalar el paquete actual.
+
+```bash
+uv sync --locked --python 3.13.16
+uv run --locked mlflow server --backend-store-uri sqlite:///mlflow_mibici.db --artifacts-destination ./mlartifacts --host 127.0.0.1 --port 5002 --workers 1
+export MLFLOW_TRACKING_URI=http://127.0.0.1:5002
+uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23 -e ingest -P question=P1 -P build=true
+uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23 -e ingest -P question=P2 -P build=true
+uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23 -e ingest -P question=P3 -P build=true
+uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23 -e search -P question=P1
+uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23 -e search -P question=P2
+uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23 -e train -P question=P3 -P model=baseline
+uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23 -e search -P question=P3
+```
+
+Si DVC no tiene credenciales, `ingest -P build=true` reconstruye los datos
+reales del portal oficial usando los CSV locales como caché. Conserva fechas
+fijas del 15 de octubre de 2023 al 30 de septiembre de 2026 y verifica el mes
+de cada CSV. P2 usa desde el 1 de noviembre de 2023, como su configuración.
+`data/interim/project_sources_manifest.json` conserva URL y SHA-256 de las
+fuentes, y se adjunta a las corridas con la configuración y `dvc.lock`.
+Esta reconstrucción tiene su propio hash; no se presenta como una descarga
+verificada del objeto remoto DVC ni como una carga al bucket.
+
+Los baselines de la ejecución actual se recalculan sobre los mismos insumos
+que los candidatos. Los registros históricos de `mlruns/` se conservan como
+referencia de la entrega previa. P1 conserva el test final del 20 % y separa
+el bloque anterior en entrenamiento (60 %) y validación (20 %) para elegir
+hiperparámetros sin consultar prueba. Es un cambio respecto del 80/20 previo
+y debe explicarse en el reporte. P3 usa métricas internas de clustering,
+no una precisión supervisada. P2 predice presión neta como proxy, no
+inventario real de bicicletas ni anclajes.
