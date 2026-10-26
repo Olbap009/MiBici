@@ -1,17 +1,16 @@
 {
   "metricas": {
-    "silhouette_score": 0.18335401028338844,
-    "davies_bouldin_score": 1.704127455039294,
-    "calinski_harabasz_score": 87.50074840489755,
+    "silhouette_score": 0.14955447344165,
+    "davies_bouldin_score": 1.9027227529577675,
+    "calinski_harabasz_score": 74.17797320642819,
     "n_stations": 471.0,
-    "n_clusters": 4.0,
-    "inertia": 2713.6489476017987
+    "n_clusters": 4.0
   },
   "distribucion_clusters": {
-    "Cluster_0 (Polo Laboral / Atractor Vespertino)": 146,
-    "Cluster_3 (Estaciones Periféricas / Baja Intensidad)": 114,
-    "Cluster_2 (Corredor Mixto / Ocio y Fin de Semana)": 111,
-    "Cluster_1 (Residencial Emisor / Matutino)": 100
+    "Cluster_1 (Residencial Emisor / Matutino)": 154,
+    "Cluster_0 (Polo Laboral / Atractor Vespertino)": 132,
+    "Cluster_2 (Corredor Mixto / Ocio y Fin de Semana)": 94,
+    "Cluster_3 (Estaciones Periféricas / Baja Intensidad)": 91
   },
   "variables": [
     "viajes_promedio_diario",
