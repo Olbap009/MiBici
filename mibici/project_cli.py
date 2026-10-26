@@ -85,17 +85,17 @@ def train(args: argparse.Namespace) -> None:
             min_samples_leaf=args.min_samples_leaf,
         )
     else:
-        if args.model not in {"kmeans", "agglomerative"}:
-            raise ValueError("P3 admite kmeans o agglomerative")
-        from mibici.modeling.train_p3 import train_p3
+        if args.model not in {"kmeans", "agglomerative", "baseline"}:
+            raise ValueError("P3 admite kmeans, agglomerative o baseline")
+        from mibici.modeling.project_p3 import run_p3
 
-        train_p3(
-            model_type="candidato",
-            algorithm=args.model,
+        model_type = "baseline" if args.model == "baseline" else "candidato"
+        algo = "kmeans" if args.model == "baseline" else args.model
+        run_p3(
+            model_type=model_type,
+            algorithm=algo,
             k=args.k,
             seed=args.seed,
-            tracking_uri=mlflow.get_tracking_uri(),
-            experiment=EXPERIMENT,
             sweep_k=False,
         )
 
@@ -112,22 +112,9 @@ def search(args: argparse.Namespace) -> None:
 
         search_p1(seed=args.seed)
     else:
-        from mibici.modeling.train_p3 import train_p3
+        from mibici.modeling.project_p3 import search_p3
 
-        with mlflow.start_run(run_name="P3_busqueda",
-                              nested=mlflow.active_run() is not None):
-            mlflow.set_tags({"question": "P3", "model_family": "search",
-                             "stage_of_work": "hyperparameter_search", "team": "23"})
-            results = [train_p3(
-                model_type="candidato", algorithm="kmeans", k=k, seed=args.seed,
-                tracking_uri=mlflow.get_tracking_uri(), experiment=EXPERIMENT,
-                sweep_k=False) for k in (3, 4, 5)]
-            winner = max(results, key=lambda item: item["silhouette_score"])
-            mlflow.log_param("winner_run_id", winner["run_id"])
-            mlflow.log_metric("best_silhouette", winner["silhouette_score"])
-            mlflow.tracking.MlflowClient().set_tag(
-                winner["run_id"], "stage_of_work", "selected_unsupervised")
-            print(f"P3 mejor run por silhouette: {winner['run_id']}")
+        search_p3(seed=args.seed)
 
 
 def main() -> None:

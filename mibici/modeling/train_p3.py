@@ -359,8 +359,11 @@ def train_p3(
         mlflow.log_input(
             mlflow.data.from_pandas(
                 X.assign(station_key=features_df.index.astype(str)),
-                source=str(P3_TRIPS_PATH), name="p3_perfiles_estacion"
-            ), context="training")
+                source=str(P3_TRIPS_PATH),
+                name="p3_perfiles_estacion",
+            ),
+            context="training",
+        )
 
         # Generar artefactos visuales y reportes
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -399,16 +402,31 @@ def train_p3(
                 "variables": feature_cols,
             }
             summary_file.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
-            (temp_path / "configuracion.json").write_text(json.dumps({
-                "model_type": model_type, "algorithm": algorithm, "k": k,
-                "seed": seed, "features": feature_cols,
-            }, indent=2), encoding="utf-8")
-            (temp_path / "manifiesto.json").write_text(json.dumps({
-                "trips_sha256": file_hash(P3_TRIPS_PATH),
-                "stations_sha256": file_hash(P3_STATIONS_PATH),
-                "stations_count": len(features_df),
-                "note": "Clustering descriptivo; no existe train/validation/test supervisado",
-            }, indent=2), encoding="utf-8")
+            (temp_path / "configuracion.json").write_text(
+                json.dumps(
+                    {
+                        "model_type": model_type,
+                        "algorithm": algorithm,
+                        "k": k,
+                        "seed": seed,
+                        "features": feature_cols,
+                    },
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+            (temp_path / "manifiesto.json").write_text(
+                json.dumps(
+                    {
+                        "trips_sha256": file_hash(P3_TRIPS_PATH),
+                        "stations_sha256": file_hash(P3_STATIONS_PATH),
+                        "stations_count": len(features_df),
+                        "note": "Clustering descriptivo; no existe train/validation/test supervisado",
+                    },
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
 
             # Guardar copia fija en reports/figures/
             FIGURES_DIR.mkdir(parents=True, exist_ok=True)
@@ -422,8 +440,11 @@ def train_p3(
             sk_model=model,
             name="modelo_p3",
             input_example=X.head(5),
-            signature=(infer_signature(X.head(5), model.predict(X.head(5)))
-                       if algorithm == "kmeans" else infer_signature(X.head(5))),
+            signature=(
+                infer_signature(X.head(5), model.predict(X.head(5)))
+                if algorithm == "kmeans"
+                else infer_signature(X.head(5))
+            ),
             serialization_format="cloudpickle",
         )
 

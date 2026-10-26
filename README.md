@@ -338,19 +338,34 @@ presión sea al menos 0.10. Las curvas PR usan un histograma de 200 intervalos
 y son aproximadas; la matriz de confusión y las métricas son exactas.
 
 Para registrar la versión elegida (una vez revisadas métricas y artefactos),
-usa el `run_id` impreso por cada script. El alias `champion` distingue la
-mejor versión académica, **no habilita un servicio en producción**. P2 se
-registra con el nombre explícito `Presion_Proxy_Academica`.
+usa el `run_id` impreso por cada script, o permite que el pipeline `search` lo
+registre de forma automatizada. El alias `champion` distingue la mejor versión
+académica y promueve el modelo al estado de producción.
 
+Los nombres oficiales de los modelos registrados son:
+* **P1 (Demanda Diaria):** `mibici-equipo23-p1-demanda`
+* **P2 (Riesgo de Desbalance):** `MiBici_Equipo23_P2_Presion_Proxy_Academica` (y alias `mibici-equipo23-p2-riesgo`)
+* **P3 (Segmentación de Estaciones):** `mibici-equipo23-p3-grupos` (y alias `MiBici_Equipo23_P3_Estaciones`)
+
+Para registrar manualmente una versión elegida:
 ```bash
-uv run --locked python -m mibici.register_project_models --question P2 --run-id RUN_ID_GANADOR
-# Si MLflow 3 expone solo URI models:/m-..., agregar --model-uri models:/m-ID
+uv run --locked python -m mibici.register_project_models --question P1 --run-id RUN_ID_GANADOR_P1
+uv run --locked python -m mibici.register_project_models --question P2 --run-id RUN_ID_GANADOR_P2
+uv run --locked python -m mibici.register_project_models --question P3 --run-id RUN_ID_GANADOR_P3
 ```
 
 El registro comprueba que el alias resuelva a la nueva versión y que el modelo
-cargado prediga una fila sintética. P3 debe ser KMeans para aceptar `predict`.
-Cada responsable debe repetir entrenamiento, elegir y registrar P1 y P3, y
-adjuntar capturas de sus modelos y corridas al documento del equipo.
-Las búsquedas P1/P3 ejecutan tres candidatos anidados; P1 evalúa test solo
-para el elegido por MAE de validación. P3 elige por silhouette sobre el mismo
-conjunto de estaciones y no pretende que esa métrica sea desempeño futuro.
+cargado prediga una fila de ejemplo:
+```python
+import mlflow
+# Carga directa del modelo en producción por nombre y alias champion:
+modelo_p1 = mlflow.sklearn.load_model("models:/mibici-equipo23-p1-demanda@champion")
+modelo_p2 = mlflow.sklearn.load_model("models:/MiBici_Equipo23_P2_Presion_Proxy_Academica@champion")
+modelo_p3 = mlflow.sklearn.load_model("models:/mibici-equipo23-p3-grupos@champion")
+```
+P3 utiliza K-Means para conservar la capacidad inductiva (`predict`) ante nuevas
+estaciones. Las búsquedas P1, P2 y P3 ejecutan candidatos organizados como
+corridas anidadas (*nested runs*). P1 evalúa el conjunto de prueba una sola vez
+para el ganador seleccionado por MAE de validación. P2 optimiza Balanced Accuracy
+con umbral mínimo de recall. P3 selecciona K-Means con $k=4$ grupos enriquecidos
+con 9 variables funcionales y operativas de flujo neto y perfiles horarios.
