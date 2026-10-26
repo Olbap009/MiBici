@@ -35,20 +35,25 @@ def check_inputs(question: str) -> None:
 
 
 def ingest(question: str, build: str) -> None:
-    """Valida insumos existentes o construye explícitamente los ejemplos P2."""
+    """Valida insumos existentes o construye explícitamente los ejemplos P1/P2."""
     if build not in {"true", "false"}:
         raise ValueError("--build debe ser true o false")
     if build == "true":
-        if question != "P2":
-            raise ValueError("Construcción integrada solo disponible para P2")
-        for path in (P2_TRIPS_PATH, P2_STATIONS_PATH):
-            if not path.is_file():
-                raise FileNotFoundError(f"Falta el insumo corregido de P2: {path}")
-        from mibici.build_p2_examples import main as build_examples
-        from mibici.build_p2_movements import main as build_movements
+        if question == "P1":
+            from mibici.dataset import build_p1_daily_demand
 
-        build_movements()
-        build_examples()
+            build_p1_daily_demand()
+        elif question == "P2":
+            for path in (P2_TRIPS_PATH, P2_STATIONS_PATH):
+                if not path.is_file():
+                    raise FileNotFoundError(f"Falta el insumo corregido de P2: {path}")
+            from mibici.build_p2_examples import main as build_examples
+            from mibici.build_p2_movements import main as build_movements
+
+            build_movements()
+            build_examples()
+        else:
+            raise ValueError("Construcción integrada solo disponible para P1 y P2")
     check_inputs(question)
     for path in INPUTS[question]:
         print(f"{question} OK: {path} ({Path(path).stat().st_size:,} bytes)")

@@ -336,11 +336,14 @@ El proyecto aplicó rigurosamente la política de colaboración mediante Git y G
 
 ---
 
-# 8. Referencias
+# 8. Referencias (APA 7)
 
+* AMIM. (2026). *Plan integral de movilidad y transporte sustentable del Área Metropolitana de Guadalajara*. Agencia Metropolitana de Infraestructura para la Movilidad.
 * Chen, L., Zhang, D., Wang, L., Yang, D., Ma, X., Li, S., ... & Biderman, C. (2016). Bike sharing station placement leveraging heterogeneous urban big data. *IEEE Transactions on Intelligent Transportation Systems*, 17(9), 2484–2494. https://doi.org/10.1109/TITS.2016.2523412
+* DrivenData. (2026). *Cookiecutter Data Science: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work*. https://cookiecutter-data-science.drivendata.org/
 * Géron, A. (2022). *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems* (3rd ed.). O'Reilly Media.
 * Hutter, F., Kotthoff, L., & Vanschoren, J. (Eds.). (2019). *Automated Machine Learning: Methods, Systems, Challenges*. Springer Nature. https://doi.org/10.1007/978-3-030-05318-5
+* Iterative. (2026). *Data Version Control (DVC) Documentation*. https://dvc.org/doc
 * MLflow Documentation. (2026). *MLflow Projects and Model Registry Workflows*. Databricks. https://mlflow.org/docs/latest/index.html
 * Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... & Duchesnay, É. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research*, 12, 2825–2830.
 * Sistema de Bicicletas Públicas de Guadalajara (MiBici). (2026). *Datos abiertos del sistema MiBici*. Instituto de Planeación y Gestión del Desarrollo del Área Metropolitana de Guadalajara (IMEPLAN). https://mibici.net/es/datos-abiertos/

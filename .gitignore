@@ -74,3 +74,8 @@ __pypackages__/
 /mlflow_mibici.db-*
 /mlruns/
 /mlartifacts/
+
+# Compilados intermedios de reportes y binarios de oficina
+references/*.html
+*:Zone.Identifier
+*.docx
