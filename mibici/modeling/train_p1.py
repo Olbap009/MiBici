@@ -64,7 +64,7 @@ def main():
     if not P1_DATA_PATH.exists():
         raise FileNotFoundError(
             f"No se encontró el dataset {P1_DATA_PATH}. "
-            "Ejecuta 'uv run python notebooks/preparacion_p1.py' primero."
+            "Ejecuta 'uv run python -m mibici.project_cli ingest --question P1 --build true' primero."
         )
 
     # Cargar datos

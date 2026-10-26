@@ -275,13 +275,13 @@ Para ejecutar los experimentos base:
 
 - **P1 (Regresión de Demanda Diaria):**
   ```bash
-  uv run python notebooks/preparacion_p1.py
+  uv run python -m mibici.project_cli ingest --question P1 --build true
   uv run python -m mibici.modeling.train_p1
   ```
 
 - **P2 (Clasificación de Presión Neta):**
   ```bash
-  uv run python -m mibici.baseline_p2
+  uv run python -m mibici.project_cli train --question P2 --model baseline
   ```
 
 ## MLflow Projects — propuesta común de P1, P2 y P3
@@ -319,8 +319,8 @@ uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo
 uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23-mlprojects -e train -P question=P2 -P model=tree -P max_depth=5 -P min_samples_leaf=100 -P class_weight=balanced
 uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23-mlprojects -e search -P question=P2 -P seed=42 -P sample_fraction=0.05
 
-# P1: primero preparar los datos propios; luego ejecutar variantes.
-uv run --locked python notebooks/preparacion_p1.py
+# P1: validar o reconstruir serie de demanda; luego ejecutar variantes.
+uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23-mlprojects -e ingest -P question=P1 -P build=true
 uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23-mlprojects -e train -P question=P1 -P model=rf -P max_depth=6 -P min_samples_leaf=8 -P n_estimators=200
 uv run --locked mlflow run . --env-manager local --experiment-name mibici-equipo23-mlprojects -e search -P question=P1
 

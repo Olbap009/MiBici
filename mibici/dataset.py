@@ -383,6 +383,32 @@ def download_and_clean(
     return row_count
 
 
+def build_p1_daily_demand(
+    trips_path: Path = PROCESSED_DATA_DIR / "trips.parquet",
+    output_path: Path = PROCESSED_DATA_DIR / "p1_demanda_diaria.csv",
+) -> pd.DataFrame:
+    """Extrae serie temporal continua de demanda diaria con rezagos para P1."""
+    if not trips_path.is_file():
+        raise FileNotFoundError(f"Falta el insumo de viajes: {trips_path}")
+    df = pd.read_parquet(trips_path, columns=["started_at"])
+    df["fecha"] = df["started_at"].dt.normalize()
+    demanda = df.groupby("fecha").size().rename("viajes").sort_index()
+    calendario = pd.date_range(demanda.index.min(), demanda.index.max(), freq="D")
+    demanda = demanda.reindex(calendario)
+    demanda.index.name = "fecha"
+    demanda = demanda.reset_index()
+    demanda["dia_semana"] = demanda["fecha"].dt.dayofweek
+    demanda["mes"] = demanda["fecha"].dt.month
+    demanda["fin_semana"] = (demanda["dia_semana"] >= 5).astype(int)
+    demanda["lag_1"] = demanda["viajes"].shift(1)
+    demanda["lag_7"] = demanda["viajes"].shift(7)
+    demanda = demanda.dropna().reset_index(drop=True)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    demanda.to_csv(output_path, index=False)
+    logger.success("Wrote {:,} daily demand rows to {}", len(demanda), output_path)
+    return demanda
+
+
 @app.command()
 def main(
     start_date: Annotated[
