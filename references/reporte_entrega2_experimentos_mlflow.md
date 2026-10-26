@@ -324,19 +324,47 @@ Para respaldo integral del proyecto del equipo, se integran las evidencias de P2
 
 ![Model Registry P2 con Modelo Champion](../reports/evidence/p2/P2_03_registry.png)
 
+![Evidencia de Búsqueda y Registro P1 — Demanda Diaria](../reports/evidence/p1/P1%20evidence.jpeg)
+
 ---
 
 # 7. Flujo de Trabajo con Git y Colaboración
 
 El proyecto aplicó rigurosamente la política de colaboración mediante Git y GitHub:
 * **Ramas Temáticas:** El desarrollo se distribuyó en ramas específicas por pregunta (`feat/p2-mlflow-registry`, `feat/p1-mlflow-registry` y `feat/p3-mlflow-registry`).
-* **Protección de Rama Principal:** Todo cambio ingresó a `main` mediante **Pull Request** revisado y aprobado por otro compañero de equipo.
-* **Convención de Commits:** Se utilizaron *Conventional Commits* (`feat:`, `docs:`, `test:`, `fix:`) asegurando un historial limpio y legible.
+* **Protección de Rama Principal:** Todo cambio ingresó a `main` mediante **Pull Request** revisado y aprobado por otro compañero de equipo (PR #7 para P2, PR #8 para P1, PR #9 para P3 y PR #10 para refactorización).
+* **Convención de Commits:** Se utilizaron *Conventional Commits* (`feat:`, `docs:`, `test:`, `refactor:`) asegurando un historial limpio y trazable.
 * **Control de Calidad Previo:** Cada commit fue validado por hooks de `pre-commit` ejecutando formateo y linting estricto con `ruff` y la suite de pruebas unitarias con `pytest` (25 pruebas automáticas pasando al 100%).
 
 ---
 
-# 8. Referencias (APA 7)
+# 8. Limitaciones del Modelado y Consideraciones Operativas de Negocio
+
+La experimentación rigurosa permitió identificar fronteras claras y restricciones que deben considerarse antes de utilizar estos modelos en entornos productivos reales:
+
+1. **Pregunta 1 (Demanda Diaria):**
+   * *Granularidad global vs. local:* El modelo pronostica la demanda agregada de toda la red metropolitana. Si bien es de gran utilidad para el dimensionamiento del personal de taller y la disponibilidad de flota activa general, no captura la variabilidad espacial a nivel de estación individual.
+   * *Deriva estacional (Seasonality Drift):* La brecha entre el MAE de validación (872.17) y el MAE de prueba (1250.43) refleja la sensibilidad ante cambios estacionales y vacaciones en Guadalajara, exigiendo un monitoreo continuo de métricas y reentrenamiento calendarizado.
+
+2. **Pregunta 2 (Riesgo de Desbalance Operativo):**
+   * *Naturaleza del target (Presión estimada vs. Inventario observado):* La etiqueta supervisada mide saldo neto proyectado a partir de viajes registrados, no el estado físico real de anclajes o bicicletas.
+   * *Tasa de falsas alarmas:* Aunque el árbol balanceado ($d=7$) captura casi el 60% de los eventos de desbalance, la baja prevalencia natural de las situaciones críticas se traduce en una precisión baja (~1.3%). Este modelo debe emplearse como un **filtro heurístico de priorización de patrullaje logístico**, nunca como un despachador automatizado desatendido sin supervisión humana.
+
+3. **Pregunta 3 (Segmentación de Estaciones):**
+   * *Evaluación interna vs. desempeño futuro:* Al tratarse de aprendizaje no supervisado, no existe una métrica supervisada tradicional de generalización futura. La métrica de silueta valida la separación geométrica, pero la verdadera justificación técnica radica en la coherencia operativa de los 4 cuadrantes funcionales urbanos y la capacidad inductiva (`predict`) de K-Means.
+
+---
+
+# 9. Conclusiones
+
+La Segunda Entrega del proyecto demuestra la implementación exitosa de un flujo de **MLOps** profesional, reproducible y trazable de extremo a extremo:
+1. **Reproducibilidad Garantizada:** El empaquetamiento como **MLflow Project** permite que cualquier colaborador o evaluador reproduzca la ingesta, el entrenamiento individual y las búsquedas jerárquicas con un solo comando determinista desde un clon limpio.
+2. **Experimentación Sistemática:** El uso de **nested runs** permitió estructurar y comparar decenas de combinaciones algorítmicas frente a sus respectivas líneas base, respetando estrictamente las particiones temporales y evitando fuga de datos.
+3. **Gobernanza y Ciclo de Vida Moderno:** La adopción del **Model Registry** respaldado en base de datos SQLite y el esquema de **Aliases** (`@champion`) desacopla limpiamente el código cliente de las versiones físicas de los modelos, estableciendo un estándar industrial para las etapas subsiguientes del proyecto integrador.
+
+---
+
+# 10. Referencias (APA 7)
 
 * AMIM. (2026). *Plan integral de movilidad y transporte sustentable del Área Metropolitana de Guadalajara*. Agencia Metropolitana de Infraestructura para la Movilidad.
 * Chen, L., Zhang, D., Wang, L., Yang, D., Ma, X., Li, S., ... & Biderman, C. (2016). Bike sharing station placement leveraging heterogeneous urban big data. *IEEE Transactions on Intelligent Transportation Systems*, 17(9), 2484–2494. https://doi.org/10.1109/TITS.2016.2523412
