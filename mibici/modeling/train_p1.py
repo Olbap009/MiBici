@@ -45,8 +45,10 @@ def file_hash(path: Path) -> str:
 
 def get_tracking_uri(uri: str = "http://127.0.0.1:5001") -> str:
     """Verifica si el servidor HTTP de MLflow responde; si no, usa SQLite local."""
+    if not uri.startswith(("http://", "https://")):
+        return f"sqlite:///{PROJ_ROOT}/mlruns.db"
     try:
-        with urlopen(uri, timeout=1.5):
+        with urlopen(uri, timeout=1.5):  # nosec B310
             return uri
     except (URLError, TimeoutError, OSError):
         return f"sqlite:///{PROJ_ROOT}/mlruns.db"

@@ -108,7 +108,7 @@ def check_tracking_uri(uri: str) -> str:
     """Verifica si la URI HTTP responde; en caso contrario, utiliza SQLite local."""
     if uri.startswith(("http://", "https://")):
         try:
-            with urlopen(uri, timeout=1.5):
+            with urlopen(uri, timeout=1.5):  # nosec B310
                 return uri
         except (URLError, TimeoutError, OSError):
             local_db = f"sqlite:///{PROJ_ROOT}/mlruns.db"
