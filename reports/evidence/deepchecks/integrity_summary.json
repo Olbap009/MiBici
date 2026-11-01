@@ -1,0 +1,21 @@
+{
+  "missing_values": {
+    "fecha": 0,
+    "viajes": 0,
+    "dia_semana": 0,
+    "mes": 0,
+    "fin_semana": 0,
+    "lag_1": 0,
+    "lag_7": 0
+  },
+  "duplicate_rows": 0,
+  "duplicate_dates": 0,
+  "negative_values": {
+    "viajes": 0,
+    "lag_1": 0,
+    "lag_7": 0
+  },
+  "invalid_weekdays": 0,
+  "invalid_months": 0,
+  "invalid_weekend": 0
+}

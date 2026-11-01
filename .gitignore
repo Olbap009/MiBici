@@ -80,3 +80,5 @@ references/*.html
 *:Zone.Identifier
 *.docx
 scratch/
+
+.venv-deepchecks/
