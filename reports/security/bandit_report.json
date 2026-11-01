@@ -1,0 +1,728 @@
+{
+  "errors": [],
+  "generated_at": "2026-11-01T01:35:12Z",
+  "metrics": {
+    "_totals": {
+      "CONFIDENCE.HIGH": 24,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 24,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 2656,
+      "nosec": 0,
+      "skipped_tests": 4
+    },
+    "mibici/__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 1,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/build_p2_examples.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 128,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/build_p2_movements.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 127,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/config.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 45,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/dataset.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 367,
+      "nosec": 0,
+      "skipped_tests": 2
+    },
+    "mibici/features.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 200,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/modeling/__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/modeling/project_p1.py": {
+      "CONFIDENCE.HIGH": 3,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 3,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 188,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/modeling/project_p2.py": {
+      "CONFIDENCE.HIGH": 3,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 3,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 284,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/modeling/project_p3.py": {
+      "CONFIDENCE.HIGH": 5,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 5,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 321,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/modeling/train_p1.py": {
+      "CONFIDENCE.HIGH": 3,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 3,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 149,
+      "nosec": 0,
+      "skipped_tests": 1
+    },
+    "mibici/modeling/train_p2.py": {
+      "CONFIDENCE.HIGH": 5,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 5,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 239,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/modeling/train_p3.py": {
+      "CONFIDENCE.HIGH": 5,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 5,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 403,
+      "nosec": 0,
+      "skipped_tests": 1
+    },
+    "mibici/project_cli.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 128,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "mibici/register_project_models.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 76,
+      "nosec": 0,
+      "skipped_tests": 0
+    }
+  },
+  "results": [
+    {
+      "code": "6 from pathlib import Path\n7 import subprocess\n8 import tempfile\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "mibici/modeling/project_p1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 7,
+      "line_range": [
+        7
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "71                 \"team\": \"23\",\n72                 \"commit\": subprocess.check_output(\n73                     [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n74                 ).strip(),\n75             }\n",
+      "col_offset": 26,
+      "end_col_offset": 17,
+      "filename": "mibici/modeling/project_p1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 72,
+      "line_range": [
+        72,
+        73,
+        74
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "71                 \"team\": \"23\",\n72                 \"commit\": subprocess.check_output(\n73                     [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n74                 ).strip(),\n75             }\n",
+      "col_offset": 26,
+      "end_col_offset": 17,
+      "filename": "mibici/modeling/project_p1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 72,
+      "line_range": [
+        72,
+        73,
+        74
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "6 from pathlib import Path\n7 import subprocess\n8 import tempfile\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "mibici/modeling/project_p2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 7,
+      "line_range": [
+        7
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "107 def _commit() -> str:\n108     return subprocess.check_output([\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True).strip()\n109 \n",
+      "col_offset": 11,
+      "end_col_offset": 90,
+      "filename": "mibici/modeling/project_p2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 108,
+      "line_range": [
+        108
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "107 def _commit() -> str:\n108     return subprocess.check_output([\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True).strip()\n109 \n",
+      "col_offset": 11,
+      "end_col_offset": 90,
+      "filename": "mibici/modeling/project_p2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 108,
+      "line_range": [
+        108
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "6 from pathlib import Path\n7 import subprocess\n8 import tempfile\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "mibici/modeling/project_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 7,
+      "line_range": [
+        7
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "109     with mlflow.start_run(run_name=run_name, nested=mlflow.active_run() is not None) as run:\n110         commit = subprocess.check_output(\n111             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n112         ).strip()\n113 \n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/project_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 110,
+      "line_range": [
+        110,
+        111,
+        112
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "109     with mlflow.start_run(run_name=run_name, nested=mlflow.active_run() is not None) as run:\n110         commit = subprocess.check_output(\n111             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n112         ).strip()\n113 \n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/project_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 110,
+      "line_range": [
+        110,
+        111,
+        112
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "256     with mlflow.start_run(run_name=\"P3_busqueda\", nested=mlflow.active_run() is not None):\n257         commit = subprocess.check_output(\n258             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n259         ).strip()\n260         mlflow.set_tags(\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/project_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 257,
+      "line_range": [
+        257,
+        258,
+        259
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "256     with mlflow.start_run(run_name=\"P3_busqueda\", nested=mlflow.active_run() is not None):\n257         commit = subprocess.check_output(\n258             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n259         ).strip()\n260         mlflow.set_tags(\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/project_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 257,
+      "line_range": [
+        257,
+        258,
+        259
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "2 from pathlib import Path\n3 import subprocess\n4 from urllib.error import URLError\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "mibici/modeling/train_p1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 3,
+      "line_range": [
+        3
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "92     try:\n93         commit = subprocess.check_output(\n94             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n95         ).strip()\n96     except (subprocess.SubprocessError, OSError):\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 93,
+      "line_range": [
+        93,
+        94,
+        95
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "92     try:\n93         commit = subprocess.check_output(\n94             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n95         ).strip()\n96     except (subprocess.SubprocessError, OSError):\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 93,
+      "line_range": [
+        93,
+        94,
+        95
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "6 from pathlib import Path\n7 import subprocess\n8 import tempfile\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "mibici/modeling/train_p2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 7,
+      "line_range": [
+        7
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "169     with mlflow.start_run(run_name=name) as run:\n170         commit = subprocess.check_output(\n171             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n172         ).strip()\n173         dirty = subprocess.check_output(\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 170,
+      "line_range": [
+        170,
+        171,
+        172
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "169     with mlflow.start_run(run_name=name) as run:\n170         commit = subprocess.check_output(\n171             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n172         ).strip()\n173         dirty = subprocess.check_output(\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 170,
+      "line_range": [
+        170,
+        171,
+        172
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "172         ).strip()\n173         dirty = subprocess.check_output(\n174             [\"git\", \"status\", \"--porcelain\"], cwd=PROJ_ROOT, text=True\n175         ).strip()\n176         mlflow.set_tags(\n",
+      "col_offset": 16,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 173,
+      "line_range": [
+        173,
+        174,
+        175
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "172         ).strip()\n173         dirty = subprocess.check_output(\n174             [\"git\", \"status\", \"--porcelain\"], cwd=PROJ_ROOT, text=True\n175         ).strip()\n176         mlflow.set_tags(\n",
+      "col_offset": 16,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 173,
+      "line_range": [
+        173,
+        174,
+        175
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "8 from pathlib import Path\n9 import subprocess\n10 import tempfile\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "mibici/modeling/train_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 9,
+      "line_range": [
+        9
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "318     with mlflow.start_run(run_name=run_name, nested=mlflow.active_run() is not None) as run:\n319         commit = subprocess.check_output(\n320             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n321         ).strip()\n322         dirty = subprocess.check_output(\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 319,
+      "line_range": [
+        319,
+        320,
+        321
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "318     with mlflow.start_run(run_name=run_name, nested=mlflow.active_run() is not None) as run:\n319         commit = subprocess.check_output(\n320             [\"git\", \"rev-parse\", \"HEAD\"], cwd=PROJ_ROOT, text=True\n321         ).strip()\n322         dirty = subprocess.check_output(\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 319,
+      "line_range": [
+        319,
+        320,
+        321
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "321         ).strip()\n322         dirty = subprocess.check_output(\n323             [\"git\", \"status\", \"--porcelain\"], cwd=PROJ_ROOT, text=True\n324         ).strip()\n325 \n",
+      "col_offset": 16,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 322,
+      "line_range": [
+        322,
+        323,
+        324
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "321         ).strip()\n322         dirty = subprocess.check_output(\n323             [\"git\", \"status\", \"--porcelain\"], cwd=PROJ_ROOT, text=True\n324         ).strip()\n325 \n",
+      "col_offset": 16,
+      "end_col_offset": 9,
+      "filename": "mibici/modeling/train_p3.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 322,
+      "line_range": [
+        322,
+        323,
+        324
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    }
+  ]
+}
