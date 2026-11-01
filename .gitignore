@@ -62,8 +62,32 @@ docs/site/
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/
 
-# Environments
+# Environments & Secrets
 .env
+.env.*
+!.env.example
+*.env
+.secrets*
+*.secret
+*.token
+token.json
+
+# Security & Credentials
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+*credentials*.json
+*secret*.json
+service_account*.json
+gcp_key*.json
+aws_*.json
+.aws/
+.gcp/
+
 .venv
 
 # Ruff stuff:
