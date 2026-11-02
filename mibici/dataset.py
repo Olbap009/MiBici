@@ -92,12 +92,12 @@ class DownloadLinkParser(HTMLParser):
 
 def _download(url: str) -> bytes:
     request = _request(url)
-    with urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
+    with urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:  # nosec B310
         return response.read()
 
 
 def _read_trip_csv_chunks(url: str) -> Iterator[pd.DataFrame]:
-    with urlopen(_request(url), timeout=REQUEST_TIMEOUT_SECONDS) as response:
+    with urlopen(_request(url), timeout=REQUEST_TIMEOUT_SECONDS) as response:  # nosec B310
         buffered_response = BufferedReader(response)
         header = buffered_response.peek(8192).splitlines()[0]
         encoding = _detect_csv_encoding(header)
@@ -117,6 +117,9 @@ def _detect_csv_encoding(header: bytes) -> str:
 
 
 def _request(url: str) -> Request:
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        raise ValueError(f"Unsupported URL scheme: {parsed.scheme}")
     return Request(url, headers={"User-Agent": "mibici-open-data-downloader/1.0"})
 
 

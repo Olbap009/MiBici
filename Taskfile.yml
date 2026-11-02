@@ -49,6 +49,31 @@ tasks:
     cmds:
       - uv run pytest tests
 
+  security:bandit:
+    desc: Run Bandit SAST static security analysis on codebase
+    cmds:
+      - uv run bandit -r mibici -ll
+
+  security:audit:
+    desc: Run pip-audit software composition analysis (SCA) on dependencies
+    cmds:
+      - uv run pip-audit
+
+  security:check:
+    desc: Run all basic security checks (SAST code analysis and SCA dependencies)
+    cmds:
+      - task: security:bandit
+      - task: security:audit
+
+  security:report:
+    desc: Generate formatted security audit evidence reports in reports/security/
+    cmds:
+      - mkdir -p reports/security
+      - uv run bandit -r mibici -f txt -o reports/security/bandit_report.txt || true
+      - uv run bandit -r mibici -f json -o reports/security/bandit_report.json || true
+      - uv run pip-audit -f columns -o reports/security/pip_audit_report.txt || true
+      - uv run pip-audit -f json -o reports/security/pip_audit_report.json || true
+
   data:
     desc: Make dataset using DVC pipeline
     deps: [requirements]
