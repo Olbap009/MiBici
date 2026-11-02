@@ -1,17 +1,16 @@
 """Validacion de calidad de datos P1 mediante DeepChecks."""
 
-from pathlib import Path
 import json
-
-import pandas as pd
+from pathlib import Path
 
 from deepchecks.tabular import Dataset
 from deepchecks.tabular.checks import (
     DataDuplicates,
-    MixedDataTypes,
     FeatureDrift,
+    MixedDataTypes,
 )
 from deepchecks.tabular.suites import data_integrity
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -45,21 +44,14 @@ def validate_rules(df):
     issues["duplicate_dates"] = int(df["fecha"].duplicated().sum())
 
     issues["negative_values"] = {
-        col: int((df[col] < 0).sum())
-        for col in ["viajes", "lag_1", "lag_7"]
+        col: int((df[col] < 0).sum()) for col in ["viajes", "lag_1", "lag_7"]
     }
 
-    issues["invalid_weekdays"] = int(
-        (~df["dia_semana"].between(0, 6)).sum()
-    )
+    issues["invalid_weekdays"] = int((~df["dia_semana"].between(0, 6)).sum())
 
-    issues["invalid_months"] = int(
-        (~df["mes"].between(1, 12)).sum()
-    )
+    issues["invalid_months"] = int((~df["mes"].between(1, 12)).sum())
 
-    issues["invalid_weekend"] = int(
-        (~df["fin_semana"].isin([0, 1])).sum()
-    )
+    issues["invalid_weekend"] = int((~df["fin_semana"].isin([0, 1])).sum())
 
     return issues
 
@@ -130,7 +122,11 @@ def run_validation():
     integrity_result = integrity_suite.run(full_dataset)
 
     integrity_result.save_as_html(
-        str(OUTPUT_DIR / "deepchecks_integrity.html")
+        str(OUTPUT_DIR / "deepchecks_integrity.html"),
+        as_widget=False,
+    )
+    (OUTPUT_DIR / "deepchecks_integrity.json").write_text(
+        integrity_result.to_json(with_display=False), encoding="utf-8"
     )
 
     # Chequeos especificos
@@ -146,7 +142,11 @@ def run_validation():
     print(drift_result.value)
     print("==========================================")
     drift_result.save_as_html(
-        str(OUTPUT_DIR / "deepchecks_drift.html")
+        str(OUTPUT_DIR / "deepchecks_drift.html"),
+        as_widget=False,
+    )
+    (OUTPUT_DIR / "deepchecks_drift.json").write_text(
+        drift_result.to_json(with_display=False), encoding="utf-8"
     )
 
     print("\nChequeos ejecutados:")

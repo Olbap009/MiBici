@@ -1,0 +1,76 @@
+{
+  "recorded_at": "2026-11-01T21:19:40-06:00",
+  "timezone": "America/Mexico_City",
+  "contribution_author": "Juan Pablo Islas Guzmán",
+  "github_login": "Olbap009",
+  "base_commit": "45fa7c485ba9aad21239c6057f0e64a9b6ce102b",
+  "branch": "docs/actividad7-evidencias-a01797727",
+  "execution_note": "Run on the contribution working tree before its evidence commit. Validation export was adjusted to HTML without ipywidgets and structured JSON. Models unchanged.",
+  "dataset": {
+    "path": "data/processed/p1_demanda_diaria.csv",
+    "source": "Local course project: Semana 5/MiBici_Proyecto",
+    "sha256": "36ecd695ac7bd9b4e6256445a9c299f2c9d05d950808d5788f54bbb366656e70",
+    "rows": 1075,
+    "date_min": "2023-10-22",
+    "date_max": "2026-09-30",
+    "synthetic": false,
+    "canonical_dvc_identity_verified": false,
+    "local_trips_matches_dvc_lock": false,
+    "split_rows": {
+      "train": 645,
+      "validation": 215,
+      "test": 215
+    }
+  },
+  "checks": {
+    "pytest": {
+      "command": "uv run --locked python -m pytest tests -q",
+      "exit_code": 0,
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "warnings": 60,
+      "log": "pytest_ejecucion.txt"
+    },
+    "deepchecks": {
+      "command": ".venv-deepchecks/bin/python -m mibici.validation.deepchecks_validation",
+      "exit_code": 0,
+      "conditions_passed": 9,
+      "checks_without_conditions": 1,
+      "checks_not_applicable_or_unavailable": 2,
+      "log": "deepchecks_ejecucion.txt"
+    },
+    "bandit_threshold": {
+      "command": "uv run --locked bandit -r mibici -ll",
+      "exit_code": 0,
+      "log": "bandit_ejecucion.txt"
+    },
+    "bandit_full": {
+      "command": "uv run --locked bandit -r mibici -f json",
+      "exit_code": 1,
+      "low": 24,
+      "medium": 0,
+      "high": 0,
+      "json": "bandit_revision.json"
+    },
+    "pip_audit": {
+      "command": "uv run --locked pip-audit",
+      "exit_code": 1,
+      "advisory_entries": 5,
+      "unique_package_advisories": 4,
+      "packages": [
+        "diskcache",
+        "mlflow"
+      ],
+      "measured_at": "2026-11-01T21:04:02-06:00",
+      "json": "pip_audit_revision.json",
+      "log": "pip_audit_ejecucion.txt"
+    }
+  },
+  "limitations": [
+    "Actual local P1 CSV is identified by hash; canonical DVC dataset not certified.",
+    "No claim that all DeepChecks suite checks passed.",
+    "Dependency advisories remain open.",
+    "No Canvas submission or PR approval claimed."
+  ]
+}

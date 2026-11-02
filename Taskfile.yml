@@ -49,6 +49,16 @@ tasks:
     cmds:
       - uv run pytest tests
 
+  deepchecks:
+    desc: Validate P1 data using the separate Python 3.12 DeepChecks environment (Unix/macOS)
+    preconditions:
+      - sh: test -x .venv-deepchecks/bin/python
+        msg: Prepare .venv-deepchecks with requirements-deepchecks.txt as documented in README.
+      - sh: test -f data/processed/p1_demanda_diaria.csv
+        msg: Prepare the real P1 dataset as documented in README before running DeepChecks.
+    cmds:
+      - .venv-deepchecks/bin/python -m mibici.validation.deepchecks_validation
+
   security:bandit:
     desc: Run Bandit SAST static security analysis on codebase
     cmds:

@@ -6,6 +6,42 @@
 
 Proyecto de MLOps con datos del sistema de bicicleta pública del Área Metropolitana de Guadalajara, MiBici.
 
+## Actividad 7: pruebas, validación de datos y seguridad
+
+La [guía de ejecución y evidencias](reports/evidence/actividad7/README.md) documenta
+la preparación de los dos entornos, los comandos y la interpretación de sus resultados.
+Incluye [capturas](reports/evidence/actividad7/README.md#capturas-y-archivos-de-evidencia),
+salidas de ejecución, versiones y la identificación del dataset validado.
+
+```bash
+# Entorno principal: Python 3.13, versiones fijadas en uv.lock.
+uv sync --locked
+uv run --locked python -m pytest tests -q
+
+# Seguridad: un código de salida distinto de cero exige revisar el reporte.
+uv run --locked bandit -r mibici -ll
+uv run --locked pip-audit
+
+# DeepChecks usa otro entorno, sin instalarlo sobre el entorno principal.
+# Comandos para Linux/macOS; preparación de datos y Windows en la guía.
+uv venv --python 3.12 .venv-deepchecks
+uv pip install --python .venv-deepchecks/bin/python -r requirements-deepchecks.txt
+.venv-deepchecks/bin/python -m mibici.validation.deepchecks_validation
+```
+
+También están disponibles `task test`, `task deepchecks`, `task security:bandit`,
+`task security:audit` y `task security:check`. DeepChecks requiere previamente
+`data/processed/p1_demanda_diaria.csv`; la guía explica cómo obtenerlo o reconstruirlo
+desde los viajes del proyecto. Las pruebas unitarias usan datos pequeños de prueba
+y no requieren descargar el dataset completo.
+
+La ejecución documentada pasó las **26 pruebas**. Bandit no detectó hallazgos medios
+o altos y reportó 24 bajos en el análisis completo. **pip-audit conserva avisos
+abiertos**: la [auditoría de seguridad](reports/security/auditoria_seguridad.md) y la
+guía distinguen una herramienta ejecutada correctamente de un resultado sin
+vulnerabilidades. Las cifras y la versión concreta de los datos están en las evidencias;
+no se atribuyen a ejecuciones o datasets distintos.
+
 ## Estructura del proyecto
 
 ```

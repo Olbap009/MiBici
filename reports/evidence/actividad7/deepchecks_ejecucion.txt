@@ -1,0 +1,51 @@
+2026-11-01 21:16:49.635 | INFO     | mibici.config:<module>:11 - PROJ_ROOT path is: /private/tmp/revision-tc5061-equipo23-20261101
+/private/tmp/revision-tc5061-equipo23-20261101/.venv-deepchecks/lib/python3.12/site-packages/deepchecks/core/serialization/dataframe/html.py:16: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import parse_version
+/private/tmp/revision-tc5061-equipo23-20261101/.venv-deepchecks/lib/python3.12/site-packages/sklearn/metrics/_scorer.py:610: FutureWarning: The `needs_threshold` and `needs_proba` parameter are deprecated in version 1.4 and will be removed in 1.6. You can either let `response_method` be `None` or set it to `predict` to preserve the same behaviour.
+  warnings.warn(
+Registros: 1075
+Columnas: ['fecha', 'viajes', 'dia_semana', 'mes', 'fin_semana', 'lag_1', 'lag_7']
+
+Resumen de integridad:
+{
+  "missing_values": {
+    "fecha": 0,
+    "viajes": 0,
+    "dia_semana": 0,
+    "mes": 0,
+    "fin_semana": 0,
+    "lag_1": 0,
+    "lag_7": 0
+  },
+  "duplicate_rows": 0,
+  "duplicate_dates": 0,
+  "negative_values": {
+    "viajes": 0,
+    "lag_1": 0,
+    "lag_7": 0
+  },
+  "invalid_weekdays": 0,
+  "invalid_months": 0,
+  "invalid_weekend": 0
+}
+
+Division temporal:
+Train: 645
+Validation: 215
+Test: 215
+
+Data Integrity Suite:
+|            | 0/12 [Time: 00:00]
+Data Integrity Suite:
+|██████████  | 10/12 [Time: 00:00, Check=Feature Label Correlation]
+
+========== RESULTADOS DATA DRIFT ==========
+{'dia_semana': {'Drift score': 0.0, 'Method': "Cramer's V", 'Importance': None}, 'mes': {'Drift score': 0.5118494166956006, 'Method': "Cramer's V", 'Importance': None}, 'fin_semana': {'Drift score': 0.0, 'Method': "Cramer's V", 'Importance': None}, 'lag_1': {'Drift score': 0.23410852713178298, 'Method': 'Kolmogorov-Smirnov', 'Importance': None}, 'lag_7': {'Drift score': 0.26201550387596906, 'Method': 'Kolmogorov-Smirnov', 'Importance': None}}
+==========================================
+
+Chequeos ejecutados:
+Duplicados: 0.0
+Tipos mixtos: {'dia_semana': {}, 'mes': {}, 'fin_semana': {}, 'lag_1': {}, 'lag_7': {}, 'viajes': {}}
+
+Reportes generados en:
+/private/tmp/revision-tc5061-equipo23-20261101/reports/evidence/deepchecks
