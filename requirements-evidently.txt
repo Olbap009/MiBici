@@ -1,0 +1,8 @@
+evidently==0.7.23
+loguru==0.8.0
+numpy==2.5.4
+pandas==2.3.3
+pyarrow==22.0.0
+pydantic==2.14.3
+python-dotenv==1.2.4
+scipy==1.18.1
