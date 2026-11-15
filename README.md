@@ -6,6 +6,12 @@
 
 Proyecto de MLOps con datos del sistema de bicicleta pública del Área Metropolitana de Guadalajara, MiBici.
 
+## Monitoreo de datos de P2 con Evidently
+
+La [guía de monitoreo](reports/evidence/p2_drift/README.md) documenta cómo comparar
+los datos de julio a septiembre de 2025 y 2026, y contiene las gráficas y los
+resultados reproducibles de drift y calidad de datos de las ocho variables de P2.
+
 ## API REST de P2: despliegue y evidencia
 
 La [guía del servicio P2](docs/api_p2.md) explica la estrategia de inferencia en

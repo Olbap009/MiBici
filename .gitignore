@@ -107,6 +107,8 @@ references/*.html
 scratch/
 
 .venv-deepchecks/
+.venv-evidently/
 
 # Large interactive DeepChecks reports; regenerate locally. Keep JSON/logs/screenshots.
 /reports/evidence/deepchecks/*.html
+/reports/evidence/p2_drift/*.html
