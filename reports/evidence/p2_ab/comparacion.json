@@ -1,0 +1,103 @@
+{
+  "dataset_sha256": "65e71b0f8d489210ce185ac3e3de0ab85c0c50df75473128aeb5e32e61a477a3",
+  "evaluation": {
+    "split": "test",
+    "start_inclusive": "2026-07-01T00:00:00",
+    "end_exclusive": "2026-10-01T00:00:00",
+    "rows": 2010909
+  },
+  "class_order": [
+    "sin_presion_neta_elevada",
+    "presion_sin_bicicletas",
+    "presion_sin_anclajes"
+  ],
+  "A": {
+    "kind": "local_artifact",
+    "artifact": "p2_champion",
+    "model_name": "MiBici_Equipo23_P2_Presion_Proxy_Academica",
+    "version": "1",
+    "run_id": "55225195968642979a681bf751d9e2f8",
+    "balanced_accuracy": 0.467632173950627,
+    "precision": {
+      "sin_presion_neta_elevada": 0.9968052938181995,
+      "presion_sin_bicicletas": 0.019723946982469126,
+      "presion_sin_anclajes": 0.09085673146148308
+    },
+    "recall": {
+      "sin_presion_neta_elevada": 0.9617352062683432,
+      "presion_sin_bicicletas": 0.31153929421952803,
+      "presion_sin_anclajes": 0.12962202136400985
+    },
+    "alerts": 79902,
+    "alerts_on_no_pressure": 76584,
+    "confusion_matrix": [
+      [
+        1924838,
+        70516,
+        6068
+      ],
+      [
+        2934,
+        1439,
+        246
+      ],
+      [
+        3235,
+        1002,
+        631
+      ]
+    ]
+  },
+  "B": {
+    "kind": "local_candidate",
+    "model_type": "DecisionTreeClassifier",
+    "params": {
+      "max_depth": 3,
+      "class_weight": "balanced",
+      "random_state": 42
+    },
+    "splits": [
+      "train",
+      "validation"
+    ],
+    "training_cutoff": "2026-07-01T00:00:00",
+    "sample_fraction": 0.05,
+    "train_rows_available": 16903453,
+    "train_rows_used": 844359,
+    "sample_class_counts": {
+      "sin_presion_neta_elevada": 838105,
+      "presion_sin_bicicletas": 3194,
+      "presion_sin_anclajes": 3060
+    },
+    "balanced_accuracy": 0.6037371406983822,
+    "precision": {
+      "sin_presion_neta_elevada": 0.9994157750813304,
+      "presion_sin_bicicletas": 0.011512280077528816,
+      "presion_sin_anclajes": 0.006968155699540752
+    },
+    "recall": {
+      "sin_presion_neta_elevada": 0.6931836464273902,
+      "presion_sin_bicicletas": 0.5323663130547738,
+      "presion_sin_anclajes": 0.5856614626129828
+    },
+    "alerts": 622745,
+    "alerts_on_no_pressure": 614069,
+    "confusion_matrix": [
+      [
+        1387353,
+        209546,
+        404523
+      ],
+      [
+        387,
+        2459,
+        1773
+      ],
+      [
+        424,
+        1593,
+        2851
+      ]
+    ]
+  }
+}
