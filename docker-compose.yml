@@ -1,0 +1,89 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: mibici-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-mibici}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mibici}
+      POSTGRES_DB: ${POSTGRES_DB:-mibici}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infra/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mibici} -d ${POSTGRES_DB:-mibici}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Containerfile
+    image: mibici-p2-api:latest
+    container_name: mibici-p2-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    expose:
+      - "8000"
+    ports:
+      - "${API_PORT:-8000}:8000"
+    environment:
+      MODEL_PATH: ${MODEL_PATH:-/app/models/p2_champion}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      APP_ENV: ${APP_ENV:-production}
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-mibici}:${POSTGRES_PASSWORD:-mibici}@postgres:5432/${POSTGRES_DB:-mibici}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana-oss:11.3.0
+    container_name: mibici-grafana
+    depends_on:
+      postgres:
+        condition: service_healthy
+    expose:
+      - "3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_SERVER_ROOT_URL: http://localhost:${NGINX_PORT:-80}/monitoring/
+      GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+      POSTGRES_USER: ${POSTGRES_USER:-mibici}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mibici}
+      POSTGRES_DB: ${POSTGRES_DB:-mibici}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./infra/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: mibici-nginx
+    depends_on:
+      api:
+        condition: service_healthy
+      grafana:
+        condition: service_started
+    ports:
+      - "${NGINX_PORT:-80}:80"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  grafana_data:

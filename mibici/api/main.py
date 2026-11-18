@@ -9,6 +9,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.responses import HTMLResponse
 from loguru import logger
 
+from mibici.api.db import init_db, log_predictions
 from mibici.api.model import ModelService, get_model_service, model_service
 from mibici.api.schemas import (
     BatchP2PredictionRequest,
@@ -25,6 +26,7 @@ from mibici.api.ui import get_ui_html
 async def lifespan(app: FastAPI):
     """Ciclo de vida de la aplicación: carga el modelo al iniciar."""
     logger.info("Iniciando servicio de API FastAPI para MiBici P2...")
+    init_db()
     try:
         model_service.load_model()
     except (RuntimeError, ValueError, OSError) as e:
@@ -151,7 +153,9 @@ async def predict(
     - **capacity**: Capacidad total de anclajes de la estación (> 0).
     """
     try:
-        return service.predict(request)
+        response = service.predict(request)
+        log_predictions([(request, response)])
+        return response
     except (ValueError, TypeError, RuntimeError) as e:
         logger.error("Error al procesar la predicción: {}", e)
         raise HTTPException(
@@ -174,6 +178,7 @@ async def predict_batch(
     """Realiza inferencias vectorizadas sobre una lista de instancias."""
     try:
         predictions = service.predict_batch(request.instances)
+        log_predictions(list(zip(request.instances, predictions, strict=True)))
         return BatchP2PredictionResponse(predictions=predictions)
     except (ValueError, TypeError, RuntimeError) as e:
         logger.error("Error al procesar lote de predicciones: {}", e)

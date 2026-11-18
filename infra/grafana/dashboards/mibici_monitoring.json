@@ -1,0 +1,82 @@
+{
+  "id": null,
+  "uid": "mibici-p2-monitoring",
+  "title": "MiBici P2 — Monitoreo de Predicciones",
+  "tags": ["mibici", "p2", "mlops"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Total de predicciones",
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "mibici-postgres" },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT COUNT(*) AS total FROM predictions;"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Alertas de presión (sin bicis / sin anclajes)",
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "mibici-postgres" },
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 0 },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT COUNT(*) AS alertas FROM predictions WHERE prediction <> 'sin_presion_neta_elevada';"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "piechart",
+      "title": "Distribución por clase predicha",
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "mibici-postgres" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT prediction AS clase, COUNT(*) AS total FROM predictions GROUP BY prediction ORDER BY total DESC;"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "Predicciones en el tiempo por clase",
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "mibici-postgres" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 5 },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawSql": "SELECT date_trunc('minute', created_at) AS time, prediction AS metric, COUNT(*) AS value FROM predictions WHERE $__timeFilter(created_at) GROUP BY 1, 2 ORDER BY 1;"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "table",
+      "title": "Últimas predicciones registradas",
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "mibici-postgres" },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 13 },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT created_at, prediction, model_name, model_version, departures_prev_30m, arrivals_prev_30m, departures_prev_2h, arrivals_prev_2h, hour, minute, day_of_week, capacity FROM predictions ORDER BY created_at DESC LIMIT 50;"
+        }
+      ]
+    }
+  ]
+}
