@@ -1,0 +1,100 @@
+{
+  "price_reference": {
+    "service": "AWS Lightsail Linux/Unix con IPv4 p\u00fablico",
+    "monthly_usd": 24,
+    "memory_gb": 4,
+    "vcpus": 2,
+    "hours_per_month_assumed": 730,
+    "source": "https://aws.amazon.com/lightsail/pricing/"
+  },
+  "scenarios": [
+    {
+      "users": 5,
+      "requests": 1364,
+      "failures": 0,
+      "error_rate_percent": 0.0,
+      "rps": 23.491656129559455,
+      "mean_ms": 11.70091027282408,
+      "p50_ms": 10,
+      "p95_ms": 21,
+      "p99_ms": 56,
+      "resources": {
+        "mibici-p2-api": {
+          "samples": 17,
+          "cpu_mean_percent": 12.581176470588234,
+          "cpu_max_percent": 20.43,
+          "memory_mean_mib": 225.11176470588236,
+          "memory_max_mib": 225.7
+        },
+        "mibici-postgres": {
+          "samples": 17,
+          "cpu_mean_percent": 1.9229411764705882,
+          "cpu_max_percent": 4.14,
+          "memory_mean_mib": 26.934117647058823,
+          "memory_max_mib": 28.12
+        },
+        "mibici-grafana": {
+          "samples": 17,
+          "cpu_mean_percent": 1.0623529411764705,
+          "cpu_max_percent": 12.6,
+          "memory_mean_mib": 67.92411764705882,
+          "memory_max_mib": 68.31
+        },
+        "mibici-nginx": {
+          "samples": 17,
+          "cpu_mean_percent": 1.234705882352941,
+          "cpu_max_percent": 2.02,
+          "memory_mean_mib": 7.591176470588235,
+          "memory_max_mib": 8.031
+        }
+      },
+      "usd_per_inference": 3.887516504139916e-07,
+      "usd_per_1000_at_measured_rate": 0.00038875165041399155,
+      "usd_per_1000_at_10pct_utilization": 0.003887516504139915
+    },
+    {
+      "users": 25,
+      "requests": 7179,
+      "failures": 0,
+      "error_rate_percent": 0.0,
+      "rps": 119.9645413522231,
+      "mean_ms": 6.385318793854682,
+      "p50_ms": 5,
+      "p95_ms": 10,
+      "p99_ms": 23,
+      "resources": {
+        "mibici-p2-api": {
+          "samples": 16,
+          "cpu_mean_percent": 24.975625,
+          "cpu_max_percent": 38.35,
+          "memory_mean_mib": 226.65625,
+          "memory_max_mib": 238.5
+        },
+        "mibici-postgres": {
+          "samples": 16,
+          "cpu_mean_percent": 2.29375,
+          "cpu_max_percent": 4.98,
+          "memory_mean_mib": 28.490625,
+          "memory_max_mib": 29.52
+        },
+        "mibici-grafana": {
+          "samples": 16,
+          "cpu_mean_percent": 0.37125,
+          "cpu_max_percent": 5.23,
+          "memory_mean_mib": 68.525,
+          "memory_max_mib": 69.9
+        },
+        "mibici-nginx": {
+          "samples": 16,
+          "cpu_mean_percent": 2.05125,
+          "cpu_max_percent": 2.82,
+          "memory_mean_mib": 8.80175,
+          "memory_max_mib": 9.707
+        }
+      },
+      "usd_per_inference": 7.612599513476958e-08,
+      "usd_per_1000_at_measured_rate": 7.612599513476957e-05,
+      "usd_per_1000_at_10pct_utilization": 0.0007612599513476957
+    }
+  ]
+}

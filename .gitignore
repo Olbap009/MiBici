@@ -108,6 +108,7 @@ scratch/
 
 .venv-deepchecks/
 .venv-evidently/
+.venv-locust/
 
 # Large interactive DeepChecks reports; regenerate locally. Keep JSON/logs/screenshots.
 /reports/evidence/deepchecks/*.html

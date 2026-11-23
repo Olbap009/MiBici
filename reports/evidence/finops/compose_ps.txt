@@ -1,0 +1,5 @@
+NAME              IMAGE                        COMMAND                  SERVICE    CREATED         STATUS                   PORTS
+mibici-grafana    grafana/grafana-oss:11.3.0   "/run.sh"                grafana    3 minutes ago   Up 2 minutes             3000/tcp
+mibici-nginx      nginx:1.27-alpine            "/docker-entrypoint.…"   nginx      3 minutes ago   Up 2 minutes             0.0.0.0:18080->80/tcp, [::]:18080->80/tcp
+mibici-p2-api     mibici-p2-api:latest         "uvicorn mibici.api.…"   api        3 minutes ago   Up 2 minutes (healthy)   0.0.0.0:18000->8000/tcp, [::]:18000->8000/tcp
+mibici-postgres   postgres:16-alpine           "docker-entrypoint.s…"   postgres   3 minutes ago   Up 3 minutes (healthy)   5432/tcp
