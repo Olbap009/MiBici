@@ -1,0 +1,23 @@
+{
+  "start_time": "2026-11-23T05:58:33Z",
+  "end_time": "2026-11-23T05:59:31Z",
+  "host": "http://127.0.0.1:18080",
+  "statistics": {
+    "avg_content_length": 125.33284457478005,
+    "avg_response_time": 11.70091027282408,
+    "current_fail_per_sec": 0.0,
+    "current_rps": 23.6,
+    "max_response_time": 95.0,
+    "median_response_time": 10,
+    "method": "",
+    "min_response_time": 3.0,
+    "name": "Aggregated",
+    "num_failures": 0,
+    "num_requests": 1364,
+    "response_time_percentile_0.95": 21,
+    "response_time_percentile_0.99": 56,
+    "total_fail_per_sec": 0.0,
+    "total_rps": 23.491656129559455
+  },
+  "periodic_csv_requests": 1341
+}

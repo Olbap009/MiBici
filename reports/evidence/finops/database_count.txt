@@ -1,0 +1,5 @@
+ predictions_logged 
+--------------------
+               8543
+(1 row)
+

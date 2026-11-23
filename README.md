@@ -1,5 +1,47 @@
 # mibici
 
+## Operación con Compose y pruebas de carga
+
+Requisitos: Docker con Compose y Python 3.13. Desde la raíz del repositorio:
+
+```bash
+docker compose up -d --build
+docker compose ps
+curl -fsS http://127.0.0.1:8000/health
+curl -fsS http://127.0.0.1:8000/model/info
+```
+
+Nginx expone la interfaz en `http://127.0.0.1/ui` y Grafana en
+`http://127.0.0.1/monitoring/`. El Compose incluye la API, PostgreSQL,
+Grafana y Nginx, con volúmenes persistentes y comprobaciones de salud.
+Configurar credenciales mediante las variables del Compose según el entorno.
+Para usar los mismos puertos de esta evidencia, anteponer
+`API_PORT=18000 NGINX_PORT=18080` al comando de levantamiento.
+
+La prueba de carga se instala en un entorno separado:
+
+```bash
+python3.13 -m venv .venv-locust
+source .venv-locust/bin/activate
+python -m pip install -r requirements-locust.txt
+python loadtests/run_load.py --host http://127.0.0.1 --users 5 25 --seconds 60
+python loadtests/summarize.py
+python loadtests/plot_results.py
+```
+
+Con los puertos alternativos, usar `--host http://127.0.0.1:18080`.
+Los tres casos de entrada, la validación de la respuesta, los CSV de Locust,
+los HTML interactivos y las muestras de `docker stats` quedan en
+`reports/evidence/finops/`. El resumen agrega métricas por escenario y estima
+el costo unitario según los supuestos de tarifa documentados allí.
+
+El pipeline `.github/workflows/ci.yml` se ejecuta con cada push a `main`.
+Corre Ruff y Pytest, construye la imagen y comprueba `/health`, con caché
+de dependencias y capas. La [ejecución verificada en verde](https://github.com/bryan-s-ortega/TC5061-Proyecto-Equipo23/actions/runs/44222997493)
+está disponible en GitHub Actions.
+
+Para detener los servicios conservando sus volúmenes, ejecutar `docker compose down`.
+
 <a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
     <img src="https://img.shields.io/badge/CCDS-Plantilla%20de%20proyecto-328F97?logo=cookiecutter" />
 </a>
