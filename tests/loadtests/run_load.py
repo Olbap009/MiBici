@@ -28,7 +28,7 @@ def main():
             "-m",
             "locust",
             "-f",
-            "loadtests/locustfile.py",
+            "tests/loadtests/locustfile.py",
             "--headless",
             "--host",
             args.host,
