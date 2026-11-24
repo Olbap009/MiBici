@@ -68,6 +68,10 @@ manifiesto identifica el Registry de DagsHub, el alias `champion`, la versión y
 corrida de procedencia. La guía distingue esos metadatos de la respuesta de la
 API y del modo de demostración que puede activarse si falla la carga del modelo.
 
+Para levantar el stack completo (`nginx`, `api`, `postgres`, `grafana`) con Docker
+Compose y exponerlo temporalmente en internet mediante **ngrok**, consulta la
+[guía de demo con Docker Compose y ngrok](docs/demo_docker_ngrok.md).
+
 ## Actividad 7: pruebas, validación de datos y seguridad
 
 La [guía de ejecución y evidencias](reports/evidence/actividad7/README.md) documenta

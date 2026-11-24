@@ -88,6 +88,33 @@ tasks:
     cmds:
       - docker run --rm -p 8000:8000 mibici-p2-api:latest
 
+  stack:up:
+    desc: Build and start full local stack (nginx, api, postgres, grafana)
+    cmds:
+      - test -f .env || cp .env.example .env
+      - docker compose up -d --build
+
+  stack:down:
+    desc: Stop local Docker Compose stack
+    cmds:
+      - docker compose down
+
+  stack:logs:
+    desc: Follow logs from Docker Compose services
+    cmds:
+      - docker compose logs -f
+
+  demo:tunnel:
+    desc: Expose local Nginx entrypoint publicly via ngrok for temporary demos
+    vars:
+      PORT: '{{.PORT | default "80"}}'
+      URL: '{{.URL | default ""}}'
+    preconditions:
+      - sh: command -v ngrok >/dev/null 2>&1
+        msg: 'ngrok is not installed. Install it from https://ngrok.com/download'
+    cmds:
+      - '{{if .URL}}ngrok http {{.PORT}} --url {{.URL}}{{else}}ngrok http {{.PORT}}{{end}}'
+
   create-env:
     desc: Set up Python virtual environment
     aliases: [create_environment]
