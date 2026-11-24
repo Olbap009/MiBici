@@ -31,9 +31,9 @@ El pipeline [.github/workflows/ci.yml](../.github/workflows/ci.yml) se ejecuta e
 La prueba de carga usa el grupo `loadtest` integrado en `uv.lock`:
 
 ```bash
-uv run --locked --group loadtest python loadtests/run_load.py --host http://127.0.0.1 --users 5 25 --seconds 60
-uv run --locked --group loadtest python loadtests/summarize.py
-uv run --locked --group loadtest python loadtests/plot_results.py
+uv run --locked --group loadtest python tests/loadtests/run_load.py --host http://127.0.0.1 --users 5 25 --seconds 60
+uv run --locked --group loadtest python tests/loadtests/summarize.py
+uv run --locked --group loadtest python tests/loadtests/plot_results.py
 ```
 
 Con puertos alternativos, usar `--host http://127.0.0.1:18080`. Los resultados y estimaciones de costo quedan en [reports/evidence/finops/](../reports/evidence/finops/).

@@ -80,7 +80,7 @@ en el contenedor coincide con el paquete del repositorio.
 El contrato original está en [schemas.py](../mibici/api/schemas.py) y se describe
 en [p2_api_contract.md](../references/p2_api_contract.md). Se usa el mismo JSON
 compartido por el equipo, disponible en
-[examples/p2_prediction_request.json](../examples/p2_prediction_request.json):
+[references/p2_prediction_request.json](../references/p2_prediction_request.json):
 
 ```json
 {
@@ -103,7 +103,7 @@ campos adicionales ni faltantes.
 curl --fail-with-body -i \
   -X POST http://127.0.0.1:18000/predict \
   -H 'Content-Type: application/json' \
-  --data-binary @examples/p2_prediction_request.json
+  --data-binary @references/p2_prediction_request.json
 ```
 
 Respuesta real obtenida desde el contenedor el 8 de noviembre de 2026, con HTTP
