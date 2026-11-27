@@ -13,6 +13,11 @@ Julio a septiembre de 2025 es la referencia del protocolo de drift, tomada de
 la partición `train` de P2. Su uso exacto en el entrenamiento de A queda por
 confirmar con el equipo.
 
+La [auditoría de linaje del 27 de noviembre](../p2_lineage/README.md)
+comprobó la identidad del artefacto remoto y el empaquetado. Los metadatos
+y los artefactos disponibles no identifican el dataset histórico de A;
+el hash del archivo de evaluación no debe atribuirse a su entrenamiento.
+
 **B** es la versión 2 del mismo modelo, registrada en la corrida
 `2be806abea9245c5afcbee36c660c9c7` con el alias `challenger`. Se fijó un
 árbol de profundidad 3, pesos balanceados y semilla 42. Se tomó una muestra

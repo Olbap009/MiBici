@@ -1,0 +1,120 @@
+{
+  "audit_date": "2026-11-27",
+  "access": "Read-only public MLflow REST endpoints; no credentials used; no metadata or registry mutations.",
+  "conclusion": "The registered artifact identity and packaging provenance are verified. The exact historical training dataset of v1 remains unresolved because it was not recorded in available tracking metadata or artifacts.",
+  "training_dataset_status": "unresolved",
+  "model": {
+    "name": "MiBici_Equipo23_P2_Presion_Proxy_Academica",
+    "version": "1",
+    "alias": [
+      "champion"
+    ],
+    "status": "READY",
+    "run_id": "55225195968642979a681bf751d9e2f8",
+    "logged_model_id": "m-f5e368ba2fb94a4fbf376a1cd6df2aa9"
+  },
+  "registration": {
+    "run_name": "P2_decision_tree_champion_registered",
+    "status": "FINISHED",
+    "experiment_id": "0",
+    "created_utc": "2026-11-08T19:20:09.289000+00:00",
+    "source_script": "mibici/api/extract_model.py",
+    "source_git_commit": "77dc91cb26a3c7c90de5a56f7d7154c20d2fb86a",
+    "source_git_branch": "feat/api-fastapi",
+    "source_script_present_at_recorded_commit": false,
+    "source_consistency_note": "The source tag names a script not tracked at the recorded commit. MLflow Git tags do not establish the contents of uncommitted local files."
+  },
+  "missing_training_metadata": {
+    "run_inputs": {},
+    "run_params": [],
+    "run_metrics": [],
+    "logged_model_data": {},
+    "training_dataset_artifact_present": false,
+    "input_example_is_training_dataset": false
+  },
+  "available_artifacts": [
+    {
+      "path": "MLmodel",
+      "is_dir": false,
+      "file_size": 1567
+    },
+    {
+      "path": "conda.yaml",
+      "is_dir": false,
+      "file_size": 4595
+    },
+    {
+      "path": "input_example.json",
+      "is_dir": false,
+      "file_size": 191
+    },
+    {
+      "path": "model.pkl",
+      "is_dir": false,
+      "file_size": 1870
+    },
+    {
+      "path": "python_env.yaml",
+      "is_dir": false,
+      "file_size": 115
+    },
+    {
+      "path": "requirements.txt",
+      "is_dir": false,
+      "file_size": 3717
+    },
+    {
+      "path": "serving_input_example.json",
+      "is_dir": false,
+      "file_size": 366
+    }
+  ],
+  "artifact_integrity": [
+    {
+      "filename": "MLmodel",
+      "bytes": 1567,
+      "sha256": "e8d5e190c3da7eb19a362cf262abb84ac38d6535444a82ed0392f6b1caf2fd4c",
+      "matches_repository_package": true
+    },
+    {
+      "filename": "model.pkl",
+      "bytes": 1870,
+      "sha256": "79f72b41f34e5ff13fba3c5d9871d0aa90ba47f9107e27d075e7fc1458d68f35",
+      "matches_repository_package": true
+    }
+  ],
+  "experiment_history": {
+    "runs_count": 3,
+    "next_page_present": false,
+    "runs": [
+      {
+        "run_id": "c88f6506fee54675bb58c42a8634c426",
+        "run_name": "P2_decision_tree_champion_registered",
+        "status": "FAILED",
+        "training_metadata_recorded": false
+      },
+      {
+        "run_id": "55225195968642979a681bf751d9e2f8",
+        "run_name": "P2_decision_tree_champion_registered",
+        "status": "FINISHED",
+        "training_metadata_recorded": false
+      },
+      {
+        "run_id": "2be806abea9245c5afcbee36c660c9c7",
+        "run_name": "P2_candidata_drift_ab",
+        "status": "FINISHED",
+        "training_metadata_recorded": true
+      }
+    ]
+  },
+  "public_sources": {
+    "run": "https://dagshub.com/bryan-s-ortega/TC5061-Proyecto-Equipo23.mlflow/api/2.0/mlflow/runs/get?run_id=55225195968642979a681bf751d9e2f8",
+    "logged_model": "https://dagshub.com/bryan-s-ortega/TC5061-Proyecto-Equipo23.mlflow/api/2.0/mlflow/logged-models/m-f5e368ba2fb94a4fbf376a1cd6df2aa9",
+    "repository_artifact": "https://github.com/bryan-s-ortega/TC5061-Proyecto-Equipo23/tree/main/models/p2_champion"
+  },
+  "interpretation_limits": [
+    "A serialized decision tree contains learned structure/statistics, not a recoverable unique training table.",
+    "A matching estimator state on a repository fixture is evidence of reproducibility with that fixture, not conclusive proof that the historical v1 run trained on that exact dataset.",
+    "The Parquet hash recorded for v2/evaluation must not be retroactively attributed to v1 without independent evidence."
+  ]
+}

@@ -23,6 +23,7 @@
 ## 3. Datos, linaje y variables
 - **Fuente:** Portal de datos abiertos de MiBici (`mibici.net/es/datos-abiertos/`), versionado con DVC en DagsHub ([dvc.yaml](../dvc.yaml), [dvc.lock](../dvc.lock)).
 - **Pipeline de datos:** `p2_dataset` (`trips_fechas_corregidas.parquet`, 2023-11-01 a 2026-09-30) → `p2_movements` → `p2_examples` (`data/processed/p2_examples.parquet`, SHA-256 `65e71b0f8d489210ce185ac3e3de0ab85c0c50df75473128aeb5e32e61a477a3`).
+- **Alcance del linaje de v1:** El hash anterior identifica el conjunto usado en la evaluación y el monitoreo; no acredita el dataset de entrenamiento de v1. La auditoría del 27 de noviembre verificó que el artefacto remoto coincide con el empaquetado, pero la corrida de registro no conserva parámetros, métricas ni entradas del entrenamiento. Su dataset histórico sigue sin identificar. Véanse la [auditoría de linaje](../reports/evidence/p2_lineage/README.md) y el [resultado verificable](../reports/evidence/p2_lineage/lineage_audit.json).
 - **Variables de entrada (8):**
   - Flujos previos sin fuga temporal: `departures_prev_30m`, `arrivals_prev_30m`, `departures_prev_2h`, `arrivals_prev_2h`
   - Calendario: `hour` (`0–23`), `minute` (`0` o `30`), `day_of_week` (`0–6`)
@@ -44,7 +45,7 @@ Evaluación sobre exactamente las mismas **2,010,909 filas** de la partición `t
 | **Alertas emitidas totales** | 79,902 | 622,745 |
 | **Alertas en filas sin presión** | 76,584 | 614,069 |
 
-**Decisión de gobernanza:** Se mantiene el alias `champion` en la **versión 1** y `challenger` en la **versión 2**. Aunque la versión 2 eleva la *balanced accuracy* (+13.61 pp) y el *recall* de ambas clases de presión, multiplica ~8× las falsas alertas (614,069 frente a 76,584), superando el umbral aceptable de alertas falsas definido en [references/p2_drift_ab_protocolo.md](../references/p2_drift_ab_protocolo.md).
+**Decisión de gobernanza:** Se mantiene el alias `champion` en la **versión 1** y `challenger` en la **versión 2**. Aunque la versión 2 eleva la *balanced accuracy* (+13.61 pp) y el *recall* de ambas clases de presión, multiplica ~8× las falsas alertas (614,069 frente a 76,584). La [regla previa de recomendación](../references/p2_drift_ab_protocolo.md) exige revisar el aumento de falsas alertas antes de promover B; no fija un umbral numérico de aceptación.
 
 ---
 
